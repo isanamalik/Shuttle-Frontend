@@ -1,5 +1,3 @@
-# ned-shuttle-tracker
-
 To run this application :
 
 1. Clone Repository
