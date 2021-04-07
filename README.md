@@ -20,3 +20,32 @@ Run:
 3. Now run the app again
 
 If the above command doesn't help, then you may have an error in code.
+
+
+ERROR: unable to load script from assets 'index.android.bundle'
+
+
+mkdir android\app\src\main\assets
+
+react-native bundle --platform android --dev false --entry-file index.js --bundle-output android\app\src\main\assets\index.android.bundle --assets-dest android\app\src\main\res
+ 
+
+(if this causes regular expression error: or Invalid regular expression: /(.*\\__fixtures__\\.*|node_modules[\\\]react[\\\]dist[\\\].*|website\\node_modules\\.*|heapCapture\\bundle\.js|.*\\__tests__\\.*)$/: Unterminated character class. Run CLI with --verbose flag for more details.)
+
+try:
+
+go to :   {project_root}\node_modules\metro-config\src\defaults\blacklist.js
+
+change blacklist variable to: var sharedBlacklist = [
+  /node_modules[\/\\]react[\/\\]dist[\/\\].*/,
+  /website\/node_modules\/.*/,
+  /heapCapture\/bundle\.js/,
+  /.*\/__tests__\/.*/
+];
+
+
+ERROR: Command failed: gradlew.bat app:installDebug
+cd android
+gradlew.bat installDebug
+cd ..
+react-native run-android
