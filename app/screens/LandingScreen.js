@@ -24,7 +24,7 @@ const LandingScreen = ({ navigation }) => {
         <View style={{ alignItems: 'center', marginHorizontal: SIZES.padding }}>
           <Text style={{ ...FONTS.h2 }}>Track Your Shuttle</Text>
           <Text style={{ color: COLORS.gray, marginTop: SIZES.padding, marginBottom: SIZES.padding, textAlign: 'center', ...FONTS.body3 }}>
-            We aim to provide a platform which can be helpful to students, our drivers and conductors.
+            We aim to do shit!
             </Text>
         </View>
 

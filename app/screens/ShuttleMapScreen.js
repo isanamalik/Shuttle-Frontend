@@ -8,7 +8,8 @@ import {
   Text,
   Image,
 } from 'react-native';
-
+import { GoogleMap, DistanceMatrixService } from 'react-google-maps';
+import {GOOGLE_API_KEY} from '../../googleApiKey';
 import MapView, {Marker, Polyline} from 'react-native-maps';
 import Geolocation from '@react-native-community/geolocation';
 import marker from '../../bus.png';
@@ -30,8 +31,11 @@ export default class MapScreen extends Component {
       },
       polyLineCoordinates: [],
       markerPosition: {
-        longitude: null,
-        latitude: null,
+        // longitude: null,
+        // latitude:null
+        longitude: 67.1142597525609,
+        latitude: 24.93219222192159
+        
       },
     };
   }
@@ -65,6 +69,43 @@ export default class MapScreen extends Component {
   // componentWillUnmount() {
   //   iGeolocation.clearWatch(this.locationWatchId);
   // }
+
+  getDistance= async () =>
+{
+  const userCoords =[this.state.coordinates.latitude, this.state.coordinates.longitude]
+  const driverCoords =[this.state.markerPosition.latitude, this.state.markerPosition.longitude]
+
+    // get location of base
+    const OriginLocation =  userCoords;
+
+    // get locations of targets
+    const DestinationLocation = driverCoords;
+
+    // prepare final API call
+    let ApiURL = "https://maps.googleapis.com/maps/api/distancematrix/json?";
+    let params = `origins=${OriginLocation}&destinations=${DestinationLocation}&key=${GOOGLE_API_KEY}`;  
+    let finalApiURL = `${ApiURL}${encodeURI(params)}`;
+
+ 
+    console.log("user cord biyatch:", userCoords);
+    console.log("driver cord biyatch:", driverCoords);
+    console.log("finalApiURL:\n");
+    console.log(finalApiURL);
+
+    // get duration/distance from base to each target
+    try {
+            let response =  await fetch(finalApiURL);
+            let responseJson = await response.json();
+            console.log("responseJson:\n");
+            console.log(responseJson);
+
+           console.log ("trynna get response", responseJson.rows[0].elements[0].duration.text)
+           this.setState({eta:responseJson.rows[0].elements[0].duration.text})
+        } catch(error) {
+            console.error(error);
+        } 
+  
+}
 
   getPolyLineCoordinates = async (state) => {
     if (state === 'start') {
@@ -167,6 +208,15 @@ export default class MapScreen extends Component {
           style={styles.redButton}>
           <Text>Stop Tracking</Text>
         </TouchableOpacity>
+        
+        <TouchableOpacity
+          onPress={() => {
+            this.getDistance();
+          }}
+          style={styles.button}>
+          <Text>Calculate ETA</Text>
+        </TouchableOpacity>
+          <Text>ETA: {this.state.eta? this.state.eta : 'no eta available'} </Text>
       </View>
     );
   }

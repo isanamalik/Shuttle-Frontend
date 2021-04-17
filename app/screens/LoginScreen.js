@@ -33,7 +33,7 @@ const LoginScreen = ({ navigation }) => {
                 password: password.value
             })
                 .then(function (response) {
-                    console.log(response.data.msg);
+                    console.debug(response.data.msg);
                     if (response.data.msg == "login succeful") {
                         navigation.navigate('StudentHomeScreen')
                     }
