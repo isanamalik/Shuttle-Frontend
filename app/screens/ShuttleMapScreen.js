@@ -87,8 +87,8 @@ export default class MapScreen extends Component {
     let finalApiURL = `${ApiURL}${encodeURI(params)}`;
 
  
-    console.log("user cord biyatch:", userCoords);
-    console.log("driver cord biyatch:", driverCoords);
+    console.log("user cord:", userCoords);
+    console.log("driver cord :", driverCoords);
     console.log("finalApiURL:\n");
     console.log(finalApiURL);
 
