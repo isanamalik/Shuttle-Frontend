@@ -87,6 +87,7 @@ const LoginScreen = ({ navigation }) => {
                 <Button mode="contained" onPress={_onLoginPressed}>Login</Button>
                 <View style={styles.row}>
                     <Text style={styles.label}>Don’t have an account? </Text>
+                    {/* changing screen name here */}
                     <TouchableOpacity onPress={() => navigation.navigate('SignupScreen')}>
                         <Text style={styles.link}>Sign up </Text>
                     </TouchableOpacity>

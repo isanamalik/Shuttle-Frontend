@@ -43,29 +43,41 @@ const ShuttleNumberScreen = ({ navigation }) => {
             icon={icons.airplane}
             bgColor={['#46aeff', '#5884ff']}
             text="1"
-            onPress={() => { navigation.navigate("ShuttleMapScreen") }}
+            onPress={() => {
+              navigation.navigate("ShuttleMapScreen", {
+                route_id: 1
+              })
+            }}
           />
           <OptionItem
             icon={icons.train}
             bgColor={['#46aeff', '#5884ff']}
             text="2"
-            onPress={() => { navigation.navigate("ShuttleMapScreen") }}
+            onPress={() => { navigation.navigate("ShuttleMapScreen", {
+              route_id: 2
+            }) }}
           />
           <OptionItem
             icon={icons.bus}
             bgColor={['#46aeff', '#5884ff']}
             text="3"
-            onPress={() =>{ navigation.navigate("ShuttleMapScreen") }}
+            onPress={() => { navigation.navigate("ShuttleMapScreen", {
+              route_id: 3
+            }) }}
           />
         </View>
         <View style={{ flexDirection: 'row', marginTop: SIZES.padding, paddingHorizontal: SIZES.base }}>
           <OptionItem
             text="4"
-            onPress={() =>{ navigation.navigate("ShuttleMapScreen") }}
+            onPress={() => { navigation.navigate("ShuttleMapScreen", {
+              route_id: 4
+            }) }}
           />
           <OptionItem
             text="5"
-            onPress={() => { navigation.navigate("ShuttleMapScreen") }}
+            onPress={() => { navigation.navigate("ShuttleMapScreen", {
+              route_id: 5
+            }) }}
           />
           <OptionItem
             text="6"
@@ -97,7 +109,7 @@ const ShuttleNumberScreen = ({ navigation }) => {
           />
           <OptionItem
             text="12"
-            onPress={() =>{ navigation.navigate("ShuttleMapScreen") }}
+            onPress={() => { navigation.navigate("ShuttleMapScreen") }}
           />
         </View>
         <View style={{ flexDirection: 'row', marginTop: SIZES.padding, paddingHorizontal: SIZES.base }}>
@@ -108,15 +120,15 @@ const ShuttleNumberScreen = ({ navigation }) => {
         </View>
 
       </View>
-      <View style={{marginBottom: SIZES.radius}}>
-      <Button
-        title="Do we select one for you?"
-        color="darkslateblue"
-        onPress={() => Linking.openURL('https://www.neduet.edu.pk/sites/default/files/users/student_affairs/Shuttle_Route.pdf')}></Button>
-    </View>
+      <View style={{ marginBottom: SIZES.radius }}>
+        <Button
+          title="Do we select one for you?"
+          color="darkslateblue"
+          onPress={() => Linking.openURL('https://www.neduet.edu.pk/sites/default/files/users/student_affairs/Shuttle_Route.pdf')}></Button>
+      </View>
     </View >
   );
-};   
+};
 
 const styles = StyleSheet.create({
 
