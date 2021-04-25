@@ -81,44 +81,77 @@ const ShuttleNumberScreen = ({ navigation }) => {
           />
           <OptionItem
             text="6"
-            onPress={() => { navigation.navigate("ShuttleMapScreen") }}
+            onPress={() => { navigation.navigate("ShuttleMapScreen", {
+              route_id: 6
+            }) }}
           />
         </View>
         <View style={{ flexDirection: 'row', marginTop: SIZES.padding, paddingHorizontal: SIZES.base }}>
           <OptionItem
             text="7"
-            onPress={() => { navigation.navigate("ShuttleMapScreen") }}
+            onPress={() => { navigation.navigate("ShuttleMapScreen", {
+              route_id: 7
+            }) }}
           />
           <OptionItem
             text="8"
-            onPress={() => { navigation.navigate("ShuttleMapScreen") }}
+            onPress={() => { navigation.navigate("ShuttleMapScreen", {
+              route_id: 8
+            }) }}
           />
           <OptionItem
             text="9"
-            onPress={() => { navigation.navigate("ShuttleMapScreen") }}
+            onPress={() => { navigation.navigate("ShuttleMapScreen", {
+              route_id: 9
+            }) }}
           />
         </View>
         <View style={{ flexDirection: 'row', marginTop: SIZES.padding, paddingHorizontal: SIZES.base }}>
           <OptionItem
             text="10"
-            onPress={() => { navigation.navigate("ShuttleMapScreen") }}
+            onPress={() => { navigation.navigate("ShuttleMapScreen", {
+              route_id: 10
+            }) }}
           />
           <OptionItem
             text="11"
-            onPress={() => { navigation.navigate("ShuttleMapScreen") }}
+            onPress={() => { navigation.navigate("ShuttleMapScreen", {
+              route_id: 11
+            }) }}
           />
           <OptionItem
             text="12"
-            onPress={() => { navigation.navigate("ShuttleMapScreen") }}
+            onPress={() => { navigation.navigate("ShuttleMapScreen", {
+              route_id: 12
+            }) }}
           />
         </View>
         <View style={{ flexDirection: 'row', marginTop: SIZES.padding, paddingHorizontal: SIZES.base }}>
           <OptionItem
             text="13"
-            onPress={() => { navigation.navigate("ShuttleMapScreen") }}
+            onPress={() => { navigation.navigate("ShuttleMapScreen", {
+              route_id: 13
+            }) }}
+          />
+          {/* <OptionItem
+            text="14+3"
+            onPress={() => { navigation.navigate("ShuttleMapScreen", {
+              route_id: 14
+            }) }}
+          /> */}
+           <OptionItem
+            text="15"
+            onPress={() => { navigation.navigate("ShuttleMapScreen", {
+              route_id: 15
+            }) }}
+          />
+          <OptionItem
+            text="16"
+            onPress={() => { navigation.navigate("ShuttleMapScreen", {
+              route_id: 16
+            }) }}
           />
         </View>
-
       </View>
       <View style={{ marginBottom: SIZES.radius }}>
         <Button
