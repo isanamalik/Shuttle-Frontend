@@ -30,3 +30,7 @@ export const registrationNumberValidator = registrationNumber => {
   if(registrationNumber.length < 7 || registrationNumber.length > 8) return 'Please enter valid 7 digit registration number'
   return '';
 };
+  export const locationNameValidator = locationName => {
+    if (!locationName) return 'Please enter valid location';
+    return '';
+};

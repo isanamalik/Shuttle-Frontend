@@ -1,21 +1,26 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Linking, Button, Image, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Linking, SafeAreaView, TouchableOpacity, ScrollView } from 'react-native';
 import Header from '../components/Header'
-
-
+import TextInput from '../components/TextInput';
+import BackButton from '../components/BackButton';
+import Button from '../components/Button';
 import LinearGradient from 'react-native-linear-gradient';
-
+import { Loading } from '../components/Loading';
+import { BASE_URL } from '../config/index';
 import { images, icons, COLORS, FONTS, SIZES } from '../constants';
+import {
+  locationNameValidator
+} from '../core/utils';
 
 const OptionItem = ({ bgColor, icon, label, onPress, text }) => {
   return (
     <TouchableOpacity
-      style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
+      style={{ flex: 1, alignItems: 'center', justifyContent: 'center', margin: 50 }}
       onPress={onPress}
     >
-      <View style={[styles.shadow, { width: 75, height: 75 }]}>
+      <View style={[styles.shadow, { width: 75, height: 75, marginRight: 20, marginLeft: 20 }]}>
         <LinearGradient
-          style={[{ flex: 1, alignItems: 'center', justifyContent: 'center', borderRadius: 15, backgroundColor: 'red' }]}
+          style={[{ flex: 1, alignItems: 'center', justifyContent: 'center', borderRadius: 15 }]}
           colors={['#46aeff', '#5884ff']}
           start={{ x: 0, y: 0 }}
           end={{ x: 0, y: 1 }}
@@ -32,134 +37,88 @@ const OptionItem = ({ bgColor, icon, label, onPress, text }) => {
 }
 
 const ShuttleNumberScreen = ({ navigation }) => {
+  const [locationName, setLocationName] = useState({ value: '', error: '' });
+  console.log(locationName)
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  console.log("location is null", locationName.value)
+  let markerList = [];
+  if (locationName.value == '')
+    for (let i = 0; i < 15; i++) {
+      if (i == 3 || i == 6 || i == 9 || i == 12 || i == 15) {
+        markerList.push(
+          <Text key={i + 20} style={{ flexDirection: 'row', justifyContent: 'center', margin: 50 }}>{'\n'}{'\n'} </Text>
+        )
+      }
+      markerList.push(
+        <OptionItem
+          key={i}
+          bgColor={['#46aeff', '#5884ff']}
+          text={i + 1}
+          onPress={() => {
+            navigation.navigate("ShuttleMapScreen", {
+              route_id: i + 1
+            })
+          }}
 
+        />
+      )
+    }
+    console.log(locationName)
+  // console.log(markerList)
+  const onSearch = async () => {
+    const locationError = locationNameValidator(locationName.value);
+    console.log(locationName)
+    
+    try {
+      // setLoading(true);
+      // const request = await axios.post(`${BASE_URL}/route/by_name`, {
+      //   route_location: locationName.value
+      // }).then((response) => {
+      //   console.log(response)
+      //   // if (response.data.id !== null) {
+      //     setLoading(false);
+      //   //   navigation.navigate('LoginScreen')
+      //   // }
+      //   // else {
+      //   //   setError("An error occured")
+      //   // }
+
+      // })
+    } catch (e) {  
+      setError(e)
+      setLoading(false)
+    }
+  }
   return (
-    <View style={styles.container}>
-      <Header title="Select Your Shuttle Number" />
-
-      <View style={{ flex: 1, justifyContent: 'center' }}>
-        <View style={{ flexDirection: 'row', marginTop: SIZES.padding, paddingHorizontal: SIZES.base }}>
-          <OptionItem
-            icon={icons.airplane}
-            bgColor={['#46aeff', '#5884ff']}
-            text="1"
-            onPress={() => {
-              navigation.navigate("ShuttleMapScreen", {
-                route_id: 1
-              })
-            }}
-          />
-          <OptionItem
-            icon={icons.train}
-            bgColor={['#46aeff', '#5884ff']}
-            text="2"
-            onPress={() => { navigation.navigate("ShuttleMapScreen", {
-              route_id: 2
-            }) }}
-          />
-          <OptionItem
-            icon={icons.bus}
-            bgColor={['#46aeff', '#5884ff']}
-            text="3"
-            onPress={() => { navigation.navigate("ShuttleMapScreen", {
-              route_id: 3
-            }) }}
-          />
-        </View>
-        <View style={{ flexDirection: 'row', marginTop: SIZES.padding, paddingHorizontal: SIZES.base }}>
-          <OptionItem
-            text="4"
-            onPress={() => { navigation.navigate("ShuttleMapScreen", {
-              route_id: 4
-            }) }}
-          />
-          <OptionItem
-            text="5"
-            onPress={() => { navigation.navigate("ShuttleMapScreen", {
-              route_id: 5
-            }) }}
-          />
-          <OptionItem
-            text="6"
-            onPress={() => { navigation.navigate("ShuttleMapScreen", {
-              route_id: 6
-            }) }}
-          />
-        </View>
-        <View style={{ flexDirection: 'row', marginTop: SIZES.padding, paddingHorizontal: SIZES.base }}>
-          <OptionItem
-            text="7"
-            onPress={() => { navigation.navigate("ShuttleMapScreen", {
-              route_id: 7
-            }) }}
-          />
-          <OptionItem
-            text="8"
-            onPress={() => { navigation.navigate("ShuttleMapScreen", {
-              route_id: 8
-            }) }}
-          />
-          <OptionItem
-            text="9"
-            onPress={() => { navigation.navigate("ShuttleMapScreen", {
-              route_id: 9
-            }) }}
-          />
-        </View>
-        <View style={{ flexDirection: 'row', marginTop: SIZES.padding, paddingHorizontal: SIZES.base }}>
-          <OptionItem
-            text="10"
-            onPress={() => { navigation.navigate("ShuttleMapScreen", {
-              route_id: 10
-            }) }}
-          />
-          <OptionItem
-            text="11"
-            onPress={() => { navigation.navigate("ShuttleMapScreen", {
-              route_id: 11
-            }) }}
-          />
-          <OptionItem
-            text="12"
-            onPress={() => { navigation.navigate("ShuttleMapScreen", {
-              route_id: 12
-            }) }}
-          />
-        </View>
-        <View style={{ flexDirection: 'row', marginTop: SIZES.padding, paddingHorizontal: SIZES.base }}>
-          <OptionItem
-            text="13"
-            onPress={() => { navigation.navigate("ShuttleMapScreen", {
-              route_id: 13
-            }) }}
-          />
-          {/* <OptionItem
-            text="14+3"
-            onPress={() => { navigation.navigate("ShuttleMapScreen", {
-              route_id: 14
-            }) }}
-          /> */}
-           <OptionItem
-            text="15"
-            onPress={() => { navigation.navigate("ShuttleMapScreen", {
-              route_id: 15
-            }) }}
-          />
-          <OptionItem
-            text="16"
-            onPress={() => { navigation.navigate("ShuttleMapScreen", {
-              route_id: 16
-            }) }}
-          />
-        </View>
-      </View>
-      <View style={{ marginBottom: SIZES.radius }}>
-        <Button
-          title="Do we select one for you?"
-          color="darkslateblue"
-          onPress={() => Linking.openURL('https://www.neduet.edu.pk/sites/default/files/users/student_affairs/Shuttle_Route.pdf')}></Button>
-      </View>
-    </View >
+    <SafeAreaView style={{ flex: 1 }}>
+      <View style={styles.container}>
+        <ScrollView>
+          <BackButton goBack={() => navigation.navigate('StudentHomeScreen')} />
+          <Header title="Find Your Shuttle" />
+          <View style={{ padding: 18 }}>
+            <TextInput
+              label="Enter your location(e.g Buffer Zone)"
+              returnKeyType="next"
+              value={locationName.value}
+              onChangeText={text => setLocationName({ value: text, error: '' })}
+            error={!!locationName.error}
+            errorText={locationName.error}
+            />
+            <Button mode="contained" onPress={onSearch}>Search</Button>
+          </View>
+          <Text style={{ flex: 1, marginRight: SIZES.base }}>
+            {markerList}
+          </Text>
+          <View style={{ marginBottom: SIZES.radius }}>
+            {/* <Button
+              title="Do we select one for you?"
+              color="darkslateblue"
+              onPress={() => Linking.openURL('https://www.neduet.edu.pk/sites/default/files/users/student_affairs/Shuttle_Route.pdf')}></Button> */}
+          </View>
+        </ScrollView>
+      </View >
+    </SafeAreaView>
   );
 };
 
@@ -167,7 +126,7 @@ const styles = StyleSheet.create({
 
   container: {
     flex: 1,
-    // paddingTop: 60
+    // padding: 18,
   },
 
 

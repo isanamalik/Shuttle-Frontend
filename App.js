@@ -64,10 +64,11 @@ export default class App extends Component {
       <Stack.Navigator initialRouteName="LandingScreen">
         <Stack.Screen
           name="LandingScreen"
-          component={LandingScreen}
+          // changing here
+          component={ShuttleNumberScreen}
           options={{
             title: "Welcome Wheels",
-            // headerShown: false,
+            headerShown: false,
             headerStyle: {
               backgroundColor: COLORS.white
             },
