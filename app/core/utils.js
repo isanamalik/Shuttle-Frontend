@@ -31,6 +31,6 @@ export const registrationNumberValidator = registrationNumber => {
   return '';
 };
   export const locationNameValidator = locationName => {
-    if (!locationName) return 'Please enter valid location';
+    if (!locationName) return 'Please enter valid location.';
     return '';
 };

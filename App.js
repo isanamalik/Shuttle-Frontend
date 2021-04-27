@@ -65,7 +65,7 @@ export default class App extends Component {
         <Stack.Screen
           name="LandingScreen"
           // changing here
-          component={ShuttleNumberScreen}
+          component={LandingScreen}
           options={{
             title: "Welcome Wheels",
             headerShown: false,

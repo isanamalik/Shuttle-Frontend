@@ -50,9 +50,10 @@ const LoginScreen = ({ navigation }) => {
     };
     return (
         <SafeAreaView style={{ flex: 1 }}>
-            
+
             <View style={styles.container}>
 
+                <Loading loading={loading} />
                 <BackButton goBack={() => navigation.navigate('LandingScreen')} />
                 <Header title="Login" />
 
@@ -88,14 +89,13 @@ const LoginScreen = ({ navigation }) => {
                 <View style={styles.row}>
                     <Text style={styles.label}>Don’t have an account? </Text>
                     {/* changing screen name here */}
-                    <TouchableOpacity onPress={() => navigation.navigate('ShuttleNumberScreen')}>
+                    <TouchableOpacity onPress={() => navigation.navigate('SignupScreen')}>
                         <Text style={styles.link}>Sign up </Text>
                     </TouchableOpacity>
                 </View>
-             
+
             </View>
 
-            <Loading loading={loading} />
         </SafeAreaView>
     );
 };

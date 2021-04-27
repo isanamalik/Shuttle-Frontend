@@ -8,9 +8,11 @@ import LinearGradient from 'react-native-linear-gradient';
 import { Loading } from '../components/Loading';
 import { BASE_URL } from '../config/index';
 import { images, icons, COLORS, FONTS, SIZES } from '../constants';
+import axios from "axios";
 import {
   locationNameValidator
 } from '../core/utils';
+import { CommonActions } from '@react-navigation/routers';
 
 const OptionItem = ({ bgColor, icon, label, onPress, text }) => {
   return (
@@ -38,9 +40,10 @@ const OptionItem = ({ bgColor, icon, label, onPress, text }) => {
 
 const ShuttleNumberScreen = ({ navigation }) => {
   const [locationName, setLocationName] = useState({ value: '', error: '' });
-  console.log(locationName)
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [locationError, locationNameError] = useState({ value: '', error: '' });
+  const [searchResult, setSearchResult] = useState([]);
   console.log("location is null", locationName.value)
   let markerList = [];
   if (locationName.value == '')
@@ -64,28 +67,56 @@ const ShuttleNumberScreen = ({ navigation }) => {
         />
       )
     }
-    console.log(locationName)
-  // console.log(markerList)
+  
   const onSearch = async () => {
+    setError('')
+    setSearchResult([])
     const locationError = locationNameValidator(locationName.value);
-    console.log(locationName)
-    
+    console.log('Inside search', locationName.value)
+    if (locationError) {
+      setLocationName({ ...locationName, error: locationError });
+      return;
+    }
     try {
-      // setLoading(true);
-      // const request = await axios.post(`${BASE_URL}/route/by_name`, {
-      //   route_location: locationName.value
-      // }).then((response) => {
-      //   console.log(response)
-      //   // if (response.data.id !== null) {
-      //     setLoading(false);
-      //   //   navigation.navigate('LoginScreen')
-      //   // }
-      //   // else {
-      //   //   setError("An error occured")
-      //   // }
-
-      // })
-    } catch (e) {  
+      setLoading(true);
+      const request = await axios.post(`${BASE_URL}/route/by_name`, {
+        route_location: locationName.value
+      }).then((response) => {
+        let searchResult = []
+        let search = response.data
+        if (search.length > 0) {
+          for (let i = 0; i < search.length; i++) {
+            if (i == 3 || i == 6 || i == 9 || i == 12 || i == 15) {
+              searchResult.push(
+                <Text key={i + 20} style={{ flexDirection: 'row', justifyContent: 'center', margin: 50 }}>{'\n'}{'\n'} </Text>
+              )
+            }
+            searchResult.push(
+              <OptionItem
+                key={i}
+                bgColor={['#46aeff', '#5884ff']}
+                text={search[i].route_id}
+                onPress={() => {
+                  navigation.navigate("ShuttleMapScreen", {
+                    route_id: search[i].route_id
+                  })
+                }}
+              />
+            )
+          }
+          setSearchResult([...searchResult])
+          setLoading(false);
+          console.log('res', searchResult)
+        }
+        else {
+          if (response.data.length == 0) {
+            setLoading(false);
+            setError("Oops! No shuttle found for your route. Try another location")
+          }
+        }
+      })
+    } catch (e) {
+      console.log(e)
       setError(e)
       setLoading(false)
     }
@@ -102,13 +133,19 @@ const ShuttleNumberScreen = ({ navigation }) => {
               returnKeyType="next"
               value={locationName.value}
               onChangeText={text => setLocationName({ value: text, error: '' })}
-            error={!!locationName.error}
-            errorText={locationName.error}
+              error={!!locationName.error}
+              errorText={locationName.error}
             />
             <Button mode="contained" onPress={onSearch}>Search</Button>
+            <Loading loading={loading} />
+            <View style={styles.row}>
+              <Text style={styles.error}>{error}</Text>
+            </View>
           </View>
+
           <Text style={{ flex: 1, marginRight: SIZES.base }}>
             {markerList}
+            {searchResult}
           </Text>
           <View style={{ marginBottom: SIZES.radius }}>
             {/* <Button
@@ -128,6 +165,16 @@ const styles = StyleSheet.create({
     flex: 1,
     // padding: 18,
   },
+  error: {
+    // fontWeight:bold "",
+    color: "red"
+  },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignContent: 'center',
+    margin: 4,
+  }
 
 
 });
