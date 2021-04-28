@@ -4,6 +4,7 @@ import {
   StyleSheet,
   SafeAreaView,
   ToastAndroid,
+  ScrollView,
   TouchableOpacity,
   Text,
   Image,
@@ -223,39 +224,40 @@ export default class MapScreen extends Component {
             strokeWidth={6}
           />
         </MapView>
+        <ScrollView>
+          <TouchableOpacity
+            onPress={() => {
+              this.addingMarkers();
+            }}
+            style={styles.redButton}>
+            <Text>Check Routes</Text>
+          </TouchableOpacity>
 
-        <TouchableOpacity
-          onPress={() => {
-            this.addingMarkers();
-          }}
-          style={styles.redButton}>
-          <Text>Check Routes</Text>
-        </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              this.getPolyLineCoordinates('start');
+            }}
+            style={styles.button}>
+            <Text>Start Tracking</Text>
+          </TouchableOpacity>
 
-        <TouchableOpacity
-          onPress={() => {
-            this.getPolyLineCoordinates('start');
-          }}
-          style={styles.button}>
-          <Text>Start Tracking</Text>
-        </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              this.getPolyLineCoordinates('stop');
+            }}
+            style={styles.redButton}>
+            <Text>Stop Tracking</Text>
+          </TouchableOpacity>
 
-        <TouchableOpacity
-          onPress={() => {
-            this.getPolyLineCoordinates('stop');
-          }}
-          style={styles.redButton}>
-          <Text>Stop Tracking</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          onPress={() => {
-            this.getDistance();
-          }}
-          style={styles.button}>
-          <Text>Calculate ETA</Text>
-        </TouchableOpacity>
-        <Text>ETA: {this.state.eta ? this.state.eta : 'no eta available'} </Text>
+          <TouchableOpacity
+            onPress={() => {
+              this.getDistance();
+            }}
+            style={styles.button}>
+            <Text>Calculate ETA</Text>
+          </TouchableOpacity>
+          <Text>ETA: {this.state.eta ? this.state.eta : 'no eta available'} </Text>
+        </ScrollView>
       </View>
     );
   }
