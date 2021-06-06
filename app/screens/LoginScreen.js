@@ -1,5 +1,5 @@
 import React, { memo, useState } from 'react';
-import { View, TouchableOpacity, StyleSheet, Text, SafeAreaView } from 'react-native';
+import { View, TouchableOpacity, StyleSheet, Text, SafeAreaView, Image } from 'react-native';
 import Header from '../components/Header';
 import Button from '../components/Button';
 import TextInput from '../components/TextInput';
@@ -11,6 +11,7 @@ import { BASE_URL } from '../config/index';
 import axios from "axios";
 import { registrationNumberValidator, passwordValidator } from '../core/utils';
 import { Error } from '../components/Error';
+import { images } from '../constants';
 
 const LoginScreen = ({ navigation }) => {
     const [registrationNumber, setRegistrationNumber] = useState({ value: '', error: '' });
@@ -40,7 +41,7 @@ const LoginScreen = ({ navigation }) => {
                     else {
                         setError("Invalid Credentials")
                     }
-                })
+                }) 
             setLoading(false);
         } catch (e) {
             setError("Invalid credentials");
@@ -53,9 +54,17 @@ const LoginScreen = ({ navigation }) => {
 
             <View style={styles.container}>
 
-                <Loading loading={loading} />
+                
                 <BackButton goBack={() => navigation.navigate('LandingScreen')} />
-                <Header title="Login" />
+        <Image
+          source={images.logo}
+          resizeMode="contain"
+          style={{
+            width: '30%',
+            height: '25%',
+          }}
+        />
+                {/* <Header title="Login" /> */}
 
                 <TextInput
                     label="Registration Number(e.g 4001048)"
@@ -64,6 +73,7 @@ const LoginScreen = ({ navigation }) => {
                     onChangeText={text => setRegistrationNumber({ value: text, error: '' })}
                     error={!!registrationNumber.error}
                     errorText={registrationNumber.error}
+                    
                 />
                 <TextInput
                     label="Password"
@@ -73,18 +83,13 @@ const LoginScreen = ({ navigation }) => {
                     error={!!password.error}
                     errorText={password.error}
                     secureTextEntry
+                    outlineColor="#0d47a1"
                 />
 
                 <View style={styles.row}>
                     <Text style={styles.error}>{error}</Text>
                 </View>
-                <View style={styles.forgotPassword}>
-                    <TouchableOpacity
-                        onPress={() => navigation.navigate('ForgotPasswordScreen')}>
-                        <Text style={styles.label}>Forgot your password?</Text>
-                    </TouchableOpacity>
-                </View>
-
+               
                 <Button mode="contained" onPress={_onLoginPressed}>Login</Button>
                 <View style={styles.row}>
                     <Text style={styles.label}>Don’t have an account? </Text>
@@ -95,7 +100,7 @@ const LoginScreen = ({ navigation }) => {
                 </View>
 
             </View>
-
+<Loading loading={loading} />
         </SafeAreaView>
     );
 };
@@ -112,14 +117,17 @@ const styles = StyleSheet.create({
     },
     row: {
         flexDirection: 'row',
-        marginTop: 4,
+        marginTop: 10,
+        marginBottom: 10
     },
     label: {
         color: theme.colors.secondary,
+        marginTop: 4
     },
     link: {
         fontWeight: 'bold',
         color: COLORS.darkblue,
+        marginTop: 4
     },
     error: {
         // fontWeight:bold "",

@@ -49,3 +49,8 @@ cd android
 gradlew.bat installDebug
 cd ..
 react-native run-android
+
+
+
+Splash Command 
+yarn react-native generate-bootsplash assets/bootsplash_logo@3x.png --background-color=FFFFFF --logo-width=100 --assets-path=assets --flavor=main

@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, FlatList, Image, SafeAreaView } from 'react-native';
+import { View, Text, StyleSheet, FlatList, Image, SafeAreaView, TouchableOpacity } from 'react-native';
 
 import LinearGradient from 'react-native-linear-gradient';
 import { images, COLORS, FONTS, SIZES } from '../constants';
 import Button from '../components/Button'
-
+import WhiteButton from '../components/WhiteButton'
 const LandingScreen = ({ navigation }) => {
 
   return (
@@ -27,29 +27,24 @@ const LandingScreen = ({ navigation }) => {
           We aim to provide a platform which can be helpful to students, our drivers and conductors.
             </Text>
         </View>
-
-        {/* <TouchableOpacity
-          style={[styles.shadow, { marginTop: SIZES.padding * 2, width: '70%', height: 50, alignItems: 'center', justifyContent: 'center' }]}
-          onPress={() => navigation.navigate("LoginScreen")}
-        > */}
-        <Button mode="contained" onPress={() => { navigation.navigate("LoginScreen") }}>
-          Next
-      </Button>
-        {/* <LinearGradient
-            style={{ height: '100%', width: '100%', alignItems: 'center', justifyContent: 'center', borderRadius: 15 }}
-            colors={['#46aeff', '#5884ff']}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 0 }}
+              <View style={{ flexDirection: 'row', margin: 20, paddingVertical: 20 }}>
+              
+          <TouchableOpacity
+          onPress={ () => navigation.navigate('LoginScreen') }
           >
-            <Text style={{ color: COLORS.white, ...FONTS.h3 }}>Next !</Text>
-          </LinearGradient>
-        </TouchableOpacity> */}
+             <Button mode="contained" style={styles.button}>Login</Button>
+          </TouchableOpacity>
+          <TouchableOpacity
+          onPress={ () => navigation.navigate('SignupScreen') }
+          >
+             <WhiteButton mode="contained" style={styles.button}>Sign Up</WhiteButton>
+          </TouchableOpacity>
+          
+        </View>
+     
+        
       </View>
     </SafeAreaView>
-
-    // <View style={styles.container}>
-    //   <Header title="Landing Screen" />
-    // </View>
 
 
   );

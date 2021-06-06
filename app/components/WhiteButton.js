@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 import { Button as PaperButton } from 'react-native-paper';
 import { theme } from '../core/theme';
 import {COLORS} from '../constants/theme'
-const Button = ({ mode, style, children, ...props }) => (
+const WhiteButton = ({ mode, style, children, ...props }) => (
   <PaperButton
     style={[
       styles.button,
@@ -20,11 +20,11 @@ const Button = ({ mode, style, children, ...props }) => (
 
 const styles = StyleSheet.create({
   button: {
-   backgroundColor: '#0d47a1', padding: 5, width:150, borderRadius: 30, marginHorizontal: 2 
+    backgroundColor: '#FFF', padding: 5, width:150, borderRadius: 30, marginHorizontal: 2, borderWidth: 1, borderColor: '#0d47a1'
   },
   text: {
-    textAlign: 'center', color: '#FFF', fontSize: 15
+textAlign: 'center', color: '#0d47a1', fontSize: 15
   },
 });
 
-export default memo(Button);
+export default memo(WhiteButton);

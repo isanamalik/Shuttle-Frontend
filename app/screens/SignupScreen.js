@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, SafeAreaView, StatusBar } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, SafeAreaView, StatusBar, Image } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import Header from '../components/Header';
 import Button from '../components/Button';
@@ -20,6 +20,7 @@ import {
   registrationNumberValidator
 } from '../core/utils';
 import { BASE_URL } from '../config/index';
+import { images } from '../constants';
 export const SignupScreen = ({ navigation }) => {
 
   // const {register} = React.useContext(AuthContext);
@@ -73,14 +74,22 @@ export const SignupScreen = ({ navigation }) => {
 
   };
   return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView style={styles.scrollView}>
-        <AuthContainer>
-          <View>
-
-            <BackButton goBack={() => navigation.navigate('LoginScreen')} />
-
-            <Header title="Create Account" />
+    <SafeAreaView style={{flex: 1}}>
+    
+      {/* <ScrollView style={styles.scrollView}>
+        <AuthContainer> */}
+          <View style={styles.container}>
+<BackButton goBack={() => navigation.navigate('LoginScreen')} />
+            
+   <Image
+          source={images.logo}
+          resizeMode="contain"
+          style={{
+            width: '25%',
+            height: '15%',
+          }}
+        />
+            
 
             <TextInput
               label="Name"
@@ -90,29 +99,7 @@ export const SignupScreen = ({ navigation }) => {
               error={!!name.error}
               errorText={name.error}
             />
-
-            <TextInput
-              label="Email"
-              returnKeyType="next"
-              value={email.value}
-              onChangeText={text => setEmail({ value: text, error: '' })}
-              error={!!email.error}
-              errorText={email.error}
-              autoCapitalize="none"
-              autoCompleteType="email"
-              textContentType="emailAddress"
-              keyboardType="email-address"
-            />
-            <TextInput
-              label="Password"
-              returnKeyType="next"
-              value={password.value}
-              onChangeText={text => setPassword({ value: text, error: '' })}
-              error={!!password.error}
-              errorText={password.error}
-              secureTextEntry
-            />
-            <DropDownPicker
+<DropDownPicker
               items={[
                 { label: 'Civil Engineering', value: 'Civil Engineering' },
                 { label: 'Urban & Infrastructure Engineering', value: 'Urban & Infrastructure Engineering' },
@@ -156,6 +143,28 @@ export const SignupScreen = ({ navigation }) => {
               errorText={department.error}
             />
             <TextInput
+              label="Email"
+              returnKeyType="next"
+              value={email.value}
+              onChangeText={text => setEmail({ value: text, error: '' })}
+              error={!!email.error}
+              errorText={email.error}
+              autoCapitalize="none"
+              autoCompleteType="email"
+              textContentType="emailAddress"
+              keyboardType="email-address"
+            />
+            <TextInput
+              label="Password"
+              returnKeyType="next"
+              value={password.value}
+              onChangeText={text => setPassword({ value: text, error: '' })}
+              error={!!password.error}
+              errorText={password.error}
+              secureTextEntry
+            />
+            
+            <TextInput
               label="Registration Number(e.g 4001048)"
               returnKeyType="done"
               value={registrationNumber.value}
@@ -175,8 +184,8 @@ export const SignupScreen = ({ navigation }) => {
 
           </View>
           <Loading loading={loading} />
-        </AuthContainer>
-      </ScrollView>
+        {/* </AuthContainer>
+      </ScrollView> */}
 
     </SafeAreaView>
 
@@ -185,25 +194,30 @@ export const SignupScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: StatusBar.currentHeight,
+        alignItems: 'center',
+        paddingLeft: 18,
+        paddingRight: 18,
+        paddingTop: 0,
+        paddingBottom:  0
   },
   label: {
     color: theme.colors.secondary,
+    marginTop: 4
   },
   button: {
     marginTop: 24,
   },
   row: {
     flexDirection: 'row',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    
   },
   link: {
     fontWeight: 'bold',
     color: COLORS.darkblue,
+    marginTop: 4
   },
   scrollView: {
     marginHorizontal: 20,
   },
 });
-
-

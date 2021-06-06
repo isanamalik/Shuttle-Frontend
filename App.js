@@ -3,6 +3,8 @@ import React ,{Component} from 'react';
 import { Image, TouchableOpacity,PermissionsAndroid,Platform } from 'react-native';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import RNBootSplash from "react-native-bootsplash";
+
 import { icons, COLORS, SIZES } from './app/constants';
 import LandingScreen from './app/screens/LandingScreen';
 import LoginScreen from './app/screens/LoginScreen';
@@ -35,8 +37,9 @@ export default class App extends Component {
     }
   }
 
-  componentDidMount(){
+  async componentDidMount(){
     this.requestFineLocation();
+    await RNBootSplash.hide({ fade: true });
   }
 
   async requestFineLocation(){
