@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, FlatList, Button, Image, TouchableOpacity } from 'react-native';
-// import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
+import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 // import Header from '../../components/Header'
 import LinearGradient from 'react-native-linear-gradient';
 
