@@ -123,12 +123,14 @@ const ShuttleNumberScreen = ({ navigation }) => {
   }
   return (
     <SafeAreaView style={{ flex: 1 }}>
+     <BackButton goBack={() => navigation.navigate('StudentHomeScreen')} />
       <View style={styles.container}>
+      
         <ScrollView>
-          <BackButton goBack={() => navigation.navigate('StudentHomeScreen')} />
-          
-          <View style={{ padding: 18 }}>
-          <Header title="Find Your Shuttle" />
+           <Header title="Find Your Shuttle" />
+           
+          <View style={{ padding: 18, alignItems: 'center' }}>
+         
             <TextInput
               label="Enter your location(e.g Buffer Zone)"
               returnKeyType="next"
@@ -137,8 +139,8 @@ const ShuttleNumberScreen = ({ navigation }) => {
               error={!!locationName.error}
               errorText={locationName.error}
             />
-            <Button mode="contained" onPress={onSearch} style={{alignContent: 'center'}}>Search</Button>
-            <Loading loading={loading} />
+            <Button mode="contained" onPress={onSearch} style={{alignContent: 'center', marginTop: 10}}>Search</Button>
+           
             <View style={styles.row}>
               <Text style={styles.error}>{error}</Text>
             </View>
@@ -156,6 +158,7 @@ const ShuttleNumberScreen = ({ navigation }) => {
           </View>
         </ScrollView>
       </View >
+       <Loading loading={loading} />
     </SafeAreaView>
   );
 };
@@ -164,17 +167,17 @@ const styles = StyleSheet.create({
 
   container: {
     flex: 1,
+    marginTop: 30
     // padding: 18,
   },
   error: {
-    // fontWeight:bold "",
     color: "red"
   },
   row: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignContent: 'center',
-    margin: 4,
+    // margin: 4,
   }
 
 

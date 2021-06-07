@@ -17,6 +17,8 @@ import marker from '../../bus.png';
 import axios from 'axios';
 import { BASE_URL } from '../config/index';
 import { Loading } from '../components/Loading';
+import Button from '../components/Button'
+import WhiteButton from '../components/WhiteButton'
 
 navigator.geolocation = require('@react-native-community/geolocation');
 
@@ -180,6 +182,7 @@ export default class MapScreen extends Component {
     }
     // console.log(markerList)
     return (
+      <SafeAreaView style={{flex: 1}}>
       <View style={styles.container}>
         <MapView
           draggable={false}
@@ -224,73 +227,61 @@ export default class MapScreen extends Component {
             strokeWidth={6}
           />
         </MapView>
-        <ScrollView>
-          <TouchableOpacity
+        </View>
+        <View style={{ flexDirection: 'row', margin: 5, paddingVertical: 10 }}>
+         <TouchableOpacity
             onPress={() => {
               this.addingMarkers();
             }}
-            style={styles.redButton}>
-            <Text>Check Routes</Text>
+          >
+             <Button mode="contained" style={styles.button}>Check Routes</Button>
           </TouchableOpacity>
 
-          <TouchableOpacity
-            onPress={() => {
-              this.getPolyLineCoordinates('start');
-            }}
-            style={styles.button}>
-            <Text>Start Tracking</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            onPress={() => {
-              this.getPolyLineCoordinates('stop');
-            }}
-            style={styles.redButton}>
-            <Text>Stop Tracking</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
+            <TouchableOpacity
             onPress={() => {
               this.getDistance();
             }}
-            style={styles.button}>
-            <Text>Calculate ETA</Text>
+          >
+             <WhiteButton mode="contained" style={styles.button}>Calculate ETA</WhiteButton>
+              <Text style={{textAlign: 'center'}}>ETA: {this.state.eta ? this.state.eta : 'no eta available'} </Text>
           </TouchableOpacity>
-          <Text>ETA: {this.state.eta ? this.state.eta : 'no eta available'} </Text>
-        </ScrollView>
-      </View>
+        </View>
+        <View style={{ flexDirection: 'row', margin: 5, paddingVertical: 10 }}>
+        <TouchableOpacity
+            onPress={() => {
+                 this.getPolyLineCoordinates('start');
+            }}
+          >
+             <Button mode="contained" style={styles.button}>Start Tracking</Button>
+          </TouchableOpacity>
+            <TouchableOpacity
+            onPress={() => {
+             this.getPolyLineCoordinates('stop');
+            }}
+          >
+             <WhiteButton mode="contained" style={styles.button}>Stop Tracking</WhiteButton>
+              
+          </TouchableOpacity>
+        </View>
+      
+      </SafeAreaView>
     );
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    ...StyleSheet.absoluteFillObject,
+    // ...StyleSheet.absoluteFillObject,
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
   map: {
-    width: '90%',
-    height: '70%',
+    width: '100%',
+    height: '100%',
   },
   button: {
-    backgroundColor: 'lightblue',
-    marginTop: 20,
-    paddingTop: 10,
-    paddingBottom: 10,
-    paddingLeft: 25,
-    paddingRight: 25,
-    borderRadius: 5,
-  },
-  redButton: {
-    backgroundColor: 'lightyellow',
-    marginTop: 20,
-    paddingTop: 10,
-    paddingBottom: 10,
-    paddingLeft: 25,
-    paddingRight: 25,
-    borderRadius: 5,
+    width: 170
   },
 });
 

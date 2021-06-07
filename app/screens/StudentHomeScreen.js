@@ -1,104 +1,141 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, FlatList, Button, Image, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, FlatList, Button, Image, TouchableOpacity, ScrollView } from 'react-native';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 // import Header from '../../components/Header'
 import LinearGradient from 'react-native-linear-gradient';
-
+  import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { images, icons, COLORS, FONTS, SIZES } from '../constants';
 import ShuttleNumberScreen from "./ShuttleNumberScreen";
 import StudentInfo from "./StudentInfo";
-import Notifications from "./Notifications";
+import NotificationScreen from "./NotificationScreen";
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import Header from '../components/Header'
+const Tab = createMaterialBottomTabNavigator();
 
-const OptionItem = ({ bgColor, icon, label, onPress }) => {
-    return (
-        <TouchableOpacity
-            style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
-            onPress={onPress}
-        >
-            <View style={[styles.shadow, { width: 70, height: 70 }]}>
-                <LinearGradient
-                    style={[{ flex: 1, alignItems: 'center', justifyContent: 'center', borderRadius: 15, backgroundColor: 'red' }]}
-                    colors={bgColor}
-                    start={{ x: 0, y: 0 }}
-                    end={{ x: 0, y: 1 }}
-                >
-                    <Image
-                        source={icon}
-                        resizeMode="cover"
-                        style={{
-                            tintColor: COLORS.white,
-                            // width: 35,
-                            // height: 35,
-                        }}
-                    />
-                </LinearGradient>
-            </View>
-            <Text style={{ marginTop: SIZES.base, color: COLORS.gray, ...FONTS.body3 }}>{label}</Text>
-        </TouchableOpacity>
-    )
-}
 const StudentHomeScreen = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
             {/* Banner */}
-            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                <Image
-                    source={images.ned}
-                    // resizeMode="cover"
-                    // style={{
-                    //     width: "100%",
-                    //     height: "100%",
-                    //     borderRadius: 15,
-                    // }}
-                    resizeMode="contain"
-                    style={{
-                        width: '100%',
-                        height: '100%',
-                    }}
-                />
-            </View>
-            <View style={{ flex: 1, marginTop: SIZES.padding }}>
-                <View style={{ flexDirection: 'row', marginBottom: SIZES.padding }}>
-                    <OptionItem
-                        icon={icons.bus}
-                        bgColor={['#46aeff', '#5884ff']}
-                        label="Shuttle Routes"
-                        onPress={() => {
-                            navigation.navigate('ShuttleNumberScreen'
-                            )
-                        }}
-                    />
-                    <OptionItem
-                        icon={icons.user}
-                        bgColor={['#fca397', '#fc7b6c']}
-                        label="Student Info"
-                        onPress={() =>
-                            navigation.navigate('StudentInfo'
-                            )
-                        }
-                    />
+            <Header title="Welcome Wheels"/>
+         <View style={styles.categoryContainer}>
+        <TouchableOpacity
+          style={styles.categoryBtn}
+          onPress={() =>
+            navigation.navigate('ShuttleNumberScreen', {title: 'ShuttleNumberScreen'})
+          }>
+          <View style={styles.categoryIcon}>
+            <Ionicons name="bus" size={35} color="#FFF" />
+             <Text style={styles.categoryBtnTxt}>Shuttle Routes</Text>
+          </View>
+         
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.categoryBtn}
+          onPress={() =>
+            navigation.navigate('StudentInfo', {title: 'StudentInfo'})
+          }>
+          <View style={styles.categoryIcon}>
+            <Ionicons
+              name="person"
+              size={35}
+              color="#FFF"
+            />
+                  <Text style={styles.categoryBtnTxt}>Student Info</Text>
+          </View>
+    
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.categoryBtn}
+          onPress={() =>
+            navigation.navigate('NotificationScreen', {title: 'Notifications'})
+          }
+         >
+          <View style={styles.categoryIcon}>
+            <Ionicons name="notifications" size={35} color="#FFF"/>
+             <Text style={styles.categoryBtnTxt}>Notifications</Text>
+          </View>
+        </TouchableOpacity>
+      </View>
+           <View style={styles.categoryContainer}>
 
-                </View>
+           <TouchableOpacity
+          style={styles.categoryBtn}
+          onPress={() =>
+            navigation.navigate('About', {title: 'About'})
+          }>
+          <View style={styles.categoryIcon}>
+            <Ionicons
+              name="information-circle-outline"
+              size={35}
+              color="#FFF"
+            />
+                  <Text style={styles.categoryBtnTxt}>About</Text>
+          </View>
+    
+        </TouchableOpacity>
 
-                <View style={{ flexDirection: 'row', marginTop: SIZES.padding }}>
-                    <OptionItem
-                        icon={icons.search}
-                        bgColor={['#7be993', '#46caaf']}
-                        label="Fee Status"
-                        onPress={() => { console.log("fee status") }}
-                    />
-                    <OptionItem
-                        icon={icons.compass}
-                        bgColor={['#7cf1fb', '#4ebefd']}
-                        label="Notifier"
-                        onPress={() =>
-                            navigation.navigate('NotificationScreen'
-                            )
-                        }
-                    />
-                </View>
-            </View>
+         <TouchableOpacity style={styles.categoryBtn} onPress={() => {}}>
+          <View style={styles.categoryIcon}>
+            <Ionicons name="notifications" size={35} color="#FFF"/>
+             <Text style={styles.categoryBtnTxt}>Extra</Text>
+          </View>
+        </TouchableOpacity>
+        
+     <TouchableOpacity style={styles.categoryBtn} onPress={() => {}}>
+          <View style={styles.categoryIcon}>
+            <Ionicons name="notifications" size={35} color="#FFF"/>
+             <Text style={styles.categoryBtnTxt}>Extra</Text>
+          </View>
+        </TouchableOpacity>
+      </View>
+       <View style={styles.cardsWrapper}>
+        <Text
+          style={{
+            // alignSelf: 'center',
+            fontSize: 18,
+            fontWeight: 'bold',
+            color: COLORS.darkblue,
+            marginBottom: 10
+          }}>
+          Recent Updates..
+        </Text>
+         <View  style={styles.scrollView}>
+<ScrollView>
+
+        <View style={styles.card}>
+          <View style={styles.cardInfo}>
+            <Text style={styles.cardTitle}>Point Merge Information</Text>
+            <Text style={styles.cardDetails}>
+             Point 3 will be combined with point 14 for mornings
+            </Text>
+              <Text style={styles.time}>6:59AM</Text>
+          </View>
+        </View>
+        <View style={styles.card}>
+          <View style={styles.cardInfo}>
+            <Text style={styles.cardTitle}>Point Merge Information</Text>
+            <Text style={styles.cardDetails}>
+             Point 3 will be combined with point 14 for mornings
+            </Text>
+              <Text style={styles.time}>6:59AM</Text>
+          </View>
+        </View>
+     <View style={styles.card}>
+          <View style={styles.cardInfo}>
+            <Text style={styles.cardTitle}>Point Merge Information</Text>
+            <Text style={styles.cardDetails}>
+             Point 3 will be combined with point 14 for mornings
+            </Text>
+              <Text style={styles.time}>6:59AM</Text>
+          </View>
+        </View>
+         <View style={styles.card}>
+          {/*  for Ui fix */}
+        </View>
+</ScrollView>
+
+</View>
+        </View>
         </View>
 
 
@@ -109,20 +146,101 @@ const StudentHomeScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: COLORS.white
+        marginTop: 40,
+        marginBottom: 40,
+         
     },
-    shadow: {
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
+  wrapper: {},
+  categoryContainer: {
+    flexDirection: 'row',
+    width: '90%',
+    alignSelf: 'center',
+    marginTop: 25,
+    // marginBottom: 10,
+  },
+  categoryBtn: {
+    flex: 1,
+    width: '30%',
+    marginHorizontal: 0,
+    alignSelf: 'center',
+  },
+  categoryIcon: {
+    borderWidth: 0,
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignSelf: 'center',
+    width: 100,
+    height: 100,
+    backgroundColor: COLORS.darkblue, 
+    borderRadius: 25,
+  },
+  categoryBtnTxt: {
+    alignSelf: 'center',
+    marginTop: 5,
+    color: '#fff',
+  },
+  cardsWrapper: {
+    marginTop: 25,
+    width: '90%',
+    alignSelf: 'center',
+    marginBottom: 105
 
-        elevation: 5,
-    }
-
+  },
+  card: {
+    height: 100,
+    marginVertical: 5,
+    flexDirection: 'row',
+    shadowColor: '#999',
+    shadowOffset: {width: 0, height: 1},
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    elevation: 5,
+    // marginBottom: 105
+  },
+    scrollView: {
+    height: 320,
+    // marginBottom: 25
+    // marginVertical: 5,
+    // flexDirection: 'row',
+ 
+  },
+//   cardImgWrapper: {
+//     flex: 1,
+//   },
+//   cardImg: {
+//     height: '100%',
+//     width: '100%',
+//     alignSelf: 'center',
+//     borderRadius: 8,
+//     borderBottomRightRadius: 0,
+//     borderTopRightRadius: 0,
+//   },
+  cardInfo: {
+    flex: 2,
+    padding: 10,
+    borderColor: '#0d47a1',
+    borderWidth: 1,
+  borderRadius: 8,
+    backgroundColor: '#fff',
+    
+  },
+  cardTitle: {
+    fontWeight: 'bold',
+    color: '#0d47a1',
+     textDecorationLine: 'underline'
+  },
+  cardDetails: {
+    fontSize: 12,
+    color: '#444',
+    
+  },
+   time: {
+    fontSize: 12,
+    color: '#444',
+    textAlign: 'right',
+    marginTop: 30
+    
+  },
 });
 
 export default StudentHomeScreen;

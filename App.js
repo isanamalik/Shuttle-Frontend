@@ -14,8 +14,9 @@ import {SignupScreen} from './app/screens/SignupScreen';
 import StudentHomeScreen from './app/screens/StudentHomeScreen';
 import ShuttleMapScreen from './app/screens/ShuttleMapScreen';
 import ShuttleNumberScreen from './app/screens/ShuttleNumberScreen';
-import NotificationScreen from './app/screens/Notifications';
+import NotificationScreen from './app/screens/NotificationScreen';
 import StudentInfo from './app/screens/StudentInfo';
+import About from './app/screens/About';
 import {AuthContext} from './app/contexts/AuthContext';
 
 const Stack = createStackNavigator();
@@ -68,7 +69,7 @@ export default class App extends Component {
         <Stack.Screen
           name="LandingScreen"
           // changing here
-          component={LandingScreen}
+          component={StudentHomeScreen}
           options={{
             title: "Welcome Wheels",
             headerShown: false,
@@ -135,6 +136,11 @@ export default class App extends Component {
          <Stack.Screen
           name="StudentInfo"
           component={StudentInfo}
+          options={{ headerShown: false }}
+        />
+         <Stack.Screen
+          name="About"
+          component={About}
           options={{ headerShown: false }}
         />
 
