@@ -9,6 +9,8 @@ import {
   Text,
   TouchableRipple,
 } from 'react-native-paper';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { images } from '../constants';
 
 const StudentInfo = ({ navigation }) => {
   
@@ -18,39 +20,50 @@ const StudentInfo = ({ navigation }) => {
         <View style={styles.userInfoSection}>
             <View style={{flexDirection: 'row', marginTop: 15}}>
           <Avatar.Image 
-            source={{
-              uri: 'https://api.adorable.io/avatars/80/abott@adorable.png',
-            }}
+            source={images.person}
             size={80}
+            style={{backgroundColor: 'white'}}
           />
+          
           <View style={{marginLeft: 20}}>
             <Title style={[styles.title, {
               marginTop:15,
               marginBottom: 5,
-            }]}>John Doe</Title>
-            <Caption style={styles.caption}>@j_doe</Caption>
+            }]}>Javeria Nadeem</Title>
+            <Caption style={styles.caption}>Student</Caption>
           </View>
         </View>
         <View style={styles.userInfoSection}>
         <View style={styles.row}>
-          {/* <Icon name="map-marker-radius" color="#777777" size={20}/> */}
-          <Text style={{color:"#777777", marginLeft: 20}}>Kolkata, India</Text>
+          <Icon name="school" color="#777777" size={20}/>
+          <Text style={{color:"#777777", marginLeft: 20}}>Department Name</Text>
         </View>
         <View style={styles.row}>
-          {/* <Icon name="phone" color="#777777" size={20}/> */}
-          <Text style={{color:"#777777", marginLeft: 20}}>+91-900000009</Text>
+          <Icon name="file" color="#777777" size={20}/>
+          <Text style={{color:"#777777", marginLeft: 20}}>Registration Number</Text>
         </View>
         <View style={styles.row}>
-          {/* <Icon name="email" color="#777777" size={20}/> */}
-          <Text style={{color:"#777777", marginLeft: 20}}>john_doe@email.com</Text>
+          <Icon name="email" color="#777777" size={20}/>
+          <Text style={{color:"#777777", marginLeft: 20}}>Email</Text>
         </View>
       </View>
-            
-            <Header title="Student Information" />
-            <Text style={styles.item}>Name: Qandeel Asif</Text>
-            <Text style={styles.item}>Email ID: qandeel.asif@gmail.com</Text>
-            <Text style={styles.item}>Fee Status: Unpaid</Text>
-            <Text style={styles.item}>Registration ID: 4001021</Text>
+                <View style={styles.infoBoxWrapper}>
+          <View style={[styles.infoBox, {
+            borderRightColor: '#dddddd',
+            borderRightWidth: 1
+          }]}>
+            <Title style={{color: "#0d47a1"}}>Month</Title>
+            <Caption>January</Caption>
+            <Caption>February</Caption>
+            <Caption>March</Caption>
+          </View>
+          <View style={styles.infoBox}>
+            <Title style={{color: "#0d47a1"}}>Fee Status</Title>
+            <Caption>Paid</Caption>
+            <Caption>Unpaid</Caption>
+            <Caption>Paid</Caption>
+          </View>
+      </View>
         </View>
         </SafeAreaView>
     );
@@ -63,10 +76,12 @@ const styles = StyleSheet.create({
   userInfoSection: {
     paddingHorizontal: 30,
     marginBottom: 25,
+    marginTop: 35
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
+    color: "#0d47a1"
   },
   caption: {
     fontSize: 14,
@@ -83,7 +98,7 @@ const styles = StyleSheet.create({
     borderTopColor: '#dddddd',
     borderTopWidth: 1,
     flexDirection: 'row',
-    height: 100,
+    height: 200,
   },
   infoBox: {
     width: '50%',

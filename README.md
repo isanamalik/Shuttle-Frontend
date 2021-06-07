@@ -53,4 +53,4 @@ react-native run-android
 
 
 Splash Command 
-yarn react-native generate-bootsplash assets/bootsplash_logo@3x.png --background-color=FFFFFF --logo-width=100 --assets-path=assets --flavor=main
+yarn react-native generate-bootsplash assets/splash2.png --background-color=FFFFFF --logo-width=200 --assets-path=assets --flavor=main

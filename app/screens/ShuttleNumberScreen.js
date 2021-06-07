@@ -126,8 +126,9 @@ const ShuttleNumberScreen = ({ navigation }) => {
       <View style={styles.container}>
         <ScrollView>
           <BackButton goBack={() => navigation.navigate('StudentHomeScreen')} />
-          <Header title="Find Your Shuttle" />
+          
           <View style={{ padding: 18 }}>
+          <Header title="Find Your Shuttle" />
             <TextInput
               label="Enter your location(e.g Buffer Zone)"
               returnKeyType="next"
@@ -136,7 +137,7 @@ const ShuttleNumberScreen = ({ navigation }) => {
               error={!!locationName.error}
               errorText={locationName.error}
             />
-            <Button mode="contained" onPress={onSearch}>Search</Button>
+            <Button mode="contained" onPress={onSearch} style={{alignContent: 'center'}}>Search</Button>
             <Loading loading={loading} />
             <View style={styles.row}>
               <Text style={styles.error}>{error}</Text>
