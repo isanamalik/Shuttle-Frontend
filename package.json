@@ -13,6 +13,7 @@
     "@fortawesome/react-native-fontawesome": "^0.2.6",
     "@react-native-community/geolocation": "^2.0.2",
     "@react-native-community/masked-view": "^0.1.10",
+    "@react-navigation/material-bottom-tabs": "^5.3.15",
     "@react-navigation/native": "^5.8.6",
     "@react-navigation/stack": "^5.12.3",
     "axios": "^0.21.1",
