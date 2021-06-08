@@ -71,7 +71,7 @@ export default class App extends Component {
         <Stack.Screen
           name="LandingScreen"
           // changing here
-          component={StudentHomeScreen}
+          component={LandingScreen}
           options={{
             title: "Welcome Wheels",
             headerShown: false,
@@ -84,14 +84,6 @@ export default class App extends Component {
                 style={{ marginRight: SIZES.padding }}
                 onPress={() => console.log("Pressed")}
               >
-                {/* <Image
-                  source={icons.barMenu}
-                  resizeMode="contain"
-                  style={{
-                    width: 25,
-                    height: 25,
-                  }}
-                /> */}
               </TouchableOpacity>
             ),
           }}

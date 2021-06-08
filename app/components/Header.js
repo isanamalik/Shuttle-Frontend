@@ -17,17 +17,10 @@ Header.defaultProps = {
 };
 
 const styles = StyleSheet.create({
-    // header: {
-    //     height: 20,
-    //     // padding: 15,
-        
-    //     // backgroundColor: 'darkslateblue'
-    // },
     text: {
         color: COLORS.darkblue,
         fontSize: 23,
-        textAlign: 'center',
-        // fontWeight: 'bold',
+        textAlign: 'center'
     },
 
 });

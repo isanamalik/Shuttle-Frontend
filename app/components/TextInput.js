@@ -25,8 +25,6 @@ const styles = StyleSheet.create({
     
   },
   input: {
-    // backgroundColor: theme.colors.surface,
-
      marginHorizontal: 0.5
   },
   error: {

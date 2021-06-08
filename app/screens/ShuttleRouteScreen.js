@@ -110,18 +110,15 @@ const ShuttleRouteScreen = ({route, navigation}) => {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      // alignItems: 'center',
       padding: 20,
     },
     row: {
-      // paddingTop: 22,
       flexDirection: 'row'
      },
      item: {
        paddingHorizontal: 8,
        paddingVertical: 5,
        fontSize: 16,
-      //  height: 44,
        color: '#777777',
 
      },
@@ -132,7 +129,6 @@ const styles = StyleSheet.create({
         color: COLORS.darkblue,
         fontSize: 23,
         textAlign: 'center',
-        // fontWeight: 'bold',
     },
   });
 

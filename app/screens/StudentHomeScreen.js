@@ -80,18 +80,10 @@ const StudentHomeScreen = ({ navigation }) => {
              <Text style={styles.categoryBtnTxt}>Quick Routes</Text>
           </View>
         </TouchableOpacity>
-        
-     {/* <TouchableOpacity style={styles.categoryBtn} onPress={() => {}}>
-          <View style={styles.categoryIcon}>
-            <Ionicons name="notifications" size={35} color="#FFF"/>
-             <Text style={styles.categoryBtnTxt}>Extra</Text>
-          </View>
-        </TouchableOpacity> */}
       </View>
        <View style={styles.cardsWrapper}>
         <Text
           style={{
-            // alignSelf: 'center',
             fontSize: 18,
             fontWeight: 'bold',
             color: COLORS.darkblue,

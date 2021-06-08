@@ -155,10 +155,6 @@ const ShuttleNumberScreen = ({ navigation }) => {
             {searchResult}
           </Text>
           <View style={{ marginBottom: SIZES.radius }}>
-            {/* <Button
-              title="Do we select one for you?"
-              color="darkslateblue"
-              onPress={() => Linking.openURL('https://www.neduet.edu.pk/sites/default/files/users/student_affairs/Shuttle_Route.pdf')}></Button> */}
           </View>
         </ScrollView>
       </View >
@@ -172,7 +168,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop: 30
-    // padding: 18,
   },
   error: {
     color: "red"

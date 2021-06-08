@@ -46,7 +46,6 @@ const LoginScreen = ({ navigation }) => {
         } catch (e) {
             setError("Invalid credentials");
             setLoading(false);
-            // navigation.navigate('LandingScreen')
         }
     };
     return (
@@ -64,8 +63,6 @@ const LoginScreen = ({ navigation }) => {
             height: '25%',
           }}
         />
-                {/* <Header title="Login" /> */}
-
                 <TextInput
                     label="Registration Number(e.g 4001048)"
                     returnKeyType="next"
@@ -130,7 +127,6 @@ const styles = StyleSheet.create({
         marginTop: 4
     },
     error: {
-        // fontWeight:bold "",
         color: "red"
     }
 });
