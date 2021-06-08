@@ -179,7 +179,7 @@ export default class MapScreen extends Component {
             longitude: this.state.route_coords[i][1]
           }}>
         </Marker>)
-    }
+    } 
     // console.log(markerList)
     return (
       <SafeAreaView style={{flex: 1}}>

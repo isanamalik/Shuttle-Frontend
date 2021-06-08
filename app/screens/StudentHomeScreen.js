@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, FlatList, Button, Image, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, FlatList, Button, Image, TouchableOpacity, ScrollView,Linking } from 'react-native';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 // import Header from '../../components/Header'
 import LinearGradient from 'react-native-linear-gradient';
-  import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { images, icons, COLORS, FONTS, SIZES } from '../constants';
 import ShuttleNumberScreen from "./ShuttleNumberScreen";
 import StudentInfo from "./StudentInfo";
@@ -56,7 +56,7 @@ const StudentHomeScreen = ({ navigation }) => {
           </View>
         </TouchableOpacity>
       </View>
-           <View style={styles.categoryContainer}>
+           <View style={styles.categoryContainer2}>
 
            <TouchableOpacity
           style={styles.categoryBtn}
@@ -74,19 +74,19 @@ const StudentHomeScreen = ({ navigation }) => {
     
         </TouchableOpacity>
 
-         <TouchableOpacity style={styles.categoryBtn} onPress={() => {}}>
+         <TouchableOpacity style={styles.categoryBtn}    onPress={() => Linking.openURL('https://www.neduet.edu.pk/sites/default/files/users/student_affairs/Shuttle_Route.pdf')}>
           <View style={styles.categoryIcon}>
-            <Ionicons name="notifications" size={35} color="#FFF"/>
-             <Text style={styles.categoryBtnTxt}>Extra</Text>
+            <MaterialCommunityIcons name="map-marker-path" size={35} color="#FFF"/>
+             <Text style={styles.categoryBtnTxt}>Quick Routes</Text>
           </View>
         </TouchableOpacity>
         
-     <TouchableOpacity style={styles.categoryBtn} onPress={() => {}}>
+     {/* <TouchableOpacity style={styles.categoryBtn} onPress={() => {}}>
           <View style={styles.categoryIcon}>
             <Ionicons name="notifications" size={35} color="#FFF"/>
              <Text style={styles.categoryBtnTxt}>Extra</Text>
           </View>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
        <View style={styles.cardsWrapper}>
         <Text
@@ -154,6 +154,13 @@ const styles = StyleSheet.create({
   categoryContainer: {
     flexDirection: 'row',
     width: '90%',
+    alignSelf: 'center',
+    marginTop: 25,
+    // marginBottom: 10,
+  },
+    categoryContainer2: {
+    flexDirection: 'row',
+    width: '60%',
     alignSelf: 'center',
     marginTop: 25,
     // marginBottom: 10,
