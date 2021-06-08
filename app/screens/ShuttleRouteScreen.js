@@ -14,113 +14,96 @@ import axios from "axios";
 import { BASE_URL } from '../config/index';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Button from '../components/Button'
+import { Loading } from '../components/Loading';
+import {COLORS} from '../constants'
 
-const ShuttleRouteScreen = ({navigation}) => {
-  // useEffect(async() => {
-  //   try {
-  //     let response = await axios.post(`${BASE_URL}/route/get`,{
-  //       route_id: "P#14"
-  //     })
-  //     console.log(response.data);
-  //     // return responseJson;
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // })
-
+const ShuttleRouteScreen = ({route, navigation}) => {
+  const [loading, setLoading] = useState(false);
+  const { route_id } = route.params;
+   const [routeLocation, updateRouteLocation] = React.useState([]);
+  console.log('route parms',route.params)
+  useEffect(() => {
+    setLoading(true)
+     try {
+      axios.get(`${BASE_URL}/route/get/` + JSON.stringify(route_id))
+        .then((response) => {
+          setLoading(false)
+          console.log(response.data.route_locations)
+           let routeList = [];
+           for(let i=0;i<response.data.route_locations.length;i++){
+             if(i==response.data.route_locations.length-1){
+                  routeList.push(
+            <View key={i}>
+          <View style={styles.row}>
+          <MaterialCommunityIcons name="bus" size={35} color="#0d47a1" />
+          <Text style={styles.item}>{response.data.route_locations[i]}</Text>
+        </View>
+       </View>
+           )
+             }
+             else {
+            routeList.push(
+            <View key={i}>
+          <View style={styles.row}>
+          <MaterialCommunityIcons name="bus" size={35} color="#0d47a1" />
+          <Text style={styles.item}>{response.data.route_locations[i]}</Text>
+        </View>
+          <View style={{
+        borderStyle: 'dotted',
+        height:5,
+        borderLeftWidth:2,
+        marginLeft: 16, marginBottom: 2
+       }}/>
+          <View style={{
+        borderStyle: 'dotted',
+        height:5,
+        borderLeftWidth:2,
+        marginLeft: 16,
+         marginBottom: 2
+       }}/>
+          <View style={{
+        borderStyle: 'dotted',
+        height:5,
+        borderLeftWidth:2,
+        marginLeft: 16,
+         marginBottom: 2
+       }}/>
+       </View>
+           )}
+           }
+           updateRouteLocation([...routeLocation,routeList])
+        })
+    }
+    catch (err) { console.log(e)}
+  }, [])
+// console.log()
   return (
     <SafeAreaView style={{flex: 1}} >
          <BackButton goBack={() => navigation.navigate('ShuttleNumberScreen')} />
       <View style={styles.container}>
       
         <ScrollView>
-            <Header title="Shuttle Number 1 Routes" />
+             <Text style={styles.header}>Shuttle Number {JSON.stringify(route_id)} Routes</Text>
             <View style={styles.routesWrapper}>
 
             {/* you have to display the routes here */}
-              <View style={styles.row}>
-          <MaterialCommunityIcons name="bus" size={35} color="#0d47a1" />
-          <Text style={styles.item}>City Campus - 7:40am</Text>
-        </View>
-          <View style={{
-        borderStyle: 'dotted',
-        height:5,
-        borderLeftWidth:2,
-        marginLeft: 16, marginBottom: 2
-       }}/>
-          <View style={{
-        borderStyle: 'dotted',
-        height:5,
-        borderLeftWidth:2,
-        marginLeft: 16,
-         marginBottom: 2
-       }}/>
-          <View style={{
-        borderStyle: 'dotted',
-        height:5,
-        borderLeftWidth:2,
-        marginLeft: 16,
-         marginBottom: 2
-       }}/>
-      <View style={styles.row}>
-          <MaterialCommunityIcons name="bus" size={35} color="#0d47a1" />
-          <Text style={styles.item}>Jama Cloth 7:43am</Text>
-        </View>
-              <View style={{
-        borderStyle: 'dotted',
-        height:5,
-        borderLeftWidth:2,
-        marginLeft: 16, marginBottom: 2
-       }}/>
-          <View style={{
-        borderStyle: 'dotted',
-        height:5,
-        borderLeftWidth:2,
-        marginLeft: 16,
-         marginBottom: 2
-       }}/>
-          <View style={{
-        borderStyle: 'dotted',
-        height:5,
-        borderLeftWidth:2,
-        marginLeft: 16,
-         marginBottom: 2
-       }}/>
-         <View style={styles.row}>
-          <MaterialCommunityIcons name="bus" size={35} color="#0d47a1" />
-          <Text style={styles.item}>Radio Pakistan - 7:47am</Text>
-        </View> 
-
+            {routeLocation}
            {/* end them before view tag */}
         </View>
    </ScrollView>
-
-      {/* <FlatList
-        data={[
-          {key: 'City Campus - 7:40am'},
-          {key: 'Jama Cloth 7:43am'},
-          {key: 'Radio Pakistan - 7:47am'},
-          {key: '7Day Hospital - 7:50am'},
-          {key: 'Numaish - 7:52am'},
-          {key: 'Gurumandir - 7:54am'},
-          {key: 'Jamshed Road (No.3) - 7:55am'},
-          {key: 'New Town - 7:58am'},
-          {key: 'Askari Park - 8:00am'},
-          {key: 'Mumtaz Manzil 8:03am'},
-          {key: 'NEDUET (Main Campus) 8.20am'}
-        ]}
-        renderItem={({item}) => <Text style={styles.item}>{item.key}</Text>}
-      /> */}
     </View>
  <View style={{  flexDirection: 'row', justifyContent: 'center', alignContent: 'center', marginBottom: 10}}>
          <TouchableOpacity
             onPress={() => {
-              navigation.navigate('ShuttleMapScreen')
+              navigation.navigate('ShuttleMapScreen', {
+                route_id: JSON.stringify(route_id)
+              })
             }}
           >
              <Button mode="contained" style={styles.button}>Track</Button>
           </TouchableOpacity>
           </View>
+            <Loading loading={loading} />
     </SafeAreaView>
   );
 };
@@ -144,7 +127,13 @@ const styles = StyleSheet.create({
      },
      routesWrapper: {
        margin: 25
-     }
+     },
+        header: {
+        color: COLORS.darkblue,
+        fontSize: 23,
+        textAlign: 'center',
+        // fontWeight: 'bold',
+    },
   });
 
 export default ShuttleRouteScreen;

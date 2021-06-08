@@ -48,6 +48,7 @@ export default class MapScreen extends Component {
   }
 
   componentDidMount() {
+    // console.log('props', this.props.route)
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const initialPosition = JSON.stringify(position);
@@ -66,6 +67,7 @@ export default class MapScreen extends Component {
         );
         console.log('initialPosition');
         console.log(this.state.initialPosition);
+        // console.log(this.s)
       },
       (error) => console.log('Error ' + JSON.stringify(error)),
       { enableHighAccuracy: false, timeout: 20000, maximumAge: 1000 },
@@ -154,6 +156,7 @@ export default class MapScreen extends Component {
   }
 
   addingMarkers = async () => {
+    console.log('Route id',this.state.route_id)
     try {
       axios.get(`${BASE_URL}/route/get/` + this.state.route_id)
         .then((response) => {

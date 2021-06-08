@@ -59,9 +59,10 @@ const ShuttleNumberScreen = ({ navigation }) => {
           bgColor={['#46aeff', '#5884ff']}
           text={i + 1}
           onPress={() => {
-            navigation.navigate("ShuttleMapScreen", {
-              route_id: i + 1
+            navigation.navigate("ShuttleRouteScreen", {
+              route_id: i + 1 
             })
+            // this.displayRoutes();
           }}
 
         />
@@ -120,6 +121,9 @@ const ShuttleNumberScreen = ({ navigation }) => {
       setError(e)
       setLoading(false)
     }
+  }
+  const displayRoutes = async () => {
+    console.log('in display')
   }
   return (
     <SafeAreaView style={{ flex: 1 }}>
