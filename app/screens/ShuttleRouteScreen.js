@@ -5,14 +5,15 @@ import {
   View,
   Text,
   FlatList,
-  Button,
-  ScrollView
+  ScrollView,
+  TouchableOpacity
 } from 'react-native';
 import Header from '../components/Header'
 import BackButton from '../components/BackButton';
 import axios from "axios";
 import { BASE_URL } from '../config/index';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Button from '../components/Button'
 
 const ShuttleRouteScreen = ({navigation}) => {
   // useEffect(async() => {
@@ -45,20 +46,20 @@ const ShuttleRouteScreen = ({navigation}) => {
         borderStyle: 'dotted',
         height:5,
         borderLeftWidth:2,
-        marginLeft: 15, marginBottom: 2
+        marginLeft: 16, marginBottom: 2
        }}/>
           <View style={{
         borderStyle: 'dotted',
         height:5,
         borderLeftWidth:2,
-        marginLeft: 15,
+        marginLeft: 16,
          marginBottom: 2
        }}/>
           <View style={{
         borderStyle: 'dotted',
         height:5,
         borderLeftWidth:2,
-        marginLeft: 15,
+        marginLeft: 16,
          marginBottom: 2
        }}/>
       <View style={styles.row}>
@@ -69,20 +70,20 @@ const ShuttleRouteScreen = ({navigation}) => {
         borderStyle: 'dotted',
         height:5,
         borderLeftWidth:2,
-        marginLeft: 15, marginBottom: 2
+        marginLeft: 16, marginBottom: 2
        }}/>
           <View style={{
         borderStyle: 'dotted',
         height:5,
         borderLeftWidth:2,
-        marginLeft: 15,
+        marginLeft: 16,
          marginBottom: 2
        }}/>
           <View style={{
         borderStyle: 'dotted',
         height:5,
         borderLeftWidth:2,
-        marginLeft: 15,
+        marginLeft: 16,
          marginBottom: 2
        }}/>
          <View style={styles.row}>
@@ -111,7 +112,15 @@ const ShuttleRouteScreen = ({navigation}) => {
         renderItem={({item}) => <Text style={styles.item}>{item.key}</Text>}
       /> */}
     </View>
-
+ <View style={{  flexDirection: 'row', justifyContent: 'center', alignContent: 'center', marginBottom: 10}}>
+         <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('ShuttleMapScreen')
+            }}
+          >
+             <Button mode="contained" style={styles.button}>Track</Button>
+          </TouchableOpacity>
+          </View>
     </SafeAreaView>
   );
 };
