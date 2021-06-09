@@ -12,65 +12,50 @@ import {
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { images } from '../constants';
 
+
 const About = ({ navigation }) => {
   
     return (
           <SafeAreaView style={styles.container}>
-          <Text>ABiut page </Text>
+           <BackButton goBack={() => navigation.navigate('StudentHomeScreen')} />
+           <View style={{marginTop: 30}}>
+          <Header title="About Welcome Wheels" />
+          </View>
+          <View style={styles.row}>
+          <Text style={styles.text}>Welcome Wheels is a local NED body responsible for connecting transport networks to students of the university. </Text>
+
+          <Text style={styles.text}>
+          We convey the day-to-day operational updates on NED's shuttle service to the students eradicating the need of physical communication by the shuttle department.
+          </Text>
+          <Text style={styles.text}>
+          Live travel information and Fee status information are the current core important features of this app and we are open to hear feedbacks.
+        </Text >
+         <Text style={styles.text}> The seperate parts of our app work together to make your daily journey better. </Text>
+         </View>
         </SafeAreaView>
-    );
+    ); 
 };
 
 const styles = StyleSheet.create({
     container: {
     flex: 1,
   },
-  userInfoSection: {
-    paddingHorizontal: 30,
-    marginBottom: 25,
-    marginTop: 35
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: "#0d47a1"
-  },
-  caption: {
-    fontSize: 14,
-    lineHeight: 14,
-    fontWeight: '500',
-  },
   row: {
-    flexDirection: 'row',
-    marginBottom: 10,
-  },
-  infoBoxWrapper: {
-    borderBottomColor: '#dddddd',
-    borderBottomWidth: 1,
-    borderTopColor: '#dddddd',
-    borderTopWidth: 1,
-    flexDirection: 'row',
-    height: 200,
-  },
-  infoBox: {
-    width: '50%',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  menuWrapper: {
     marginTop: 10,
+    justifyContent: 'center',
+    alignContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'center'
   },
-  menuItem: {
-    flexDirection: 'row',
-    paddingVertical: 15,
-    paddingHorizontal: 30,
-  },
-  menuItemText: {
+  text: {
     color: '#777777',
     marginLeft: 20,
     fontWeight: '600',
     fontSize: 16,
     lineHeight: 26,
+
+    margin: 15,
+    // textAlign: 'center'
   },
 
 

@@ -1,5 +1,6 @@
 import React, { memo, useState } from 'react';
-import { View, TouchableOpacity, StyleSheet, Text, SafeAreaView, Image } from 'react-native';
+import { View, TouchableOpacity, StyleSheet, Text, SafeAreaView, Image, useWindowDimensions } from 'react-native';
+import { TabView, SceneMap,TabBar } from 'react-native-tab-view';
 import Header from '../components/Header';
 import Button from '../components/Button';
 import TextInput from '../components/TextInput';
@@ -12,92 +13,49 @@ import axios from "axios";
 import { registrationNumberValidator, passwordValidator } from '../core/utils';
 import { Error } from '../components/Error';
 import { images } from '../constants';
+import LoginUser from './LoginUser'
+import LoginAdmin from './LoginAdmin'
+import { NavigationContainer } from '@react-navigation/native';
+
+// const FirstRoute = () => (
+//     <LoginUser />
+//   );
+  
+//   const SecondRoute = () => (
+//     <LoginAdmin />
+//   );
 
 const LoginScreen = ({ navigation }) => {
-    const [registrationNumber, setRegistrationNumber] = useState({ value: '', error: '' });
-    const [password, setPassword] = useState({ value: '', error: '' });
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState('');
-    const _onLoginPressed = async () => {
-        const registrationNumberError = registrationNumberValidator(registrationNumber.value)
-        const passwordError = passwordValidator(password.value);
+    const layout = useWindowDimensions();
 
-        if (registrationNumberError || passwordError) {
-            setRegistrationNumber({ ...registrationNumber, error: registrationNumberError })
-            setPassword({ ...password, error: passwordError });
-            return;
-        }
-        try {
-            setLoading(true);
-            const request = await axios.post(`${BASE_URL}/student/login`, {
-                st_reg_number: registrationNumber.value,
-                password: password.value
-            })
-                .then(function (response) {
-                    console.debug(response.data.msg);
-                    if (response.data.msg == "login succeful") {
-                        navigation.navigate('StudentHomeScreen')
-                    }
-                    else {
-                        setError("Invalid Credentials")
-                    }
-                }) 
-            setLoading(false);
-        } catch (e) {
-            setError("Invalid credentials");
-            setLoading(false);
-        }
-    };
+  const [index, setIndex] = React.useState(0);
+  const [routes] = React.useState([
+    { key: 'first', title: 'Login as User' },
+    { key: 'second', title: 'Login as Admin' },
+  ]);
+  const renderScene = ({ route }) => {
+  switch (route.key) {
+    case 'first':
+      return <LoginUser navigation={navigation} />;
+    case 'second':
+      return <LoginAdmin navigation={navigation} />;
+    default:
+      return null;
+  }
+}
+//    
     return (
         <SafeAreaView style={{ flex: 1 }}>
-
-            <View style={styles.container}>
-
-                
-                <BackButton goBack={() => navigation.navigate('LandingScreen')} />
-        <Image
-          source={images.logo}
-          resizeMode="contain"
-          style={{
-            width: '30%',
-            height: '25%',
-          }}
-        />
-                <TextInput
-                    label="Registration Number(e.g 4001048)"
-                    returnKeyType="next"
-                    value={registrationNumber.value}
-                    onChangeText={text => setRegistrationNumber({ value: text, error: '' })}
-                    error={!!registrationNumber.error}
-                    errorText={registrationNumber.error}
-                    
-                />
-                <TextInput
-                    label="Password"
-                    returnKeyType="done"
-                    value={password.value}
-                    onChangeText={text => setPassword({ value: text, error: '' })}
-                    error={!!password.error}
-                    errorText={password.error}
-                    secureTextEntry
-                    outlineColor="#0d47a1"
-                />
-
-                <View style={styles.row}>
-                    <Text style={styles.error}>{error}</Text>
-                </View>
-               
-                <Button mode="contained" onPress={_onLoginPressed}>Login</Button>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Don’t have an account? </Text>
-                    {/* changing screen name here */}
-                    <TouchableOpacity onPress={() => navigation.navigate('SignupScreen')}>
-                        <Text style={styles.link}>Sign up </Text>
-                    </TouchableOpacity>
-                </View>
-
-            </View>
-<Loading loading={loading} />
+             <BackButton goBack={() => navigation.navigate('LandingScreen')} />
+        <TabView
+        style={{marginTop: 60}}
+            navigationState={{ index, routes }}
+            renderScene={renderScene}
+            onIndexChange={setIndex}
+            initialLayout={{ width: layout.width }}
+            navigation={navigation}  
+            renderTabBar={props => <TabBar {...props} style={{backgroundColor: COLORS.darkblue}}/>}
+            />           
         </SafeAreaView>
     );
 };

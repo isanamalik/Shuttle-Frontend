@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, Item, Button, Image, TouchableOpacity, SectionList, StatusBar, SafeAreaView } from 'react-native';
 import Header from '../components/Header'
 import BackButton from '../components/BackButton';
@@ -11,13 +11,24 @@ import {
 } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { images } from '../constants';
+import { Loading } from '../components/Loading';
+import axios from "axios";
+import { BASE_URL } from '../config/index';
 
-const StudentInfo = ({ navigation }) => {
-  
-    return (
-          <SafeAreaView style={styles.container}>
-          <BackButton goBack={() => navigation.navigate('StudentHomeScreen')} />
-        <View style={styles.userInfoSection}>
+const StudentInfo = ({ route,navigation }) => {
+  const [loading, setLoading] = useState(false);
+  const [studentInformation, updateStudentInformation] = React.useState([]);
+  const registration_no = route.params.reg_no
+   useEffect(() => {
+    setLoading(true)
+     try {
+      axios.post(`${BASE_URL}/student/get/` + registration_no)
+        .then((res) => {
+          setLoading(false)
+          let response = res.data.id
+          console.log(response)
+           let studentInfo = [];
+      studentInfo.push(<View style={styles.userInfoSection} key={1}>
             <View style={{flexDirection: 'row', marginTop: 15}}>
           <Avatar.Image 
             source={images.person}
@@ -29,22 +40,18 @@ const StudentInfo = ({ navigation }) => {
             <Title style={[styles.title, {
               marginTop:15,
               marginBottom: 5,
-            }]}>Javeria Nadeem</Title>
+            }]}>{response.st_name}</Title>
             <Caption style={styles.caption}>Student</Caption>
           </View>
         </View>
         <View style={styles.userInfoSection}>
         <View style={styles.row}>
           <Icon name="school" color="#777777" size={20}/>
-          <Text style={{color:"#777777", marginLeft: 20}}>Department Name</Text>
+          <Text style={styles.student_detail}>Department Name: {response.st_department}</Text>
         </View>
         <View style={styles.row}>
           <Icon name="file" color="#777777" size={20}/>
-          <Text style={{color:"#777777", marginLeft: 20}}>Registration Number</Text>
-        </View>
-        <View style={styles.row}>
-          <Icon name="email" color="#777777" size={20}/>
-          <Text style={{color:"#777777", marginLeft: 20}}>Email</Text>
+          <Text style={styles.student_detail}>Registration Number: {response.st_access_cred}</Text>
         </View>
       </View>
                 <View style={styles.infoBoxWrapper}>
@@ -64,7 +71,18 @@ const StudentInfo = ({ navigation }) => {
             <Caption>Paid</Caption>
           </View>
       </View>
-        </View>
+        </View>)
+           updateStudentInformation([...studentInformation,studentInfo])
+        })
+    }
+    catch (err) { console.log(err)}
+  }, [])
+  console.log('in stddent infi', registration_no)
+    return (
+          <SafeAreaView style={styles.container}>
+          <BackButton goBack={() => navigation.navigate('StudentHomeScreen')} />
+        {studentInformation}
+          <Loading loading={loading} />
         </SafeAreaView>
     );
 };
@@ -120,7 +138,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 26,
   },
-
+student_detail: {
+  color:"#777777", 
+  marginLeft: 5
+}
 
 
 });

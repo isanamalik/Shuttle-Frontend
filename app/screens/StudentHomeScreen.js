@@ -12,8 +12,10 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Header from '../components/Header'
 const Tab = createMaterialBottomTabNavigator();
 
-const StudentHomeScreen = ({ navigation }) => {
-
+const StudentHomeScreen = ({ route, navigation }) => {
+const registration_no = route.params.registration;
+  console.log('props registration no.', registration_no)
+// const { registration_no } = route.params;
     return (
         <View style={styles.container}>
             {/* Banner */}
@@ -33,7 +35,7 @@ const StudentHomeScreen = ({ navigation }) => {
         <TouchableOpacity
           style={styles.categoryBtn}
           onPress={() =>
-            navigation.navigate('StudentInfo', {title: 'StudentInfo'})
+            navigation.navigate('StudentInfo', {reg_no: registration_no})
           }>
           <View style={styles.categoryIcon}>
             <Ionicons

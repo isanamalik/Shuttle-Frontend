@@ -74,7 +74,7 @@ const ShuttleRouteScreen = ({route, navigation}) => {
            updateRouteLocation([...routeLocation,routeList])
         })
     }
-    catch (err) { console.log(e)}
+    catch (err) { console.log(err)}
   }, [])
 // console.log()
   return (

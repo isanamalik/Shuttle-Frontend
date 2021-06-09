@@ -18,6 +18,9 @@ import ShuttleRouteScreen from './app/screens/ShuttleRouteScreen';
 import NotificationScreen from './app/screens/NotificationScreen';
 import StudentInfo from './app/screens/StudentInfo';
 import About from './app/screens/About';
+import LoginUser from './app/screens/LoginUser';
+import LoginAdmin from './app/screens/LoginAdmin';
+import AdminHomeScreen from './app/screens/AdminHomeScreen';
 import {AuthContext} from './app/contexts/AuthContext';
 
 
@@ -137,10 +140,25 @@ export default class App extends Component {
           component={About}
           options={{ headerShown: false }}
         />
-
-    <Stack.Screen
+  
+        <Stack.Screen
           name="ShuttleRouteScreen"
           component={ShuttleRouteScreen}
+          options={{ headerShown: false }}
+        />
+         <Stack.Screen
+          name="LoginUser"
+          component={LoginUser}
+          options={{ headerShown: false }}
+        />
+         <Stack.Screen
+          name="LoginAdmin"
+          component={LoginAdmin}
+          options={{ headerShown: false }}
+        />
+          <Stack.Screen
+          name="AdminHomeScreen"
+          component={AdminHomeScreen}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
