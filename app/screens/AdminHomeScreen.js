@@ -37,7 +37,7 @@ const registration_no = route.params.registration;
 
       </View>
             <View style={styles.categoryContainer2}>
-         <TouchableOpacity style={styles.categoryBtn}>
+         <TouchableOpacity onPress={() => navigation.navigate('AdminNotificationScreen')} style={styles.categoryBtn} >
           <View style={styles.categoryIcon}>
             <MaterialCommunityIcons name="bell-alert-outline" size={35} color="#FFF"/>
              <Text style={styles.categoryBtnTxt}>Update Notifications</Text>

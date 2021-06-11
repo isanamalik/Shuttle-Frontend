@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, FlatList, Button, Image, TouchableOpacity, ScrollView,Linking } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, FlatList, Button, SafeAreaView, TouchableOpacity, ScrollView,Linking } from 'react-native';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 // import Header from '../../components/Header'
 import LinearGradient from 'react-native-linear-gradient';
@@ -10,15 +10,55 @@ import StudentInfo from "./StudentInfo";
 import NotificationScreen from "./NotificationScreen";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Header from '../components/Header'
+import Moment from 'moment';
+import axios from "axios";
+import { BASE_URL } from '../config/index';
+import { Loading } from '../components/Loading';
+
 const Tab = createMaterialBottomTabNavigator();
 
 const StudentHomeScreen = ({ route, navigation }) => {
 const registration_no = route.params.registration;
-  console.log('props registration no.', registration_no)
-// const { registration_no } = route.params;
+Moment.locale('en');
+const [notificationInfo, updateNotificationInfo] = useState([]);
+const [loading, setLoading] = useState(false);
+
+useEffect(() => {
+  setLoading(true)
+   try {
+    axios.get(`${BASE_URL}/student/get_notifications/`)
+      .then((res) => {
+         console.log(res.data[0].timestamp)
+        setLoading(false)
+        let response = res.data
+        console.log(res.data.length)
+         let allNotificationInfo = [];
+         if(response.length > 0 ){
+           for(let i=0;i<response.length; i++){
+          notificationInfo.push(
+            <View style={styles.card} key={i+1}>
+            <View style={styles.cardInfo}>
+              <Text style={styles.cardTitle}>{response[i].title}</Text>
+              <Text style={styles.cardDetails}>
+              {response[i].message}
+              </Text>
+                <Text style={styles.time}> {Moment(response[i].timestamp).format('DD/MM/YYYY hh:mm:ss')} </Text>
+            </View>
+          </View>
+          )
+           }
+          updateNotificationInfo([...notificationInfo, allNotificationInfo])
+         }
+   
+      })
+  }
+  catch (err) { console.log(err)}
+}, [])
+
+  // console.log('props registration no.', registration_no)
     return (
-        <View style={styles.container}>
-            {/* Banner */}
+        <SafeAreaView style={styles.container}>
+          <ScrollView>
             <Header title="Welcome Wheels"/>
          <View style={styles.categoryContainer}>
         <TouchableOpacity
@@ -93,44 +133,25 @@ const registration_no = route.params.registration;
           }}>
           Recent Updates..
         </Text>
-         <View  style={styles.scrollView}>
-<ScrollView>
-
+         {/* <View  style={styles.scrollView}> */}
+        
+        {notificationInfo}
         <View style={styles.card}>
-          <View style={styles.cardInfo}>
-            <Text style={styles.cardTitle}>Point Merge Information</Text>
-            <Text style={styles.cardDetails}>
-             Point 3 will be combined with point 14 for mornings
-            </Text>
-              <Text style={styles.time}>6:59AM</Text>
+            <View style={styles.cardInfo}>
+              <Text style={styles.cardTitle}>ehwbjnkmw</Text>
+              <Text style={styles.cardDetails}>
+              gvhbuijok
+              </Text>
+                <Text style={styles.time}> aosjinjb </Text>
+            </View>
           </View>
-        </View>
-        <View style={styles.card}>
-          <View style={styles.cardInfo}>
-            <Text style={styles.cardTitle}>Point Merge Information</Text>
-            <Text style={styles.cardDetails}>
-             Point 3 will be combined with point 14 for mornings
-            </Text>
-              <Text style={styles.time}>6:59AM</Text>
-          </View>
-        </View>
-     <View style={styles.card}>
-          <View style={styles.cardInfo}>
-            <Text style={styles.cardTitle}>Point Merge Information</Text>
-            <Text style={styles.cardDetails}>
-             Point 3 will be combined with point 14 for mornings
-            </Text>
-              <Text style={styles.time}>6:59AM</Text>
-          </View>
-        </View>
-         <View style={styles.card}>
-          {/*  for Ui fix */}
-        </View>
-</ScrollView>
+     
 
-</View>
+      {/* </View> */}
         </View>
-        </View>
+        </ScrollView>
+        <Loading loading={loading} />
+        </SafeAreaView>
 
 
 
@@ -140,9 +161,7 @@ const registration_no = route.params.registration;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        marginTop: 40,
-        marginBottom: 40,
-         
+        paddingTop: 20
     },
   wrapper: {},
   categoryContainer: {
@@ -188,7 +207,7 @@ const styles = StyleSheet.create({
 
   },
   card: {
-    height: 100,
+    // height: 100,
     marginVertical: 5,
     flexDirection: 'row',
     shadowColor: '#999',
@@ -199,7 +218,7 @@ const styles = StyleSheet.create({
     // marginBottom: 105
   },
     scrollView: {
-    height: 320,
+    // height: 320,
     // marginBottom: 25
     // marginVertical: 5,
     // flexDirection: 'row',

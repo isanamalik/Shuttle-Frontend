@@ -34,3 +34,15 @@ export const registrationNumberValidator = registrationNumber => {
     if (!locationName) return 'Please enter valid location.';
     return '';
 };
+
+export const titleValidator = title => {
+  if (!title || title.length <= 0) return 'Title cannot be empty.';
+
+  return '';
+};
+
+export const detailValidator = detail => {
+  if (!detail || detail.length <= 0) return 'Notification detail cannot be empty.';
+
+  return '';
+};

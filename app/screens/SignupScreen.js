@@ -79,17 +79,17 @@ export const SignupScreen = ({ navigation }) => {
       {/* <ScrollView style={styles.scrollView}>
         <AuthContainer> */}
           <View style={styles.container}>
-<BackButton goBack={() => navigation.navigate('LoginScreen')} />
+        <BackButton goBack={() => navigation.navigate('LoginScreen')} />
             
-   <Image
-          source={images.logo}
-          resizeMode="contain"
-          style={{
-            width: '25%',
-            height: '15%',
-          }}
-        />
-            
+        <Image
+                source={images.logo}
+                resizeMode="contain"
+                style={{
+                  width: '25%',
+                  height: '15%',
+                }}
+              />
+                  
 
             <TextInput
               label="Name"
@@ -99,7 +99,7 @@ export const SignupScreen = ({ navigation }) => {
               error={!!name.error}
               errorText={name.error}
             />
-<DropDownPicker
+            <DropDownPicker
               items={[
                 { label: 'Civil Engineering', value: 'Civil Engineering' },
                 { label: 'Urban & Infrastructure Engineering', value: 'Urban & Infrastructure Engineering' },

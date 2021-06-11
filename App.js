@@ -9,7 +9,8 @@ import { icons, COLORS, SIZES } from './app/constants';
 import LandingScreen from './app/screens/LandingScreen';
 import LoginScreen from './app/screens/LoginScreen';
 import DriverScreen from './app/screens/DriverScreen';
-import AdminScreen from './app/screens/AdminScreen';
+import AdminNotificationScreen from './app/screens/AdminNotificationScreen';
+import AdminFeeScreen from './app/screens/AdminFeeScreen';
 import {SignupScreen} from './app/screens/SignupScreen';
 import StudentHomeScreen from './app/screens/StudentHomeScreen';
 import ShuttleMapScreen from './app/screens/ShuttleMapScreen';
@@ -107,8 +108,8 @@ export default class App extends Component {
           component={DriverScreen}
         />
         <Stack.Screen
-          name="AdminScreen"
-          component={AdminScreen}
+          name="AdminNotificationScreen"
+          component={AdminNotificationScreen}
         />
         <Stack.Screen
           name="SignupScreen"
@@ -160,6 +161,10 @@ export default class App extends Component {
           name="AdminHomeScreen"
           component={AdminHomeScreen}
           options={{ headerShown: false }}
+        />
+          <Stack.Screen
+          name="AdminFeeScreen"
+          component={AdminFeeScreen}
         />
       </Stack.Navigator>
     </NavigationContainer>
