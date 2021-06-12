@@ -92,7 +92,7 @@ export default class MapScreen extends Component {
 
     // prepare final API call
     let ApiURL = "https://maps.googleapis.com/maps/api/distancematrix/json?";
-    let params = `origins=${OriginLocation}&destinations=${DestinationLocation}&key=${GOOGLE_API_KEY}`;
+    let params = `origins=${OriginLocation}&destinations=${DestinationLocation}&mode=driving&departure_time=now&traffic_model=optimistic&key=${GOOGLE_API_KEY}`;
     let finalApiURL = `${ApiURL}${encodeURI(params)}`;
 
 
@@ -109,7 +109,7 @@ export default class MapScreen extends Component {
       console.log(responseJson);
 
       console.log("trynna get response", responseJson.rows[0].elements[0].duration.text)
-      this.setState({ eta: responseJson.rows[0].elements[0].duration.text })
+      this.setState({ eta: responseJson.rows[0].elements[0].duration_in_traffic.text })
     } catch (error) {
       console.error(error);
     }
