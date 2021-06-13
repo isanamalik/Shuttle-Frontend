@@ -31,19 +31,15 @@ const LoginUser = ({ navigation }) => {
             return;
         }
         try {
-            //  navigation.navigate('StudentHomeScreen', {
-            //                 registration: '0000000'
-            //             })
             setLoading(true);
-            const request = await axios.post(`${BASE_URL}/student/login`, {
+            axios.post(`${BASE_URL}/student/login`, {
                 st_reg_number: registrationNumber.value,
                 password: password.value
             })
-                .then(function (response) {
-                    
-                    console.log(response.data.msg);
+                .then((res)=>   {
+                    console.log(res.status)
                     console.log('reg', registrationNumber.value)
-                    if (response.data.msg == "login succeful") {
+                    if (res.data.msg == "login succeful") {
                         console.log('here')
                         navigation.navigate('StudentHomeScreen', {
                             registration: registrationNumber.value
