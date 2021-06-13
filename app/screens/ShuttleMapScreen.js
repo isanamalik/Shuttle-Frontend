@@ -176,6 +176,7 @@ export default class MapScreen extends Component {
       markerList.push(
         <Marker
           key={i}
+          style={styles.map}
           draggable
           coordinate={{
             latitude: this.state.route_coords[i][0],
@@ -282,6 +283,8 @@ const styles = StyleSheet.create({
   map: {
     width: '100%',
     height: '100%',
+    // ...StyleSheet.absoluteFillObject,
+
   },
   button: {
     width: 170

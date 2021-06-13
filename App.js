@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import React ,{Component} from 'react';
+import React ,{Component, useEffect} from 'react';
 import { Image, TouchableOpacity,PermissionsAndroid,Platform } from 'react-native';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
