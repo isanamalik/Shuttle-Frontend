@@ -43,6 +43,8 @@ const LoginAdmin = ({ navigation }) => {
                         navigation.navigate('AdminHomeScreen', {
                             registration: registrationNumber.value
                         })
+                        setRegistrationNumber({value: ''})
+                        setPassword({value: ''})
                     }
                     else {
                         setError("Invalid Credentials")

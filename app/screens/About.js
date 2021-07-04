@@ -17,10 +17,12 @@ const About = ({ navigation }) => {
   
     return (
           <SafeAreaView style={styles.container}>
+           
+           <View style={{marginBottom: 10, marginTop:20}}> 
            <BackButton goBack={() => navigation.navigate('StudentHomeScreen')} />
-           <View style={{marginTop: 30}}>
-          <Header title="About Welcome Wheels" />
+         
           </View>
+           <Header title="About Welcome Wheels" />
           <View style={styles.row}>
           <Text style={styles.text}>Welcome Wheels is a local NED body responsible for connecting transport networks to students of the university. </Text>
 

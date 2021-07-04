@@ -32,7 +32,7 @@ const LoginUser = ({ navigation }) => {
         }
         try {
             setLoading(true);
-            axios.post(`${BASE_URL}/student/login`, {
+            const request = await axios.post(`${BASE_URL}/student/login`, {
                 st_reg_number: registrationNumber.value,
                 password: password.value
             })
@@ -44,6 +44,8 @@ const LoginUser = ({ navigation }) => {
                         navigation.navigate('StudentHomeScreen', {
                             registration: registrationNumber.value
                         })
+                        setRegistrationNumber({value: ''})
+                        setPassword({value: ''})
                     }
                     else {
                         setError("Invalid Credentials")

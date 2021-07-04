@@ -20,7 +20,7 @@ export const nameValidator = name => {
 };
 
 export const departmentValidator = department => {
-  if (!department || department.length <= 0) return 'Department cannot be empty.';
+  if (!department || department.length <= 0 ) return 'Department cannot be empty.';
 
   return '';
 };

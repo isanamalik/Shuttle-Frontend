@@ -46,20 +46,27 @@ export const SignupScreen = ({ navigation }) => {
       setRegistrationNumber({ ...registrationNumber, error: registrationNumberError })
       return;
     }
-
+ 
     try {
+          // console.log('deptttttt',department.value.value)
       setLoading(true);
       const request = await axios.post(`${BASE_URL}/student/insert`, {
         st_name: name.value,
         st_reg_number: registrationNumber.value,
-        st_department: department.value,
+        st_department: department.value.value,
         st_access_cred: registrationNumber.value,
         fee_status: "unpaid",
         password: password.value
       }).then((response) => {
+        console.log(response)
         console.log(response.data.id)
         if (response.data.id !== null) {
           setLoading(false);
+          setName({value: ''});
+          setEmail({value: ''});
+          setPassword({value: ''});
+          setDepartment({value: ''})
+          setRegistrationNumber({value: ''})
           navigation.navigate('LoginScreen')
         }
         else {
@@ -68,6 +75,7 @@ export const SignupScreen = ({ navigation }) => {
 
       })
     } catch (e) {  
+      console.log(e)
       setError(e)
       setLoading(false)
     }
@@ -89,8 +97,6 @@ export const SignupScreen = ({ navigation }) => {
                   height: '15%',
                 }}
               />
-                  
-
             <TextInput
               label="Name"
               returnKeyType="next"
@@ -120,7 +126,8 @@ export const SignupScreen = ({ navigation }) => {
                 { label: 'Polymer & Petrochemical  Engineering', value: 'Polymer & Petrochemical  Engineering' },
                 { label: 'Biomedical Engineering', value: 'Biomedical Engineering' },
                 { label: 'Food Engineering', value: 'Food Engineering' },
-                { label: 'Computer Science & Software Engineering', value: 'Computer Science & Software Engineering' },
+                { label: 'Computer Science', value: 'Computer Science' },
+                { label: 'Software Engineering', value: 'Software Engineering' },
                 { label: 'Mathematics', value: 'Mathematics' },
                 { label: 'Chemistry', value: 'Chemistry' },
                 { label: 'Physics', value: 'Physics' },
@@ -138,10 +145,11 @@ export const SignupScreen = ({ navigation }) => {
                 justifyContent: 'flex-start'
               }}
               dropDownStyle={{ backgroundColor: '#fafafa' }}
-              onChangeItem={item => setDepartment({ value: item.value, error: '' })}
-              error={!!department.error}
-              errorText={department.error}
+              onChangeItem={item => setDepartment({ value: item, error: '' })}
+              // error={!!department.error}
+              // errorText={department.error}
             />
+             {department.error ? <Text style={styles.error}>{department.error}</Text> : null}
             <TextInput
               label="Email"
               returnKeyType="next"
@@ -219,5 +227,12 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     marginHorizontal: 20,
+  },
+    error: {
+    fontSize: 14,
+    color: theme.colors.error,
+    paddingHorizontal: 4,
+    paddingTop: 4,
+    textAlign: 'left'
   },
 });

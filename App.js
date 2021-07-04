@@ -92,7 +92,7 @@ export default class App extends Component {
             ),
           }}
         />
-        <Stack.Screen
+        <Stack.Screen 
           name="NotificationScreen"
           component={NotificationScreen}
           options={{ headerShown: false }}
@@ -110,6 +110,7 @@ export default class App extends Component {
         <Stack.Screen
           name="AdminNotificationScreen"
           component={AdminNotificationScreen}
+            options={{ headerShown: false }}
         />
         <Stack.Screen
           name="SignupScreen"
@@ -165,6 +166,7 @@ export default class App extends Component {
           <Stack.Screen
           name="AdminFeeScreen"
           component={AdminFeeScreen}
+            options={{ headerShown: false }}
         />
       </Stack.Navigator>
     </NavigationContainer>

@@ -21,11 +21,12 @@ const ShuttleRouteScreen = ({route, navigation}) => {
   const [loading, setLoading] = useState(false);
   const { route_id } = route.params;
    const [routeLocation, updateRouteLocation] = React.useState([]);
-  console.log('route parms',route.params)
+  console.log('route parms',route_id)
   useEffect(() => {
+    console.log('route id from search', route_id)
     setLoading(true)
      try {
-      axios.get(`${BASE_URL}/route/get/` + JSON.stringify(route_id))
+      const request = axios.get(`${BASE_URL}/route/get/` + route_id)
         .then((response) => {
           setLoading(false)
           console.log(response.data.route_locations)
@@ -79,9 +80,9 @@ const ShuttleRouteScreen = ({route, navigation}) => {
 // console.log()
   return (
     <SafeAreaView style={{flex: 1}} >
-         <BackButton goBack={() => navigation.navigate('ShuttleNumberScreen')} />
-      <View style={styles.container}>
       
+      <View style={styles.container}>
+         <BackButton goBack={() => navigation.navigate('ShuttleNumberScreen')} />
         <ScrollView>
              <Text style={styles.header}>Shuttle Number {JSON.stringify(route_id)} Routes</Text>
             <View style={styles.routesWrapper}>
@@ -111,6 +112,7 @@ const styles = StyleSheet.create({
     container: {
       flex: 1,
       padding: 20,
+      marginLeft:10
     },
     row: {
       flexDirection: 'row'

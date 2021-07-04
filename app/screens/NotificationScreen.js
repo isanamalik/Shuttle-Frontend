@@ -18,7 +18,6 @@ const NotificationScreen = ({ navigation }) => {
      try {
       axios.get(`${BASE_URL}/student/get_notifications/`)
         .then((res) => {
-           console.log(res.data[0].timestamp)
           setLoading(false)
           let response = res.data
           console.log(res.data.length)
@@ -32,7 +31,7 @@ const NotificationScreen = ({ navigation }) => {
                 <Text style={styles.cardDetails}>
                 {response[i].message}
                 </Text>
-                  <Text style={styles.time}> {Moment(response[i].timestamp).format('DD/MM/YYYY hh:mm:ss')} </Text>
+                  <Text style={styles.time}> {Moment(response[i].createdAt).format('DD/MM/YYYY hh:mm A')} </Text>
               </View>
             </View>
             )

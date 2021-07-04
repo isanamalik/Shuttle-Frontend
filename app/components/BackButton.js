@@ -1,10 +1,12 @@
 import React, { memo } from 'react';
-import { TouchableOpacity, Image, StyleSheet } from 'react-native';
+import { TouchableOpacity, Image, StyleSheet, View } from 'react-native';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 
 const BackButton = ({ goBack }) => (
   <TouchableOpacity onPress={goBack} style={styles.container}>
+  <View>
     <Image style={styles.image} source={require('../assets/icons/arrow_back.png')} />
+    </View>
   </TouchableOpacity>
 );
 

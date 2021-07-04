@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, FlatList, Button, SafeAreaView, TouchableOpacity, ScrollView,Linking } from 'react-native';
+import { View, Text, StyleSheet, FlatList, SafeAreaView, TouchableOpacity, ScrollView,Linking } from 'react-native';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 // import Header from '../../components/Header'
 import LinearGradient from 'react-native-linear-gradient';
@@ -14,6 +14,8 @@ import Moment from 'moment';
 import axios from "axios";
 import { BASE_URL } from '../config/index';
 import { Loading } from '../components/Loading';
+import Button from '../components/Button';
+import LogoutButton from '../components/LogoutButton';
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -28,13 +30,14 @@ useEffect(() => {
    try {
     axios.get(`${BASE_URL}/student/get_notifications/`)
       .then((res) => {
-         console.log(res.data[0].timestamp)
         setLoading(false)
         let response = res.data
-        console.log(res.data.length)
-         let allNotificationInfo = [];
+        console.log('noti length',res.data.length)
+           let allNotificationInfo = [];
          if(response.length > 0 ){
-           for(let i=0;i<response.length; i++){
+             if((res.data.length < 6 )){
+               console.log(response[i].createdAt)
+   for(let i=0;i<response.length; i++){
           notificationInfo.push(
             <View style={styles.card} key={i+1}>
             <View style={styles.cardInfo}>
@@ -42,12 +45,32 @@ useEffect(() => {
               <Text style={styles.cardDetails}>
               {response[i].message}
               </Text>
-                <Text style={styles.time}> {Moment(response[i].timestamp).format('DD/MM/YYYY hh:mm:ss')} </Text>
+                <Text style={styles.time}> {Moment(response[i].createdAt).format('DD/MM/YYYY hh:mm A')} </Text>
             </View>
           </View>
           )
            }
-          updateNotificationInfo([...notificationInfo, allNotificationInfo])
+           updateNotificationInfo([...notificationInfo, allNotificationInfo])
+        }
+        else {
+             for(let i=0;i<4; i++){
+               console.log(response[i].createdAt)
+          notificationInfo.push(
+            <View style={styles.card} key={i+1}>
+            <View style={styles.cardInfo}>
+              <Text style={styles.cardTitle}>{response[i].title}</Text>
+              
+              <Text style={styles.cardDetails}>
+              {response[i].message}
+              </Text>
+                <Text style={styles.time}> {Moment(response[i].createdAt).format('DD/MM/YYYY hh:mm A')} </Text>
+            </View>
+          </View>
+          )
+           }
+ updateNotificationInfo([...notificationInfo, allNotificationInfo])
+        }
+          
          }
    
       })
@@ -60,6 +83,7 @@ useEffect(() => {
         <SafeAreaView style={styles.container}>
           <ScrollView>
             <Header title="Welcome Wheels"/>
+            <LogoutButton logout={() => navigation.navigate('LoginScreen')} />
          <View style={styles.categoryContainer}>
         <TouchableOpacity
           style={styles.categoryBtn}
@@ -136,15 +160,6 @@ useEffect(() => {
          {/* <View  style={styles.scrollView}> */}
         
         {notificationInfo}
-        <View style={styles.card}>
-            <View style={styles.cardInfo}>
-              <Text style={styles.cardTitle}>ehwbjnkmw</Text>
-              <Text style={styles.cardDetails}>
-              gvhbuijok
-              </Text>
-                <Text style={styles.time}> aosjinjb </Text>
-            </View>
-          </View>
      
 
       {/* </View> */}
@@ -168,7 +183,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     width: '90%',
     alignSelf: 'center',
-    marginTop: 25,
+    marginTop: 50,
     // marginBottom: 10,
   },
     categoryContainer2: {

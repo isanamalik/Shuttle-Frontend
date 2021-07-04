@@ -83,31 +83,37 @@ const ShuttleNumberScreen = ({ navigation }) => {
       const request = await axios.post(`${BASE_URL}/route/by_name`, {
         route_location: locationName.value
       }).then((response) => {
+       
         let searchResult = []
         let search = response.data
+        console.log('response',search[1].route_id)
         if (search.length > 0) {
           for (let i = 0; i < search.length; i++) {
-            if (i == 3 || i == 6 || i == 9 || i == 12 || i == 15) {
-              searchResult.push(
-                <Text key={i + 20} style={{ flexDirection: 'row', justifyContent: 'center', margin: 50 }}>{'\n'}{'\n'} </Text>
-              )
-            }
-            searchResult.push(
-              <OptionItem
-                key={i}
-                bgColor={['#46aeff', '#5884ff']}
-                text={search[i].route_id}
-                onPress={() => {
-                  navigation.navigate("ShuttleMapScreen", {
-                    route_id: search[i].route_id
-                  })
-                }}
-              />
-            )
+            console.log('route ids',search[i].route_id)
+               if (i == 3 || i == 6 || i == 9 || i == 12 || i == 15) {
+                
+        searchResult.push(
+          <Text key={search[i].route_id} style={{ flexDirection: 'row', justifyContent: 'center', margin: 50 }}>{'\n'}{'\n'} </Text>
+        )
+      }
+      searchResult.push(
+        <OptionItem
+          key={i + 1}
+          bgColor={['#46aeff', '#5884ff']}
+          text={search[i].route_id}
+          onPress={() => {
+            navigation.navigate("ShuttleRouteScreen", {
+              route_id: search[i].route_id 
+            })
+            // this.displayRoutes();
+          }}
+
+        />
+      )
           }
           setSearchResult([...searchResult])
           setLoading(false);
-          console.log('res', searchResult)
+          // console.log('res', searchResult)
         }
         else {
           if (response.data.length == 0) {

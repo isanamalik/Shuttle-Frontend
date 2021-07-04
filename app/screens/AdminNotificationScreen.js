@@ -18,6 +18,8 @@ import {
 } from '../core/utils';
 import { COLORS } from '../constants';
 import Moment from 'moment';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const AdminNotificationScreen = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -29,7 +31,7 @@ const AdminNotificationScreen = () => {
   useEffect(() => {
     setLoading(true)
      try {
-      axios.get(`${BASE_URL}/student/get_notifications/`)
+      axios.get(`${BASE_URL}/student/get_notifications`)
         .then((res) => {
           setLoading(false)
           let response = res.data
@@ -37,18 +39,32 @@ const AdminNotificationScreen = () => {
            let allNotificationInfo = [];
            if(response.length > 0 ){
              for(let i=0;i<response.length; i++){
+               console.log(response[i]._id)
             notificationInfo.push(
               <View style={styles.card} key={i+1}>
-              <View style={styles.cardInfo}>
+              {/* <MaterialCommunityIcons name="edit" size={35} color={COLORS.darkblue}/> */}
+              <View style={styles.cardInfo}>   
                 <Text style={styles.cardTitle}>{response[i].title}</Text>
-                <Text style={styles.cardDetails}>
-                {response[i].message}
-                </Text>
-                  <Text style={styles.time}>{Moment(res.data[i].timestamp).format('DD/MM/YYYY hh:mm:ss')} </Text>
-              </View>
+                
+                <Text style={styles.cardDetails}>{response[i].message}</Text>
+                
+                  <Text style={styles.time}> {Moment(response[i].createdAt).format('DD/MM/YYYY hh:mm A')} </Text>
+                   <View style={{ flexDirection: 'row',justifyContent: 'center', paddingVertical: 20  }}>
+              
+                  <TouchableOpacity
+                  // onPress={ () => navigation.navigate('LoginScreen') }
+                  >
+                    <Button mode="contained" style={{width: 120}}>Edit</Button>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                  // onPress={() => deleteNotification(response[i]._id)}
+                  >
+                    <WhiteButton mode="contained" style={{width: 120}}>Delete</WhiteButton>
+                  </TouchableOpacity>
+                </View>
+              </View> 
             </View>
-            )
-             }
+            )}
             updateNotificationInfo([...notificationInfo, allNotificationInfo])
            }
      
@@ -56,6 +72,23 @@ const AdminNotificationScreen = () => {
     }
     catch (err) { console.log(err)}
   }, [])
+
+  const deleteNotification = async(delete_noti_id) =>  {
+     console.log('delete id', delete_noti_id)
+     setLoading(true)
+     try {
+          const delete_request =  await axios.delete(`${BASE_URL}/admin/delete_notification`, {
+          _id: delete_noti_id
+        }).then((res) => {
+          setLoading(false)
+          console.log(res.config)
+        })
+     }
+     catch(e){ 
+       console.log('some error', e)
+     }
+
+   }
 
   const _onPostNotification = async () => {
     const titleError = titleValidator(title.value);
@@ -72,7 +105,7 @@ const AdminNotificationScreen = () => {
       const request = await axios.post(`${BASE_URL}/admin/push_notification`, {
         title: title.value,
         notification_message: detail.value,
-        timestamp: 123456
+        // timestamp: 123456
       }).then((response) => {
         setLoading(false)
         console.log(response.data)
@@ -83,10 +116,12 @@ const AdminNotificationScreen = () => {
           <Text style={styles.cardDetails}>
           {detail.value}
           </Text>
-            <Text style={styles.time}>{Moment(response.data[i].timestamp).format('DD/MM/YYYY hh:mm:ss')} </Text>
+          
+            <Text style={styles.time}> {Moment(response[i].createdAt).format('DD/MM/YYYY hh:mm A')} </Text>
         </View>
       </View>
        updateNotificationInfo([...notificationInfo, newResponse])
+      navigation.navigate("AdminNotificationScreen")
       })
     } catch (e) {  
       setError(e)
@@ -97,6 +132,7 @@ const AdminNotificationScreen = () => {
 
   return (
     <SafeAreaView style={{flex: 1}}>
+    {/* <Ionicons name="edit" size={35} color={COLORS.darkblue}/> */}
       <ScrollView>
       <View style={{marginTop: 15}}>
     <Header title="Notifications" />
@@ -153,6 +189,17 @@ const AdminNotificationScreen = () => {
           All notifications
         </Text>
       {notificationInfo}
+      <View style={styles.card}>
+      {/* <MaterialCommunityIcons name="edit" size={35} color={COLORS.darkblue}/> */}
+            {/* <View style={styles.cardInfo}>
+              <Text style={styles.cardTitle}>ehwbjnkmw</Text>
+              <Text style={styles.cardDetails}>
+              gvhbuijok
+              </Text>
+                <Text style={styles.time}> aosjinjb </Text>
+               
+            </View> */}
+          </View>
       </View>
     </View>
   
@@ -199,7 +246,7 @@ const styles = StyleSheet.create({
       textAlign: "center"
     },
     card: {
-      height: 100,
+      height: 180,
       margin: 5,
       flexDirection: 'row',
       shadowColor: '#999',
@@ -235,6 +282,11 @@ const styles = StyleSheet.create({
       marginTop: 30
       
     },
+    edit_button: {
+      // borderRadius: 20,
+      // padding: 10,
+      // elevation: 2
+    }
   });
 
 export default AdminNotificationScreen;

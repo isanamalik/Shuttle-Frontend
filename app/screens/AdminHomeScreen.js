@@ -10,6 +10,8 @@ import StudentInfo from "./StudentInfo";
 import NotificationScreen from "./NotificationScreen";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Header from '../components/Header'
+import LogoutButton from '../components/LogoutButton';
+
 const Tab = createMaterialBottomTabNavigator();
 
 const AdminHomeScreen = ({ route, navigation }) => {
@@ -18,11 +20,12 @@ const registration_no = route.params.registration;
 // const { registration_no } = route.params;
     return (
         <View style={styles.container}>
+        <LogoutButton logout={() => navigation.navigate('LoginScreen')} />
             {/* Banner */}
             <Header title="Welcome Wheels Admin"/>
    
            <View style={styles.categoryContainer2}>
-           <TouchableOpacity
+           <TouchableOpacity onPress={() => navigation.navigate('AdminFeeScreen')}
           style={styles.categoryBtn}>
           <View style={styles.categoryIcon}>
             <Ionicons
@@ -60,7 +63,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     width: '90%',
     alignSelf: 'center',
-    marginTop: 25,
+    marginTop: 50,
     // marginBottom: 10,
   },
     categoryContainer2: {
