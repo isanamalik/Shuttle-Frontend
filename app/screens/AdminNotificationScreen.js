@@ -23,14 +23,82 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const AdminNotificationScreen = () => {
   const [modalVisible, setModalVisible] = useState(false);
+   const [editModalVisible, setEditModalVisible] = useState(false);
   const [title, setTitle] = useState({ value: '', error: '' });
   const [detail, setDetail] = useState({ value: '', error: '' });
+  const [editTitle, setEditTitle] = useState({ value: '', error: '' });
+  const [editDetail, setEditDetail] = useState({ value: '', error: '' });
+  const [editID, setEditID] = useState({ value: '', error: '' });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [notificationInfo, updateNotificationInfo] = React.useState([]);
+  const [notificationInfo, updateNotificationInfo] = useState([]);
+  const [testInfo, updateTestInfo] = useState([]);
   useEffect(() => {
     setLoading(true)
+  //    try {
+  //     axios.get(`${BASE_URL}/student/get_notifications`)
+  //       .then((res) => {
+  //         setLoading(false)
+  //         let response = res.data
+  //         console.log(res.data.length)
+  //          let allNotificationInfo = [];
+  //          if(response.length > 0 ){
+  //            for(let i=0;i<response.length; i++){
+  //              console.log(response[i]._id)
+  //           allNotificationInfo.push(
+  //             <View style={styles.card} key={i+1}>
+  //             {/* <MaterialCommunityIcons name="edit" size={35} color={COLORS.darkblue}/> */}
+  //             <View style={styles.cardInfo}>   
+  //               <Text style={styles.cardTitle}>{response[i].title}</Text>
+                
+  //               <Text style={styles.cardDetails}>{response[i].message}</Text>
+                
+  //                 <Text style={styles.time}> {Moment(response[i].createdAt).format('DD/MM/YYYY hh:mm A')} </Text>
+  //                  <View style={{ flexDirection: 'row',justifyContent: 'center', paddingVertical: 20  }}>
+              
+  //                 <TouchableOpacity
+  //                  onPress={() => openEditModal(response[i].title,response[i].message, response[i]._id) }
+  //                 >
+  //                   <Button mode="contained" style={{width: 120}}>Edit</Button>
+  //                 </TouchableOpacity>
+  //                 <TouchableOpacity
+  //                 onPress={() => deleteNotification(response[i]._id)}
+  //                 >
+  //                   <WhiteButton mode="contained" style={{width: 120}}>Delete</WhiteButton>
+  //                 </TouchableOpacity>
+  //               </View>
+  //             </View> 
+  //           </View>
+  //           )}
+  //           updateNotificationInfo( allNotificationInfo)
+  //          }
+     
+  //       })
+  //   }
+  //   catch (err) { console.log(err)}
+  // }
+  fetchData();
+  }
+  , [])
+
+  const deleteNotification = async(delete_noti_id) =>  {
+     console.log('delete id', delete_noti_id)
+     setLoading(true)
      try {
+          const delete_request =  await axios.delete(`${BASE_URL}/admin/delete_notification`, {
+          _id: delete_noti_id
+        }).then((res) => {
+          setLoading(false)
+          console.log(res)
+        })
+     }
+     catch(e){ 
+       console.log('some error', e)
+     }
+
+   }
+  const fetchData = async () => {
+    try {
       axios.get(`${BASE_URL}/student/get_notifications`)
         .then((res) => {
           setLoading(false)
@@ -40,7 +108,7 @@ const AdminNotificationScreen = () => {
            if(response.length > 0 ){
              for(let i=0;i<response.length; i++){
                console.log(response[i]._id)
-            notificationInfo.push(
+            allNotificationInfo.push(
               <View style={styles.card} key={i+1}>
               {/* <MaterialCommunityIcons name="edit" size={35} color={COLORS.darkblue}/> */}
               <View style={styles.cardInfo}>   
@@ -52,12 +120,12 @@ const AdminNotificationScreen = () => {
                    <View style={{ flexDirection: 'row',justifyContent: 'center', paddingVertical: 20  }}>
               
                   <TouchableOpacity
-                  // onPress={ () => navigation.navigate('LoginScreen') }
+                   onPress={() => openEditModal(response[i].title,response[i].message, response[i]._id) }
                   >
                     <Button mode="contained" style={{width: 120}}>Edit</Button>
                   </TouchableOpacity>
                   <TouchableOpacity
-                  // onPress={() => deleteNotification(response[i]._id)}
+                  onPress={() => deleteNotification(response[i]._id)}
                   >
                     <WhiteButton mode="contained" style={{width: 120}}>Delete</WhiteButton>
                   </TouchableOpacity>
@@ -65,30 +133,13 @@ const AdminNotificationScreen = () => {
               </View> 
             </View>
             )}
-            updateNotificationInfo([...notificationInfo, allNotificationInfo])
+            updateNotificationInfo( allNotificationInfo)
            }
      
         })
     }
     catch (err) { console.log(err)}
-  }, [])
-
-  const deleteNotification = async(delete_noti_id) =>  {
-     console.log('delete id', delete_noti_id)
-     setLoading(true)
-     try {
-          const delete_request =  await axios.delete(`${BASE_URL}/admin/delete_notification`, {
-          _id: delete_noti_id
-        }).then((res) => {
-          setLoading(false)
-          console.log(res.config)
-        })
-     }
-     catch(e){ 
-       console.log('some error', e)
-     }
-
-   }
+  }
 
   const _onPostNotification = async () => {
     const titleError = titleValidator(title.value);
@@ -109,19 +160,68 @@ const AdminNotificationScreen = () => {
       }).then((response) => {
         setLoading(false)
         console.log(response.data)
-        let newResponse =  
-        <View style={styles.card} key={1000}>
-        <View style={styles.cardInfo}>
-          <Text style={styles.cardTitle}>{title.value}</Text>
-          <Text style={styles.cardDetails}>
-          {detail.value}
-          </Text>
+         fetchData();
+      //   let newResponse =  []
+      //   newResponse.push(
+      //   <View style={styles.card} key={1000}>
+      //   <View style={styles.cardInfo}>
+      //     <Text style={styles.cardTitle}>{title.value}</Text>
+      //     <Text style={styles.cardDetails}>
+      //     {detail.value}
+      //     </Text>
           
-            <Text style={styles.time}> {Moment(response[i].createdAt).format('DD/MM/YYYY hh:mm A')} </Text>
-        </View>
-      </View>
-       updateNotificationInfo([...notificationInfo, newResponse])
-      navigation.navigate("AdminNotificationScreen")
+      //       <Text style={styles.time}> {Moment(response[i].createdAt).format('DD/MM/YYYY hh:mm A')} </Text>
+      //   </View>
+      // </View>
+      // )
+      // console.log('new reponse', newResponse)
+      //  updateTestInfo([...testInfo,newResponse])
+      // // navigation.navigate("AdminNotificationScreen")
+      })
+    } catch (e) {  
+      setError(e)
+      setLoading(false)
+    }
+
+  };
+const openEditModal = (title,message, id) => {
+  console.log(id)
+  console.log('titleee' ,title)
+    setEditTitle({value: title});
+    setEditDetail({value: message});
+    setEditID({value: id});
+    setEditModalVisible(true);
+    console.log('checking', editTitle.value, editDetail.value, editID.value)
+}
+
+
+  const onUpdateNotification = async () => {
+    console.log('edit title',editTitle.value + 'edit message', editDetail.value + 'id', editID.value)
+    const titleError = titleValidator(editTitle.value);
+    const detailError = detailValidator(editDetail.value);
+    if (titleError || detailError) {
+      setEditTitle({ ...editTitle, error: titleError });
+      setEditDetail({ ...editDetail, error: detailError });
+      return;
+    }
+
+    try {
+       setLoading(true)
+      setModalVisible(false)
+      console.log(' edit val in api',editTitle.value, editDetail.value, editID.value)
+      const request = await axios.post(`${BASE_URL}/admin/update_notification`, {
+        title: editTitle.value,
+        notification_message: editDetail.value,
+        _id: editID.value
+        // timestamp: 123456
+      }).then((response) => {
+        setLoading(false)
+        console.log(response.data)
+        if(response.data._id !== ''){
+          setEditModalVisible(false)
+         navigation.navigate('AdminNotificationScreen')
+        }
+        
       })
     } catch (e) {  
       setError(e)
@@ -188,6 +288,7 @@ const AdminNotificationScreen = () => {
           }}>
           All notifications
         </Text>
+        {testInfo}
       {notificationInfo}
       <View style={styles.card}>
       {/* <MaterialCommunityIcons name="edit" size={35} color={COLORS.darkblue}/> */}
@@ -205,6 +306,41 @@ const AdminNotificationScreen = () => {
   
     </ScrollView>
     <Loading loading={loading} />
+ <Modal
+        visible={editModalVisible}
+        onRequestClose={() => {
+          setEditModalVisible(!editModalVisible);
+        }}
+      >
+        <View style={styles.centeredView}>
+          
+          <View style={styles.modalView}>
+          <Header title="Edit Notification" />
+          <TextInput
+              label="Title"
+              returnKeyType="next"
+              value={editTitle.value}
+              onChangeText={text => setEditTitle({ value: text, error: '' })}
+              error={!!editTitle.error}
+              errorText={editTitle.error}
+            />
+             <TextInput
+              label="Notification Detail"
+              value={editDetail.value}
+              onChangeText={text => setEditDetail({ value: text, error: '' })}
+              error={!!editDetail.error}
+              errorText={editDetail.error}
+            />
+            <TouchableOpacity
+              onPress={() => onUpdateNotification()}
+            >
+              <WhiteButton style={{marginTop: 10}}>Update</WhiteButton>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
+
+
     </SafeAreaView>
   );
 };
