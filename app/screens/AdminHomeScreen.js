@@ -40,6 +40,14 @@ const registration_no = route.params.registration;
 
       </View>
             <View style={styles.categoryContainer2}>
+         <TouchableOpacity onPress={() => navigation.navigate('AdminGetFeeScreen')} style={styles.categoryBtn} >
+          <View style={styles.categoryIcon}>
+            <MaterialCommunityIcons name="bell-alert-outline" size={35} color="#FFF"/>
+             <Text style={styles.categoryBtnTxt}>Check Fee Status</Text>
+          </View>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.categoryContainer2}>
          <TouchableOpacity onPress={() => navigation.navigate('AdminNotificationScreen')} style={styles.categoryBtn} >
           <View style={styles.categoryIcon}>
             <MaterialCommunityIcons name="bell-alert-outline" size={35} color="#FFF"/>

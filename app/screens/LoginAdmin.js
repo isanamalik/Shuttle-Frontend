@@ -52,7 +52,8 @@ const LoginAdmin = ({ navigation }) => {
                 }) 
             setLoading(false);
         } catch (e) {
-            setError("Invalid credentials");
+            // setError("Invalid credentials");
+            console.log(e)
             setLoading(false);
         }
     };

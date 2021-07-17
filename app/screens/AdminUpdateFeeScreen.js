@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import Header from '../components/Header'
 
-const AdminFeeScreen = () => {
+const AdminUpdateFeeScreen = () => {
 
   return (
     <SafeAreaView style={{flex: 1}}>
@@ -28,5 +28,5 @@ const styles = StyleSheet.create({
  
   });
 
-export default AdminFeeScreen;
+export default AdminUpdateFeeScreen;
 

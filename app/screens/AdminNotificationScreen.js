@@ -35,49 +35,7 @@ const AdminNotificationScreen = () => {
   const [testInfo, updateTestInfo] = useState([]);
   useEffect(() => {
     setLoading(true)
-  //    try {
-  //     axios.get(`${BASE_URL}/student/get_notifications`)
-  //       .then((res) => {
-  //         setLoading(false)
-  //         let response = res.data
-  //         console.log(res.data.length)
-  //          let allNotificationInfo = [];
-  //          if(response.length > 0 ){
-  //            for(let i=0;i<response.length; i++){
-  //              console.log(response[i]._id)
-  //           allNotificationInfo.push(
-  //             <View style={styles.card} key={i+1}>
-  //             {/* <MaterialCommunityIcons name="edit" size={35} color={COLORS.darkblue}/> */}
-  //             <View style={styles.cardInfo}>   
-  //               <Text style={styles.cardTitle}>{response[i].title}</Text>
-                
-  //               <Text style={styles.cardDetails}>{response[i].message}</Text>
-                
-  //                 <Text style={styles.time}> {Moment(response[i].createdAt).format('DD/MM/YYYY hh:mm A')} </Text>
-  //                  <View style={{ flexDirection: 'row',justifyContent: 'center', paddingVertical: 20  }}>
-              
-  //                 <TouchableOpacity
-  //                  onPress={() => openEditModal(response[i].title,response[i].message, response[i]._id) }
-  //                 >
-  //                   <Button mode="contained" style={{width: 120}}>Edit</Button>
-  //                 </TouchableOpacity>
-  //                 <TouchableOpacity
-  //                 onPress={() => deleteNotification(response[i]._id)}
-  //                 >
-  //                   <WhiteButton mode="contained" style={{width: 120}}>Delete</WhiteButton>
-  //                 </TouchableOpacity>
-  //               </View>
-  //             </View> 
-  //           </View>
-  //           )}
-  //           updateNotificationInfo( allNotificationInfo)
-  //          }
-     
-  //       })
-  //   }
-  //   catch (err) { console.log(err)}
-  // }
-  fetchData();
+    fetchData();
   }
   , [])
 
@@ -85,11 +43,12 @@ const AdminNotificationScreen = () => {
      console.log('delete id', delete_noti_id)
      setLoading(true)
      try {
-          const delete_request =  await axios.delete(`${BASE_URL}/admin/delete_notification`, {
+          const delete_request =  await axios.post(`${BASE_URL}/admin/delete_notification`, {
           _id: delete_noti_id
         }).then((res) => {
-          setLoading(false)
-          console.log(res)
+            fetchData();
+            console.log(res)
+            setLoading(false)
         })
      }
      catch(e){ 
@@ -161,22 +120,6 @@ const AdminNotificationScreen = () => {
         setLoading(false)
         console.log(response.data)
          fetchData();
-      //   let newResponse =  []
-      //   newResponse.push(
-      //   <View style={styles.card} key={1000}>
-      //   <View style={styles.cardInfo}>
-      //     <Text style={styles.cardTitle}>{title.value}</Text>
-      //     <Text style={styles.cardDetails}>
-      //     {detail.value}
-      //     </Text>
-          
-      //       <Text style={styles.time}> {Moment(response[i].createdAt).format('DD/MM/YYYY hh:mm A')} </Text>
-      //   </View>
-      // </View>
-      // )
-      // console.log('new reponse', newResponse)
-      //  updateTestInfo([...testInfo,newResponse])
-      // // navigation.navigate("AdminNotificationScreen")
       })
     } catch (e) {  
       setError(e)
@@ -215,11 +158,11 @@ const openEditModal = (title,message, id) => {
         _id: editID.value
         // timestamp: 123456
       }).then((response) => {
-        setLoading(false)
         console.log(response.data)
         if(response.data._id !== ''){
           setEditModalVisible(false)
-         navigation.navigate('AdminNotificationScreen')
+           fetchData();
+            setLoading(false)
         }
         
       })

@@ -10,7 +10,8 @@ import LandingScreen from './app/screens/LandingScreen';
 import LoginScreen from './app/screens/LoginScreen';
 import DriverScreen from './app/screens/DriverScreen';
 import AdminNotificationScreen from './app/screens/AdminNotificationScreen';
-import AdminFeeScreen from './app/screens/AdminFeeScreen';
+import AdminUpdateFeeScreen from './app/screens/AdminUpdateFeeScreen';
+import AdminGetFeeScreen from './app/screens/AdminGetFeeScreen';
 import {SignupScreen} from './app/screens/SignupScreen';
 import StudentHomeScreen from './app/screens/StudentHomeScreen';
 import ShuttleMapScreen from './app/screens/ShuttleMapScreen';
@@ -164,10 +165,16 @@ export default class App extends Component {
           options={{ headerShown: false }}
         />
           <Stack.Screen
-          name="AdminFeeScreen"
-          component={AdminFeeScreen}
+          name="AdminUpdateFeeScreen"
+          component={AdminUpdateFeeScreen}
             options={{ headerShown: false }}
         />
+        <Stack.Screen
+          name="AdminGetFeeScreen"
+          component={AdminGetFeeScreen}
+            options={{ headerShown: false }}
+        />
+        
       </Stack.Navigator>
     </NavigationContainer>
     );
