@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Item, Button, Image, TouchableOpacity, SectionList, StatusBar, SafeAreaView } from 'react-native';
+import { View, StyleSheet, Item, Button, Image, TouchableOpacity, SectionList, StatusBar, SafeAreaView, ScrollView } from 'react-native';
 import Header from '../components/Header'
 import BackButton from '../components/BackButton';
 import {
@@ -32,7 +32,8 @@ const StudentInfo = ({ route,navigation }) => {
           let response = res.data.id
           console.log(response)
            let studentInfo = [];
-      studentInfo.push(<View style={styles.userInfoSection} key={1}>
+      studentInfo.push(
+      <View style={styles.userInfoSection} key={1}>
             <View style={{flexDirection: 'row', marginTop: 15}}>
           <Avatar.Image 
             source={images.person}
@@ -65,7 +66,7 @@ const StudentInfo = ({ route,navigation }) => {
         </View>
         )
            updateStudentInformation([...studentInformation,studentInfo])
-
+  
 // checking for fee history here
           if(response.fee_history.length == 0){
             console.log('No fee history available')
@@ -77,39 +78,19 @@ const StudentInfo = ({ route,navigation }) => {
             let fee_status = []
             for(let i = 0; i<response.fee_history.length; i++){
             fee_status.push(
-                <View key={i+1}>
-                  <Text>Month: {response.fee_history[i].paid_month}</Text>
-                <Text>Fee Status: {response.fee_history[i].fee_status}</Text>
-                <Text>Paid Date: {response.fee_history[i].paid_date}</Text>
-            
-              
+               <View style={styles.card} key={i+1}>
+                <View style={styles.cardInfo}>
+                  <Text style={styles.cardTitle}>Month: {response.fee_history[i].paid_month}</Text>
+                  <Text style={styles.cardDetails}>
+                  Fee Status: {response.fee_history[i].fee_status}
+                  </Text>
+                    {/* <Text style={styles.time}>Paid Date: {response.fee_history[i].paid_date} </Text> */}
+                </View>
               </View>
             )
        }
-          //   fee_status.push (
-          // <View style={styles.infoBoxWrapper} key={3}>
-          //   <View style={[styles.infoBox, {
-          //     borderRightColor: '#dddddd',
-          //     borderRightWidth: 1
-          //   }]}>
-          //     <Title style={{color: "#0d47a1"}}>Month</Title>
-          //     <Caption>January</Caption>
-          //     <Caption>February</Caption>
-          //     <Caption>March</Caption>
-          //   </View>
-          //   <View style={styles.infoBox}>
-          //     <Title style={{color: "#0d47a1"}}>Fee Status</Title>
-          //     <Caption>Paid</Caption>
-          //     <Caption>Unpaid</Caption>
-          //     <Caption>Paid</Caption>
-          //   </View>
-          // </View>
-          //       )
           setFeeStatus([fee_status])
-
           }
-
-
 
         })
     }
@@ -118,10 +99,16 @@ const StudentInfo = ({ route,navigation }) => {
   console.log('in stddent infi', registration_no)
     return (
           <SafeAreaView style={styles.container}>
+          <ScrollView>
           <BackButton goBack={() => navigation.navigate('StudentHomeScreen')} />
-        {studentInformation}
-        <Text>{responseError}</Text>
-        {feeStatus}
+           <View  style={styles.cardsWrapper}>
+              {studentInformation}
+                {feeStatus}
+            </View>
+             <View>
+              <Text style={styles.error}>{responseError}</Text>
+            </View>
+            </ScrollView>
           <Loading loading={loading} />
         </SafeAreaView>
     );
@@ -181,7 +168,54 @@ const styles = StyleSheet.create({
 student_detail: {
   color:"#777777", 
   marginLeft: 5
-}
+},
+  card: {
+    height: 80,
+    // width: '50%',
+    marginVertical: 5,
+    flexDirection: 'row',
+    shadowColor: '#999',
+    shadowOffset: {width: 0, height: 1},
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    elevation: 5,
+    // marginBottom: 105
+  },
+    cardsWrapper: {
+      // flexDirection: "row",
+    marginTop: 25,
+    width: '90%',
+    alignSelf: 'center',
+    marginBottom: 105
+
+  },
+  cardInfo: {
+    flex: 2,
+    padding: 10,
+    borderColor: '#0d47a1',
+    borderWidth: 1,
+  borderRadius: 8,
+    backgroundColor: '#fff',
+    
+  },
+  cardTitle: {
+    fontWeight: 'bold',
+    color: '#0d47a1',
+    //  textDecorationLine: 'underline'
+  },
+  cardDetails: {
+    fontSize: 12,
+    color: '#444',
+    
+  },
+   time: {
+    fontSize: 12,
+    color: '#444',
+    textAlign: 'right',
+    marginTop: 30
+    
+  },
+
 
 
 });

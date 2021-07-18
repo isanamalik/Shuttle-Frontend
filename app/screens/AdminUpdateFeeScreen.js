@@ -21,6 +21,7 @@ import {
 } from '../core/utils';
 import { BASE_URL } from '../config/index';
 import { images } from '../constants';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const AdminUpdateFeeScreen = ({navigation}) => {
 
@@ -49,7 +50,7 @@ const AdminUpdateFeeScreen = ({navigation}) => {
 
       return;
     }
-    // console.log(registrationNumber.value, month.value.label, year.value.value,feeStatus.value.value)
+    console.log(registrationNumber.value, month.value.label, year.value.value,feeStatus.value.value)
  
     try {
       setLoading(true);
@@ -57,7 +58,7 @@ const AdminUpdateFeeScreen = ({navigation}) => {
        paid_date: year.value.value + '-' + month.value.value,
         st_reg_number: registrationNumber.value,
         fee_status: feeStatus.value.value,
-        paid_month: month.value.value
+        paid_month: month.value.label + " " + year.value.value
       }).then((response) => {
         console.log('check response' ,response.data)
         setLoading(false)
@@ -88,7 +89,10 @@ const AdminUpdateFeeScreen = ({navigation}) => {
   }
   return (
     <SafeAreaView  style={styles.container}>
-     <Header title="Update Student Fee Status" />
+    <BackButton goBack={() => navigation.navigate('AdminHomeScreen')} />
+    <View style={{marginTop: 0}}>
+     <Header title="Update Fee Status" />
+     </View>
    <View style={styles.modalContainer}>
    <Modal
         visible={modalVisible}
@@ -111,7 +115,7 @@ const AdminUpdateFeeScreen = ({navigation}) => {
       </Modal>
 </View>
           <View style={styles.categoryContainer}>
-        <BackButton goBack={() => navigation.navigate('LoginScreen')} />
+        
          <TextInput
               label="Registration Number(e.g 4001048)"
               returnKeyType="next"
@@ -142,13 +146,13 @@ const AdminUpdateFeeScreen = ({navigation}) => {
                 fontWeight: 'bold'
               }}
               containerStyle={{ height: 60, width: 320 }}
-              style={{ backgroundColor: '#fafafa' }}
+              style={styles.dropDown}
               itemStyle={{
                 justifyContent: 'flex-start'
               }}
               dropDownStyle={{ backgroundColor: '#fafafa' }}
               onChangeItem={item => setMonth({ value: item, error: '' })}
-              //  defaultValue={month.value}
+               selectedValue={month.label}
             />
              {month.error ? <Text style={styles.error}>{month.error}</Text> : null}
             <DropDownPicker
@@ -165,7 +169,7 @@ const AdminUpdateFeeScreen = ({navigation}) => {
                 fontWeight: 'bold'
               }}
               containerStyle={{ height: 60, width: 320 }}
-              style={{ backgroundColor: '#fafafa' }}
+              style={styles.dropDown}
               itemStyle={{
                 justifyContent: 'flex-start'
               }}
@@ -185,7 +189,7 @@ const AdminUpdateFeeScreen = ({navigation}) => {
                 fontWeight: 'bold'
               }}
               containerStyle={{ height: 60, width: 320 }}
-              style={{ backgroundColor: '#fafafa' }}
+              style={styles.dropDown}
               itemStyle={{
                 justifyContent: 'flex-start'
               }}
@@ -198,9 +202,11 @@ const AdminUpdateFeeScreen = ({navigation}) => {
    
           </View>
            <View style={styles.row}>
-                    <Text style={styles.error}>{error}</Text>
-                </View>
+              <Text style={styles.error}>{error}</Text>
+              </View>
+              <View style = {{ flex: 1, alignItems: 'center'}}>
           <Button onPress={updateFeeStatus} style={styles.button}>Update</Button>
+          </View>
           <Loading loading={loading} />
         {/* </AuthContainer>
       </ScrollView> */}
@@ -276,6 +282,9 @@ const styles = StyleSheet.create({
   //   paddingTop: 4,
   //   textAlign: 'left'
   // },
+  dropDown: {
+    marginTop: 6
+  }
 });
 
 export default AdminUpdateFeeScreen;

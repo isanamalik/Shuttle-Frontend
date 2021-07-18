@@ -17,8 +17,8 @@ import { images } from '../constants';
 // const Tab = createMaterialTopTabNavigator();
 
 const LoginUser = ({ navigation }) => {
-    const [registrationNumber, setRegistrationNumber] = useState({ value: '4001096', error: '' });
-    const [password, setPassword] = useState({ value: 'temp123', error: '' });
+    const [registrationNumber, setRegistrationNumber] = useState({ value: '', error: '' });
+    const [password, setPassword] = useState({ value: '', error: '' });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const _onLoginPressed = async () => {

@@ -33,6 +33,7 @@ export const SignupScreen = ({ navigation }) => {
   const [error, setError] = useState('');
 
   const _onSignUpPressed = async () => {
+    setError('')
     const nameError = nameValidator(name.value);
     // const emailError = emailValidator(email.value);
     const passwordError = passwordValidator(password.value);
@@ -58,19 +59,19 @@ export const SignupScreen = ({ navigation }) => {
         fee_status: "unpaid",
         password: password.value
       }).then((response) => {
+         setLoading(false);
         console.log(response)
         console.log(response.data.id)
-        if (response.data.id !== null) {
-          setLoading(false);
+        if(response.data.id.hasOwnProperty('msg')  === true) {
+          setError(response.data.id.msg)
+        }
+        else{
           setName({value: ''});
           // setEmail({value: ''});
           setPassword({value: ''});
           setDepartment({label: ''})
           setRegistrationNumber({value: ''})
           navigation.navigate('LoginScreen')
-        }
-        else {
-          setError("An error occured")
         }
 
       })
@@ -180,7 +181,9 @@ export const SignupScreen = ({ navigation }) => {
               error={!!registrationNumber.error}
               errorText={registrationNumber.error}
             />
-
+            <View style={styles.row}>
+              <Text style={styles.error}>{error}</Text>
+            </View>
             <Button  onPress={_onSignUpPressed} style={styles.button}>Sign Up</Button>
 
             <View style={styles.row}>
@@ -191,6 +194,7 @@ export const SignupScreen = ({ navigation }) => {
             </View>
 
           </View>
+         
           <Loading loading={loading} />
         {/* </AuthContainer>
       </ScrollView> */}
