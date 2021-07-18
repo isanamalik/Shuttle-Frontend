@@ -46,3 +46,21 @@ export const detailValidator = detail => {
 
   return '';
 };
+
+export const monthValidator = month => {
+  if (!month || month.length <= 0 ) return 'Please select a month';
+
+  return '';
+};
+
+export const yearValidator = year => {
+  if (!year || year.length <= 0 ) return 'Please select a year';
+
+  return '';
+};
+
+export const feeValidator = fee => {
+   if (!fee || fee.length <= 0 ) return 'Please enter valid fee status';
+
+  return '';
+};

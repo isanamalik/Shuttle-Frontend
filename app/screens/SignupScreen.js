@@ -34,13 +34,13 @@ export const SignupScreen = ({ navigation }) => {
 
   const _onSignUpPressed = async () => {
     const nameError = nameValidator(name.value);
-    const emailError = emailValidator(email.value);
+    // const emailError = emailValidator(email.value);
     const passwordError = passwordValidator(password.value);
     const departmentError = departmentValidator(department.value);
     const registrationNumberError = registrationNumberValidator(registrationNumber.value)
-    if (emailError || passwordError || nameError || departmentError || registrationNumberError) {
+    if ( passwordError || nameError || departmentError || registrationNumberError) {
       setName({ ...name, error: nameError });
-      setEmail({ ...email, error: emailError });
+      // setEmail({ ...email, error: emailError });
       setPassword({ ...password, error: passwordError });
       setDepartment({ ...department, error: departmentError })
       setRegistrationNumber({ ...registrationNumber, error: registrationNumberError })
@@ -63,9 +63,9 @@ export const SignupScreen = ({ navigation }) => {
         if (response.data.id !== null) {
           setLoading(false);
           setName({value: ''});
-          setEmail({value: ''});
+          // setEmail({value: ''});
           setPassword({value: ''});
-          setDepartment({value: ''})
+          setDepartment({label: ''})
           setRegistrationNumber({value: ''})
           navigation.navigate('LoginScreen')
         }
@@ -150,7 +150,7 @@ export const SignupScreen = ({ navigation }) => {
               // errorText={department.error}
             />
              {department.error ? <Text style={styles.error}>{department.error}</Text> : null}
-            <TextInput
+            {/* <TextInput
               label="Email"
               returnKeyType="next"
               value={email.value}
@@ -161,7 +161,7 @@ export const SignupScreen = ({ navigation }) => {
               autoCompleteType="email"
               textContentType="emailAddress"
               keyboardType="email-address"
-            />
+            /> */}
             <TextInput
               label="Password"
               returnKeyType="next"
@@ -181,7 +181,7 @@ export const SignupScreen = ({ navigation }) => {
               errorText={registrationNumber.error}
             />
 
-            <Button mode="contained" onPress={_onSignUpPressed} style={styles.button}>Sign Up</Button>
+            <Button  onPress={_onSignUpPressed} style={styles.button}>Sign Up</Button>
 
             <View style={styles.row}>
               <Text style={styles.label}>Already have an account? </Text>

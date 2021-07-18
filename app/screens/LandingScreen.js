@@ -32,12 +32,12 @@ const LandingScreen = ({ navigation }) => {
           <TouchableOpacity
           onPress={ () => navigation.navigate('LoginScreen') }
           >
-             <Button mode="contained" style={styles.button}>Login</Button>
+             <Button style={styles.button}>Login</Button>
           </TouchableOpacity>
           <TouchableOpacity
           onPress={ () => navigation.navigate('SignupScreen') }
           >
-             <WhiteButton mode="contained" style={styles.button}>Sign Up</WhiteButton>
+             <WhiteButton style={styles.button}>Sign Up</WhiteButton>
           </TouchableOpacity>
           
         </View>

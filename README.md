@@ -53,4 +53,6 @@ react-native run-android
 
 
 Splash Command 
-yarn react-native generate-bootsplash assets/splash2.png --background-color=FFFFFF --logo-width=200 --assets-path=assets --flavor=main
+yarn react-native generate-bootsplash assets/Splash.png --background-color=FFFFFF --logo-width=200 --assets-path=assets --flavor=main
+
+linking date picker with older react native version : npx react-native link react-native-date-picker

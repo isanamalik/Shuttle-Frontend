@@ -10,6 +10,8 @@ target 'shoppinglist' do
 
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
+  pod 'react-native-date-picker', :path => '../node_modules/react-native-date-picker'
+
   target 'shoppinglistTests' do
     inherit! :complete
     # Pods for testing

@@ -101,7 +101,7 @@ const ShuttleRouteScreen = ({route, navigation}) => {
               })
             }}
           >
-             <Button mode="contained" style={styles.button}>Track</Button>
+             <Button  style={styles.button}>Track</Button>
           </TouchableOpacity>
           </View>
             <Loading loading={loading} />

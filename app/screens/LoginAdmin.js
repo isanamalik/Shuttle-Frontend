@@ -92,7 +92,7 @@ const LoginAdmin = ({ navigation }) => {
                     <Text style={styles.error}>{error}</Text>
                 </View>
                
-                <Button mode="contained" onPress={_onLoginPressed}>Login</Button>
+                <Button onPress={_onLoginPressed}>Login</Button>
 
             </View>
 <Loading loading={loading} />

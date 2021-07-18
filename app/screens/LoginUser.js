@@ -17,8 +17,8 @@ import { images } from '../constants';
 // const Tab = createMaterialTopTabNavigator();
 
 const LoginUser = ({ navigation }) => {
-    const [registrationNumber, setRegistrationNumber] = useState({ value: '', error: '' });
-    const [password, setPassword] = useState({ value: '', error: '' });
+    const [registrationNumber, setRegistrationNumber] = useState({ value: '4001096', error: '' });
+    const [password, setPassword] = useState({ value: 'temp123', error: '' });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const _onLoginPressed = async () => {
@@ -100,7 +100,7 @@ const LoginUser = ({ navigation }) => {
                     <Text style={styles.error}>{error}</Text>
                 </View>
                
-                <Button mode="contained" onPress={_onLoginPressed}>Login</Button>
+                <Button onPress={_onLoginPressed}>Login</Button>
                 <View style={styles.row}>
                     <Text style={styles.label}>Don’t have an account? </Text>
                     {/* changing screen name here */}

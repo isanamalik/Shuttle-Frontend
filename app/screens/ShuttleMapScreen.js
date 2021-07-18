@@ -238,7 +238,7 @@ export default class MapScreen extends Component {
               this.addingMarkers();
             }}
           >
-             <Button mode="contained" style={styles.button}>Check Routes</Button>
+             <Button style={styles.button}>Check Routes</Button>
           </TouchableOpacity>
 
             <TouchableOpacity
@@ -246,7 +246,7 @@ export default class MapScreen extends Component {
               this.getDistance();
             }}
           >
-             <WhiteButton mode="contained" style={styles.button}>Calculate ETA</WhiteButton>
+             <WhiteButton style={styles.button}>Calculate ETA</WhiteButton>
               <Text style={{textAlign: 'center'}}>ETA: {this.state.eta ? this.state.eta : 'no eta available'} </Text>
           </TouchableOpacity>
         </View>
@@ -256,14 +256,14 @@ export default class MapScreen extends Component {
                  this.getPolyLineCoordinates('start');
             }}
           >
-             <Button mode="contained" style={styles.button}>Start Tracking</Button>
+             <Button style={styles.button}>Start Tracking</Button>
           </TouchableOpacity>
             <TouchableOpacity
             onPress={() => {
              this.getPolyLineCoordinates('stop');
             }}
           >
-             <WhiteButton mode="contained" style={styles.button}>Stop Tracking</WhiteButton>
+             <WhiteButton  style={styles.button}>Stop Tracking</WhiteButton>
               
           </TouchableOpacity>
         </View>

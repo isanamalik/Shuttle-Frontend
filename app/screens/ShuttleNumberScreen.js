@@ -83,11 +83,15 @@ const ShuttleNumberScreen = ({ navigation }) => {
       const request = await axios.post(`${BASE_URL}/route/by_name`, {
         route_location: locationName.value
       }).then((response) => {
-       
+       console.log('data', response.data)
         let searchResult = []
         let search = response.data
-        console.log('response',search[1].route_id)
-        if (search.length > 0) {
+        // console.log('response',search[1].route_id)
+          if (response.data.length == 0) {
+            setLoading(false);
+            setError("Oops! No shuttle found for your route. Try another location")
+          }
+        else  {
           for (let i = 0; i < search.length; i++) {
             console.log('route ids',search[i].route_id)
                if (i == 3 || i == 6 || i == 9 || i == 12 || i == 15) {
@@ -115,12 +119,9 @@ const ShuttleNumberScreen = ({ navigation }) => {
           setLoading(false);
           // console.log('res', searchResult)
         }
-        else {
-          if (response.data.length == 0) {
-            setLoading(false);
-            setError("Oops! No shuttle found for your route. Try another location")
-          }
-        }
+        // else {
+        
+        // }
       })
     } catch (e) {
       console.log(e)
@@ -149,7 +150,7 @@ const ShuttleNumberScreen = ({ navigation }) => {
               error={!!locationName.error}
               errorText={locationName.error}
             />
-            <Button mode="contained" onPress={onSearch} style={{alignContent: 'center', marginTop: 10}}>Search</Button>
+            <Button  onPress={onSearch} style={{alignContent: 'center', marginTop: 10}}>Search</Button>
            
             <View style={styles.row}>
               <Text style={styles.error}>{error}</Text>

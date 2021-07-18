@@ -25,7 +25,7 @@ const registration_no = route.params.registration;
             <Header title="Welcome Wheels Admin"/>
    
            <View style={styles.categoryContainer2}>
-           <TouchableOpacity onPress={() => navigation.navigate('AdminFeeScreen')}
+           <TouchableOpacity onPress={() => navigation.navigate('AdminUpdateFeeScreen')}
           style={styles.categoryBtn}>
           <View style={styles.categoryIcon}>
             <Ionicons

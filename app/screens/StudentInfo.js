@@ -18,6 +18,9 @@ import { BASE_URL } from '../config/index';
 const StudentInfo = ({ route,navigation }) => {
   const [loading, setLoading] = useState(false);
   const [studentInformation, updateStudentInformation] = React.useState([]);
+    const [responseError, setResponseError] = useState('');
+  const [feeStatus, setFeeStatus] = useState([]);
+
   const registration_no = route.params.reg_no
    useEffect(() => {
     setLoading(true)
@@ -25,6 +28,7 @@ const StudentInfo = ({ route,navigation }) => {
       axios.post(`${BASE_URL}/student/get/` + registration_no)
         .then((res) => {
           setLoading(false)
+          console.log('res', res)
           let response = res.data.id
           console.log(response)
            let studentInfo = [];
@@ -51,28 +55,62 @@ const StudentInfo = ({ route,navigation }) => {
         </View>
         <View style={styles.row}>
           <Icon name="file" color="#777777" size={20}/>
-          <Text style={styles.student_detail}>Registration Number: {response.st_access_cred}</Text>
+          <Text style={styles.student_detail}>Registration Number: {response.st_reg_number}</Text>
         </View>
       </View>
-                <View style={styles.infoBoxWrapper}>
-          <View style={[styles.infoBox, {
-            borderRightColor: '#dddddd',
-            borderRightWidth: 1
-          }]}>
-            <Title style={{color: "#0d47a1"}}>Month</Title>
-            <Caption>January</Caption>
-            <Caption>February</Caption>
-            <Caption>March</Caption>
-          </View>
-          <View style={styles.infoBox}>
-            <Title style={{color: "#0d47a1"}}>Fee Status</Title>
-            <Caption>Paid</Caption>
-            <Caption>Unpaid</Caption>
-            <Caption>Paid</Caption>
-          </View>
-      </View>
-        </View>)
+
+      {/* fee history */}
+      
+              
+        </View>
+        )
            updateStudentInformation([...studentInformation,studentInfo])
+
+// checking for fee history here
+          if(response.fee_history.length == 0){
+            console.log('No fee history available')
+            setResponseError('No fee history available for this student')
+          }
+          else {
+
+            console.log(response.fee_history)
+            let fee_status = []
+            for(let i = 0; i<response.fee_history.length; i++){
+            fee_status.push(
+                <View key={i+1}>
+                  <Text>Month: {response.fee_history[i].paid_month}</Text>
+                <Text>Fee Status: {response.fee_history[i].fee_status}</Text>
+                <Text>Paid Date: {response.fee_history[i].paid_date}</Text>
+            
+              
+              </View>
+            )
+       }
+          //   fee_status.push (
+          // <View style={styles.infoBoxWrapper} key={3}>
+          //   <View style={[styles.infoBox, {
+          //     borderRightColor: '#dddddd',
+          //     borderRightWidth: 1
+          //   }]}>
+          //     <Title style={{color: "#0d47a1"}}>Month</Title>
+          //     <Caption>January</Caption>
+          //     <Caption>February</Caption>
+          //     <Caption>March</Caption>
+          //   </View>
+          //   <View style={styles.infoBox}>
+          //     <Title style={{color: "#0d47a1"}}>Fee Status</Title>
+          //     <Caption>Paid</Caption>
+          //     <Caption>Unpaid</Caption>
+          //     <Caption>Paid</Caption>
+          //   </View>
+          // </View>
+          //       )
+          setFeeStatus([fee_status])
+
+          }
+
+
+
         })
     }
     catch (err) { console.log(err)}
@@ -82,6 +120,8 @@ const StudentInfo = ({ route,navigation }) => {
           <SafeAreaView style={styles.container}>
           <BackButton goBack={() => navigation.navigate('StudentHomeScreen')} />
         {studentInformation}
+        <Text>{responseError}</Text>
+        {feeStatus}
           <Loading loading={loading} />
         </SafeAreaView>
     );

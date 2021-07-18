@@ -127,7 +127,7 @@ const AdminGetFeeScreen = () => {
               error={!!registrationNumber.error}
               errorText={registrationNumber.error}
             />
-            <Button mode="contained" onPress={onSearch} style={{alignContent: 'center', marginTop: 10}}>Search</Button>
+            <Button onPress={onSearch} style={{alignContent: 'center', marginTop: 10}}>Search</Button>
            
             <View style={styles.row}>
               <Text style={styles.error}>{error}</Text>

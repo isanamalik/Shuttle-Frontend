@@ -81,12 +81,12 @@ const AdminNotificationScreen = () => {
                   <TouchableOpacity
                    onPress={() => openEditModal(response[i].title,response[i].message, response[i]._id) }
                   >
-                    <Button mode="contained" style={{width: 120}}>Edit</Button>
+                    <Button  style={{width: 120}}>Edit</Button>
                   </TouchableOpacity>
                   <TouchableOpacity
                   onPress={() => deleteNotification(response[i]._id)}
                   >
-                    <WhiteButton mode="contained" style={{width: 120}}>Delete</WhiteButton>
+                    <WhiteButton style={{width: 120}}>Delete</WhiteButton>
                   </TouchableOpacity>
                 </View>
               </View> 
