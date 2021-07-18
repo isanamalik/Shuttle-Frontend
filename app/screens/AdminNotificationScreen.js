@@ -20,8 +20,9 @@ import { COLORS } from '../constants';
 import Moment from 'moment';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import BackButton from '../components/BackButton'
 
-const AdminNotificationScreen = () => {
+const AdminNotificationScreen = ({navigation}) => {
   const [modalVisible, setModalVisible] = useState(false);
    const [editModalVisible, setEditModalVisible] = useState(false);
   const [title, setTitle] = useState({ value: '', error: '' });
@@ -180,6 +181,7 @@ const openEditModal = (title,message, id) => {
       <View style={{marginTop: 15}}>
     <Header title="Notifications" />
     </View>
+    <BackButton goBack={() => navigation.navigate('AdminHomeScreen')} />
     <View style={styles.centeredView}>
       <Modal
         visible={modalVisible}

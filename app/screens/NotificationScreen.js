@@ -51,6 +51,7 @@ const NotificationScreen = ({ navigation }) => {
            <View style={styles.cardsWrapper}>
           {notificationInfo}
         </View>
+        <BackButton goBack={() => navigation.navigate('StudentHomeScreen')} />
      
         </ScrollView>
         <Loading loading={loading} />
