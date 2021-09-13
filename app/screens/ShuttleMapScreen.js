@@ -118,7 +118,7 @@ export default class MapScreen extends Component {
   getPolyLineCoordinates = async (state) => {
     if (state === 'start') {
       const response = await axios.post(`${BASE_URL}/get_location`, {
-        driver_id: '6969696',
+        driver_id: this.state.route_id,
       });
       console.log({ response: response.data.id });
       this.setState({
@@ -133,9 +133,10 @@ export default class MapScreen extends Component {
           const response = await axios.post(
             `${BASE_URL}/get_location`,
             {
-              driver_id: '6969696',
+              driver_id: this.state.route_id,
             },
           );
+          console.log('response', response.data)
           const history = response.data.id.location_history;
           console.log({ markerPosition: history[history.length - 1] });
           this.setState({
