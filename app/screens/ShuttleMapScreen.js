@@ -8,6 +8,9 @@ import {
   TouchableOpacity,
   Text,
   Image,
+  Modal,
+  Pressable,
+  Alert
 } from 'react-native';
 import { GoogleMap, DistanceMatrixService } from 'react-google-maps';
 import { GOOGLE_API_KEY } from '../../googleApiKey';
@@ -19,6 +22,7 @@ import { BASE_URL } from '../config/index';
 import { Loading } from '../components/Loading';
 import Button from '../components/Button'
 import WhiteButton from '../components/WhiteButton'
+
 
 navigator.geolocation = require('@react-native-community/geolocation');
 
@@ -43,7 +47,10 @@ export default class MapScreen extends Component {
 
       },
       route_id: null,
-      route_coords: []
+      route_coords: [],
+      error: '',
+      modalVisible: false,
+      loading: false
     };
   }
 
@@ -58,7 +65,7 @@ export default class MapScreen extends Component {
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         };
-        this.setState({ initialPosition: region, route_id: this.props.route.params.route_id });
+        this.setState({ initialPosition: region, route_id: this.props.route.params.route_id, error: '' });
         console.log(
           'lat ' +
           position.coords.latitude +
@@ -79,8 +86,15 @@ export default class MapScreen extends Component {
   // componentWillUnmount() {
   //   iGeolocation.clearWatch(this.locationWatchId);
   // }
+   setModalVisible = (visible) => {
+    this.setState({ modalVisible: visible });
+  }
 
+  onCloseModal = (invisible) => {
+    this.setState({modalVisible: invisible})
+  }
   getDistance = async () => {
+    this.setModalVisible(true)
     const userCoords = [this.state.initialPosition.latitude, this.state.initialPosition.longitude]
     const driverCoords = [this.state.markerPosition.latitude, this.state.markerPosition.longitude]
 
@@ -106,12 +120,17 @@ export default class MapScreen extends Component {
       let response = await fetch(finalApiURL);
       let responseJson = await response.json();
       console.log("responseJson:\n");
-      console.log(responseJson);
-
-      console.log("trynna get response", responseJson.rows[0].elements[0].duration.text)
-      this.setState({ eta: responseJson.rows[0].elements[0].duration_in_traffic.text })
+      console.log('response', responseJson);
+      if(responseJson.error_message !== null){
+        this.setState({error: responseJson.error_message})
+      }
+      // *********** add exception handling if responseJson does  not return valid data *******
+      else {
+        console.log("trynna get response", responseJson.rows[0].elements[0].duration.text)
+        this.setState({ eta: responseJson.rows[0].elements[0].duration_in_traffic.text })
+      }
     } catch (error) {
-      console.error(error);
+      console.error('checking error',error);
     }
   }
 
@@ -120,7 +139,12 @@ export default class MapScreen extends Component {
       const response = await axios.post(`${BASE_URL}/get_location`, {
         driver_id: this.state.route_id,
       });
-      console.log({ response: response.data.id });
+      console.log({ response: response.data });
+      if(response.data.msg !== null){
+        this.setState({error: response.data.msg})
+      }
+   if(response.data.id !== undefined)
+      {
       this.setState({
         polyLineCoordinates: response.data.id.location_history,
         markerPosition:
@@ -147,11 +171,14 @@ export default class MapScreen extends Component {
           console.log({ err });
         }
       }, 5000);
+    }
     } else {
       console.log({ polylineInstance });
       if (polylineInstance) {
         clearInterval(polylineInstance);
       }
+
+   
     }
     console.log('here');
   }
@@ -159,11 +186,13 @@ export default class MapScreen extends Component {
   addingMarkers = async () => {
     console.log('Route id',this.state.route_id)
     try {
+    this.setState({loading: true})
       axios.get(`${BASE_URL}/route/get/` + this.state.route_id)
         .then((response) => {
           let route_coords = response.data.route_coords
           this.setState({
-            route_coords: route_coords
+            route_coords: route_coords,
+            loading: false
           })
         })
     }
@@ -172,6 +201,7 @@ export default class MapScreen extends Component {
 
   render() {
     const { coordinates, polyLineCoordinates, markerPosition, addingMarkers } = this.state;
+     const { modalVisible, loading } = this.state;
     let markerList = [];
     for (let i = 0; i < this.state.route_coords.length; i++) {
       markerList.push(
@@ -189,6 +219,25 @@ export default class MapScreen extends Component {
     return (
       <SafeAreaView style={{flex: 1}}>
       <View style={styles.container}>
+        <Modal
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(!modalVisible);
+        }}
+      >
+        <View style={styles.centeredView}>
+          
+          <View style={styles.modalView}>
+          {/* <Header title="" /> */}
+          <Text>Oops! The shuttle has been passed from your stop.</Text>
+            <TouchableOpacity
+              onPress={() => this.onCloseModal(false)}
+            >
+              <WhiteButton style={{marginTop: 10}}>Ok</WhiteButton>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
         <MapView
           draggable={false}
           style={styles.map}
@@ -251,7 +300,9 @@ export default class MapScreen extends Component {
               <Text style={{textAlign: 'center'}}>ETA: {this.state.eta ? this.state.eta : 'no eta available'} </Text>
           </TouchableOpacity>
         </View>
+        <Text style={styles.error}> {this.state.error}</Text>
         <View style={{ flexDirection: 'row', margin: 5, paddingVertical: 10 }}>
+       
         <TouchableOpacity
             onPress={() => {
                  this.getPolyLineCoordinates('start');
@@ -267,8 +318,9 @@ export default class MapScreen extends Component {
              <WhiteButton  style={styles.button}>Stop Tracking</WhiteButton>
               
           </TouchableOpacity>
+           
         </View>
-      
+      <Loading loading={this.state.loading} />
       </SafeAreaView>
     );
   }
@@ -289,6 +341,34 @@ const styles = StyleSheet.create({
   },
   button: {
     width: 170
+  },
+  error: {
+    color: 'red',
+    textAlign: 'center'
+  },
+   modalContainer: {
+    justifyContent: "center",
+      alignContent: "center",
+      alignSelf: 'center'
+  },
+      modalView: {
+      // display: "flex",
+      margin: 20,
+      backgroundColor: "transparent",
+      borderRadius: 20,
+      padding: 35,
+      justifyContent: "center",
+      alignItems: "center",
+      borderColor: '#0d47a1',
+      borderWidth: 2,
+    marginTop: 225,
+    textAlign: 'center'
+    },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignContent: 'center',
+    // margin: 4,
   },
 });
 

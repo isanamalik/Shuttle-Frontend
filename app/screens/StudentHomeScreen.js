@@ -35,9 +35,9 @@ useEffect(() => {
         console.log('noti length',res.data.length)
            let allNotificationInfo = [];
          if(response.length > 0 ){
-             if((res.data.length < 6 )){
-               console.log(response[i].createdAt)
-   for(let i=0;i<response.length; i++){
+             if((res.data.length < 4 )){
+              //  console.log(response[i].createdAt)
+      for(let i=0;i<response.length; i++){
           notificationInfo.push(
             <View style={styles.card} key={i+1}>
             <View style={styles.cardInfo}>
