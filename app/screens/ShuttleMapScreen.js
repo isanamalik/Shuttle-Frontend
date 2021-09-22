@@ -93,6 +93,7 @@ export default class MapScreen extends Component {
 
   onCloseModal = (invisible) => {
     this.setState({modalVisible: invisible})
+    this.props.navigation.navigate('StudentHomeScreen')
     
   }
   getDistance = async () => {
@@ -244,7 +245,9 @@ export default class MapScreen extends Component {
           {/* <Header title="" /> */}
           <Text>Oops! The shuttle has been passed from your stop.</Text>
             <TouchableOpacity
-              onPress={() => this.onCloseModal(false)}
+              onPress={
+                () => this.onCloseModal(false)
+                }
             >
               <WhiteButton style={{marginTop: 10}}>Ok</WhiteButton>
             </TouchableOpacity>
