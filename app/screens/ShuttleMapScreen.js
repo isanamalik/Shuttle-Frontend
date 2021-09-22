@@ -22,6 +22,7 @@ import { BASE_URL } from '../config/index';
 import { Loading } from '../components/Loading';
 import Button from '../components/Button'
 import WhiteButton from '../components/WhiteButton'
+import { NavigationContainer } from '@react-navigation/native';
 
 
 navigator.geolocation = require('@react-native-community/geolocation');
@@ -65,7 +66,7 @@ export default class MapScreen extends Component {
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         };
-        this.setState({ initialPosition: region, route_id: this.props.route.params.route_id, error: '' });
+        this.setState({ initialPosition: region, route_id: this.props.route.params.route_id,  error: '' });
         console.log(
           'lat ' +
           position.coords.latitude +
@@ -92,9 +93,10 @@ export default class MapScreen extends Component {
 
   onCloseModal = (invisible) => {
     this.setState({modalVisible: invisible})
+    
   }
   getDistance = async () => {
-    this.setModalVisible(true)
+    //this.setModalVisible(true)
     const userCoords = [this.state.initialPosition.latitude, this.state.initialPosition.longitude]
     const driverCoords = [this.state.markerPosition.latitude, this.state.markerPosition.longitude]
 
@@ -121,15 +123,26 @@ export default class MapScreen extends Component {
       let responseJson = await response.json();
       console.log("responseJson:\n");
       console.log('response', responseJson);
-      if(responseJson.error_message !== null){
-        this.setState({error: responseJson.error_message})
-      }
+      // if(responseJson.error_message === null){
+      //   this.setState({error: responseJson.error_message})
+      // }
       // *********** add exception handling if responseJson does  not return valid data *******
-      else {
+      //else {
         console.log("trynna get response", responseJson.rows[0].elements[0].duration.text)
         this.setState({ eta: responseJson.rows[0].elements[0].duration_in_traffic.text })
+
+        let stringmin = responseJson.rows[0].elements[0].duration_in_traffic.text
+        let stringmintime = stringmin.split(' ');
+        let stringminNum = parseInt(stringmintime);
+        console.log(stringminNum);
+
+        if (stringminNum === 1){
+          console.log("GONNA CROSS YOU SOON", stringminNum)
+          this.setModalVisible(true)
+        }
       }
-    } catch (error) {
+    //}
+     catch (error) {
       console.error('checking error',error);
     }
   }

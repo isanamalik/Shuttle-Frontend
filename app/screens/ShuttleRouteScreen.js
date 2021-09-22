@@ -97,7 +97,7 @@ const ShuttleRouteScreen = ({route, navigation}) => {
          <TouchableOpacity
             onPress={() => {
               navigation.navigate('ShuttleMapScreen', {
-                route_id: JSON.stringify(route_id)
+                route_id: JSON.stringify(route_id),
               })
             }}
           >
