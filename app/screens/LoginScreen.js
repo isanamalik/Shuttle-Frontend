@@ -45,18 +45,20 @@ const LoginScreen = ({ navigation }) => {
 }
 //    
     return (
-        <SafeAreaView style={{ flex: 1 }}>
-             <BackButton goBack={() => navigation.navigate('LandingScreen')} />
+      <SafeAreaView style={{flex: 1}}>
+        <BackButton goBack={() => navigation.navigate('LandingScreen')} />
         <TabView
-        style={{marginTop: 60}}
-            navigationState={{ index, routes }}
-            renderScene={renderScene}
-            onIndexChange={setIndex}
-            initialLayout={{ width: layout.width }}
-            navigation={navigation}  
-            renderTabBar={props => <TabBar {...props} style={{backgroundColor: COLORS.darkblue}}/>}
-            />           
-        </SafeAreaView>
+          style={{marginTop: 60}}
+          navigationState={{index, routes}}
+          renderScene={renderScene}
+          onIndexChange={setIndex}
+          initialLayout={{width: layout.width}}
+          navigation={navigation}
+          renderTabBar={(props) => (
+            <TabBar {...props} style={{backgroundColor: '#a00'}} />
+          )}
+        />
+      </SafeAreaView>
     );
 };
 const styles = StyleSheet.create({

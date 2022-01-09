@@ -1,1 +1,1 @@
-export const BASE_URL = 'https://st-ned-api.herokuapp.com';
+export const BASE_URL = 'https://abc-depploy.herokuapp.com';

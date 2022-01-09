@@ -22,6 +22,7 @@ const styles = StyleSheet.create({
   button: {
     width: '100%',
     marginVertical: 10,
+    backgroundColor: '#a00',
   },
   text: {
     fontWeight: 'bold',
