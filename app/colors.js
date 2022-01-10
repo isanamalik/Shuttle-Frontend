@@ -4,7 +4,7 @@ const appColors = {
   pink: '#e22794',
   lightPurple: '#DDD8F3',
   lightPurple2: '#d8d5df',
-  primary: '#a00',
+  primary: '#800000',
   primaryDark: '#A32532',
   primaryLight: '#f4f2fd',
   primaryGradientStart: '#4f44b6',

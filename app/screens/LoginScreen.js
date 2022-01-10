@@ -55,7 +55,7 @@ const LoginScreen = ({ navigation }) => {
           initialLayout={{width: layout.width}}
           navigation={navigation}
           renderTabBar={(props) => (
-            <TabBar {...props} style={{backgroundColor: '#a00'}} />
+            <TabBar {...props} style={{backgroundColor: appColors.primary}} />
           )}
         />
       </SafeAreaView>
