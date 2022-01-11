@@ -16,6 +16,7 @@ import { images } from '../constants';
 import LoginUser from './LoginUser'
 import LoginAdmin from './LoginAdmin'
 import { NavigationContainer } from '@react-navigation/native';
+import appColors from '../colors';
 
 // const FirstRoute = () => (
 //     <LoginUser />
@@ -46,9 +47,10 @@ const LoginScreen = ({ navigation }) => {
 //    
     return (
       <SafeAreaView style={{flex: 1}}>
-        <BackButton goBack={() => navigation.navigate('LandingScreen')} />
+        <BackButton style={{marginBottom: 60}}
+        goBack={() => navigation.navigate('LandingScreen')} />
         <TabView
-          style={{marginTop: 60}}
+          style={{marginTop: 60, marginBottom: 30}}
           navigationState={{index, routes}}
           renderScene={renderScene}
           onIndexChange={setIndex}
@@ -78,12 +80,12 @@ const styles = StyleSheet.create({
         marginBottom: 10
     },
     label: {
-        color: theme.colors.secondary,
+        color: appColors.primary,
         marginTop: 4
     },
     link: {
         fontWeight: 'bold',
-        color: COLORS.darkblue,
+        color: appColors.primary,
         marginTop: 4
     },
     error: {

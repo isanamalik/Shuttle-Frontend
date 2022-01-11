@@ -1,15 +1,23 @@
 import React from 'react';
 import {View, Text, Image, StyleSheet} from 'react-native';
 import {Button} from 'react-native-paper';
+import * as Animatable from 'react-native-animatable';
 import appColors from '../colors';
-const LandingPage3 = ({navigation}) => {
+import {useNavigation} from '@react-navigation/native';
+import { COLORS } from '../constants';
+
+const LandingPage3 = () => {
+  const navigation= useNavigation()
   return (
     <View>
-      <Image
-        style={styles.img}
+      <Animatable.Image
+        animation="bounceIn"
+        duraton="1500"
         source={require('../../assets/landing-page3.png')}
+        style={styles.img}
+        //resizeMode="stretch"
       />
-      <View style={styles.bottomContainer}>
+      <Animatable.View animation="fadeInUpBig" style={styles.bottomContainer}>
         <Text
           style={{
             fontWeight: 'bold',
@@ -31,19 +39,19 @@ const LandingPage3 = ({navigation}) => {
             LET'S START
           </Text>
         </Button>
-      </View>
+      </Animatable.View>
     </View>
   );
 };
 const styles = StyleSheet.create({
   img: {
-    marginTop: 180,
-    height: 200,
+    marginTop: 70,
+    height: 300,
     width: '100%',
   },
   bottomContainer: {
     alignItems: 'center',
-    borderRadius: 50,
+    borderRadius: 60,
     marginTop: '20%',
     backgroundColor: appColors.primary,
     width: '100%',
@@ -51,3 +59,4 @@ const styles = StyleSheet.create({
   },
 });
 export default LandingPage3;
+

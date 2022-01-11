@@ -2,14 +2,19 @@ import React from 'react';
 import {View, Text, Image, StyleSheet} from 'react-native';
 import {Button} from 'react-native-paper';
 import appColors from '../colors';
+import * as Animatable from 'react-native-animatable';
+
 const LandingPage1 = ({setIsPageOne, setIsPageTwo}) => {
   return (
     <View>
-      <Image
-        style={styles.img}
+      <Animatable.Image
+        animation="bounceIn"
+        duraton="1500"
         source={require('../../assets/landing-page1.png')}
+        style={styles.img}
+        //resizeMode="stretch"
       />
-      <View style={styles.bottomContainer}>
+      <Animatable.View animation="fadeInUpBig" style={styles.bottomContainer}>
         <Text
           style={{
             fontWeight: 'bold',
@@ -29,7 +34,7 @@ const LandingPage1 = ({setIsPageOne, setIsPageTwo}) => {
           onPress={() => [setIsPageOne(false), setIsPageTwo(true)]}>
           <Text style={{color: appColors.primary, fontSize: 20}}>Next</Text>
         </Button>
-      </View>
+      </Animatable.View>
     </View>
   );
 };
