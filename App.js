@@ -24,6 +24,7 @@ import LoginUser from './app/screens/LoginUser';
 import LoginAdmin from './app/screens/LoginAdmin';
 import AdminHomeScreen from './app/screens/AdminHomeScreen';
 import {AuthContext} from './app/contexts/AuthContext';
+import HomeScreen from './app/screens/HomeScreen';
 
 
 const Stack = createStackNavigator();
@@ -98,6 +99,12 @@ export default class App extends Component {
         <Stack.Screen
           name="LoginScreen"
           component={LoginScreen}
+          // onPress={() =>console.log("hello")}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="HomeScreen"
+          component={HomeScreen}
           // onPress={() =>console.log("hello")}
           options={{headerShown: false}}
         />

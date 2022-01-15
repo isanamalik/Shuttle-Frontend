@@ -22,10 +22,12 @@ import axios from 'axios';
 import {registrationNumberValidator, passwordValidator} from '../core/utils';
 import {Error} from '../components/Error';
 import {images} from '../constants';
+import {useNavigation} from '@react-navigation/native';
 
 // const Tab = createMaterialTopTabNavigator();
 
-const LoginUser = ({navigation}) => {
+const LoginUser = () => {
+  const navigation = useNavigation();
   const [registrationNumber, setRegistrationNumber] = useState({
     value: '',
     error: '',
@@ -109,10 +111,16 @@ const LoginUser = ({navigation}) => {
         />
       </View>
       <View style={{marginTop: 30}}>
-        <Button onPress={_onLoginPressed} style={styles.loginBtn}>
+        <Button
+          onPress={() => navigation.navigate('StudentHomeScreen')}
+          style={styles.loginBtn}>
           <Text style={styles.loginText}>LOGIN</Text>
         </Button>
       </View>
+      <Button onPress={() => navigation.navigate('SignupScreen')}
+        style={{backgroundColor: 'white', padding: 5, margin: 10}}>
+        <Text style={{color: '#800', fontSize: 20}}>Signup</Text>
+      </Button>
     </View>
   );
 };

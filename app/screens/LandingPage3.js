@@ -46,6 +46,7 @@ const LandingPage3 = () => {
 const styles = StyleSheet.create({
   img: {
     marginTop: 70,
+    marginBottom: 15,
     height: 300,
     width: '100%',
   },

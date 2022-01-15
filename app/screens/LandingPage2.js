@@ -41,6 +41,7 @@ const LandingPage2 = ({setIsPageTwo, setIsPageThree}) => {
 const styles = StyleSheet.create({
   img: {
     marginTop: 180,
+    marginBottom: 30,
     height: 200,
     width: '100%',
   },

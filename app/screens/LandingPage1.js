@@ -40,13 +40,14 @@ const LandingPage1 = ({setIsPageOne, setIsPageTwo}) => {
 };
 const styles = StyleSheet.create({
   img: {
-    marginTop: 180,
+    marginTop: 150,
+    marginBottom: 50,
     height: 200,
     width: '100%',
   },
   bottomContainer: {
     alignItems: 'center',
-    borderRadius: 50,
+    borderRadius: 60,
     marginTop: '20%',
     backgroundColor: appColors.primary,
     width: '100%',

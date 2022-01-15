@@ -45,18 +45,18 @@ const StudentInfo = ({ route,navigation }) => {
             <Title style={[styles.title, {
               marginTop:15,
               marginBottom: 5,
-            }]}>{response.st_name}</Title>
+            }]}>Simra</Title>
             <Caption style={styles.caption}>Student</Caption>
           </View>
         </View>
         <View style={styles.userInfoSection}>
         <View style={styles.row}>
           <Icon name="school" color="#777777" size={20}/>
-          <Text style={styles.student_detail}>Department Name: {response.st_department}</Text>
+          <Text style={styles.student_detail}>Department Name: BCIT</Text>
         </View>
         <View style={styles.row}>
           <Icon name="file" color="#777777" size={20}/>
-          <Text style={styles.student_detail}>Registration Number: {response.st_reg_number}</Text>
+          <Text style={styles.student_detail}>Registration Number: 4102993</Text>
         </View>
       </View>
 
@@ -74,7 +74,7 @@ const StudentInfo = ({ route,navigation }) => {
           }
           else {
 
-            console.log(response.fee_history)
+            //console.log(response.fee_history)
             let fee_status = []
             for(let i = 0; i<response.fee_history.length; i++){
             fee_status.push(
@@ -96,7 +96,7 @@ const StudentInfo = ({ route,navigation }) => {
     }
     catch (err) { console.log(err)}
   }, [])
-  console.log('in stddent infi', registration_no)
+  //console.log('studentInformation, registration_no')
     return (
           <SafeAreaView style={styles.container}>
           <ScrollView>
