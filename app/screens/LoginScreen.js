@@ -47,10 +47,8 @@ const LoginScreen = ({ navigation }) => {
 //    
     return (
       <SafeAreaView style={{flex: 1}}>
-        <BackButton style={{marginBottom: 60}}
-        goBack={() => navigation.navigate('LandingScreen')} />
         <TabView
-          style={{marginTop: 60, marginBottom: 30}}
+          style={{marginTop: 20, marginBottom: 30}}
           navigationState={{index, routes}}
           renderScene={renderScene}
           onIndexChange={setIndex}

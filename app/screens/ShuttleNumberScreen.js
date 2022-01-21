@@ -4,7 +4,6 @@ import Header from '../components/Header'
 import TextInput from '../components/TextInput';
 import BackButton from '../components/BackButton';
 import Button from '../components/Button';
-import LinearGradient from 'react-native-linear-gradient';
 import { Loading } from '../components/Loading';
 import { BASE_URL } from '../config/index';
 import { images, icons, COLORS, FONTS, SIZES } from '../constants';
@@ -18,35 +17,46 @@ import appColors from '../colors';
 
 const OptionItem = ({ bgColor, icon, label, onPress, text }) => {
   return (
-    <TouchableOpacity style={{width: '100%'}} onPress={onPress}>
-      <View >
-        <LinearGradient
-          style={[
-            {
-              borderRadius: 10,
-              width: '100%',
-            },
-          ]}
-          colors={['#800', '#800']}
-          //start={{ x: 0, y: 0 }}
-          //end={{ x: 0, y: 1 }}
-        >
-          <View style={{justifyContent: 'space-between', width: '100%'}}>
-            <MaterialIcons name="menu" size={35} color="white" />
-            <Text
-              style={{
-                color: COLORS.white,
-                fontSize: 15,
-                width: '100%',
-              }}>
-              SHUTTLE NO.{text}
-            </Text>
-            <MaterialIcons name="arrow-forward-ios" size={30} color="white" />
+      <TouchableOpacity onPress={onPress}>
+        <View
+          style={{
+            marginRight: 10,
+            marginLeft: 10,
+            textAlign: 'left',
+          }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              width: '160%',
+              marginRight: 3,
+              marginLeft: 3,
+              borderRadius: 14,
+              //borderWidth: 0.75,
+              borderBottomWidth: 1,
+              borderStyle: 'solid',
+              borderColor: appColors.primary,
+              padding: 10,
+            }}>
+            <View style={{flexDirection: 'row', textAlign: 'left'}}>
+              <MaterialIcons name="directions-bus" size={35} color="#E1AD01" />
+              <Text
+                style={{
+                  color: appColors.primary,
+                  fontSize: 18,
+                  fontWeight: 'bold',
+                  textAlign: 'left',
+                  marginLeft: 20,
+                  marginTop: 5,
+                }}>
+                SHUTTLE NO.{text}
+              </Text>
+            </View>
+            <MaterialIcons name="arrow-forward-ios" size={25} color="grey" />
           </View>
-        </LinearGradient>
-      </View>
-      {/* <Text style={{ marginTop: SIZES.base, color: COLORS.gray, ...FONTS.body3 }}>{label}</Text> */}
-    </TouchableOpacity>
+        </View>
+        {/* <Text style={{ marginTop: SIZES.base, color: COLORS.gray, ...FONTS.body3 }}>{label}</Text> */}
+      </TouchableOpacity>
   );
 }
 
@@ -78,8 +88,15 @@ const ShuttleNumberScreen = ({ navigation }) => {
         i == 15
       ) {
         markerList.push(
-          <Text key={i + 20} >
+          <Text
+            key={i + 20}
+            style={{
+              justifyContent: 'center',
+              width: '100%',
+              textAlign: 'left',
+            }}>
             {'\n'}
+            <View style={styles.lineStyle} />
           </Text>,
         );
       }
@@ -89,14 +106,13 @@ const ShuttleNumberScreen = ({ navigation }) => {
           bgColor={['#46aeff', '#5884ff']}
           text={i + 1}
           onPress={() => {
-            navigation.navigate("ShuttleRouteScreen", {
-              route_id: i + 1 
-            })
+            navigation.navigate('ShuttleRouteScreen', {
+              route_id: i + 1,
+            });
             // this.displayRoutes();
           }}
-
-        />
-      )
+        />,
+      );
     }
   
   const onSearch = async () => {
@@ -153,14 +169,13 @@ const ShuttleNumberScreen = ({ navigation }) => {
           bgColor={['#800', '#800']}
           text={search[i].route_id}
           onPress={() => {
-            navigation.navigate("ShuttleRouteScreen", {
-              route_id: search[i].route_id 
-            })
+            navigation.navigate('ShuttleRouteScreen', {
+              route_id: search[i].route_id,
+            });
             // this.displayRoutes();
           }}
-
-        />
-      )
+        />,
+      );
           }
           setSearchResult([...searchResult])
           setLoading(false);
@@ -183,25 +198,45 @@ const ShuttleNumberScreen = ({ navigation }) => {
     <View style={{backgroundColor: '#800'}}>
       <View style={styles.top}>
         <MaterialIcons
-          name="menu"
+          name="arrow-back"
           size={35}
           color="white"
-          // onPress={() =>
-          //   navigation.navigate('StudentInfo', {
-          //     title: 'StudentInfo',
-          //   })
-          //}
+          onPress={() =>
+            navigation.navigate('StudentHomeScreen', {
+              title: 'StudentHomeScreen',
+            })
+          }
+        />
+        <Text style={{color: 'white', fontSize: 20, marginTop: 5}}>
+          Shuttle Schedules
+        </Text>
+        <MaterialIcons
+          name="search"
+          size={33}
+          color="white"
+          onPress={() =>
+            navigation.navigate('QuickNavigation', {
+              title: 'QuickNavigation',
+            })
+          }
         />
       </View>
-      <ScrollView>
-        <View style={styles.bottomContainer}>
-          <View style={{padding: 10, alignItems: 'center', width: '90%'}}>
-            <Text style={{fontWeight: 'bold', fontSize: 17, color: '#800'}}>
-              Search by Area
-            </Text>
+      <View style={styles.bottomContainer}>
+        <View style={{padding: 10, width: '90%'}}>
+          <Text
+            style={{
+              fontWeight: 'bold',
+              fontSize: 17,
+              color: '#800',
+              textAlign: 'left',
+            }}>
+            Search by Area
+          </Text>
+          <View style={styles.inputContainer}>
             <TextInput
+              placeholderTextColor="white"
               style={styles.input}
-              label="Enter your location(e.g Buffer Zone)"
+              placeholder="Enter your location(e.g Buffer Zone)"
               returnKeyType="next"
               value={locationName.value}
               onChangeText={(text) => setLocationName({value: text, error: ''})}
@@ -209,129 +244,26 @@ const ShuttleNumberScreen = ({ navigation }) => {
               errorText={locationName.error}
             />
             <MaterialIcons
+              style={styles.icon}
               onPress={onSearch}
               name="search"
               size={30}
-              color="#800"
+              color="white"
             />
-            <Button
-              onPress={onSearch}
-              style={{alignContent: 'center', marginTop: 10}}>
-              Search
-            </Button>
-
             <View style={styles.row}>
               <Text style={styles.error}>{error}</Text>
             </View>
           </View>
-          <TouchableOpacity
-            style={{
-              elevation: 13,
-              marginTop: '5%',
-              backgroundColor: 'white',
-              borderRadius: 14,
-              borderWidth: 1,
-              borderStyle: 'solid',
-              borderColor: appColors.primary,
-              padding: 15,
-              width: '80%',
-              flexDirection: 'row',
-              justifyContent: 'center',
-            }}
-            onPress={() =>
-              navigation.navigate('StudentInfo', {reg_no: registration_no})
-            }>
-            <Text
-              style={{
-                fontSize: 19,
-                fontWeight: 'bold',
-                color: appColors.primary,
-              }}>
-              QUICK NAVIGATION
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-          // style={{
-          //   elevation: 13,
-          //   marginTop: '10%',
-          //   backgroundColor: 'white',
-          //   borderRadius: 14,
-          //   borderWidth: 1,
-          //   borderStyle: 'solid',
-          //   borderColor: appColors.primary,
-          //   padding: 30,
-          //   width: '90%',
-          //   flexDirection: 'row',
-          //   justifyContent: 'space-between',
-          // }}
-          // onPress={() =>
-          //   navigation.navigate('ShuttleNumberScreen', {
-          //     title: 'ShuttleNumberScreen',
-          //   })
-          //}
-          >
-            <Text style={{marginTop: 20, width: '100%'}}>
-              {markerList} {searchResult}
-            </Text>
-
-            {/* <Text
-            style={{
-              fontSize: 19,
-              fontWeight: 'bold',
-              color: appColors.primary,
-            }}>
-            SHUTTLE SCHEDULES
-          </Text> */}
-            <MaterialIcons name="arrow-forward-ios" size={30} color="#800" />
-          </TouchableOpacity>
-
-          <TouchableOpacity
-          // onPress={() =>
-          //   navigation.navigate('ShuttleNumberScreen', {
-          //     title: 'ShuttleNumberScreen',
-          //   })
-          //}
-          >
-            <MaterialIcons name="menu" size={30} color="#800" />
-            <Text
-              style={{
-                fontSize: 19,
-                fontWeight: 'bold',
-                color: appColors.primary,
-              }}>
-              SHUTTLE SCHEDULES
-            </Text>
-            <MaterialIcons name="arrow-forward-ios" size={30} color="#800" />
-          </TouchableOpacity>
-
-          <Header title="Find Your Shuttle" />
-
-          {/* <View style={{ padding: 18, alignItems: 'center' }}>
-         
-            <TextInput
-              label="Enter your location(e.g Buffer Zone)"
-              returnKeyType="next"
-              value={locationName.value}
-              onChangeText={text => setLocationName({ value: text, error: '' })}
-              error={!!locationName.error}
-              errorText={locationName.error}
-            />
-            <Button  onPress={onSearch} style={{alignContent: 'center', marginTop: 10}}>Search</Button>
-           
-            <View style={styles.row}>
-              <Text style={styles.error}>{error}</Text>
-            </View>
-          </View> */}
-
-          {/* <Text style={{flex: 1, marginRight: SIZES.base}}>
-            {markerList}
-            {searchResult}
-          </Text> */}
-          {/* <View style={{marginBottom: SIZES.radius}}></View> */}
-
-          <Loading loading={loading} />
         </View>
-      </ScrollView>
+
+        <ScrollView style={{width: '100%', height: '500%'}}>
+          <Text style={{width: '100%', textAlign: 'left'}}>
+            {markerList} {searchResult}
+          </Text>
+        </ScrollView>
+
+        <Loading loading={loading} />
+      </View>
     </View>
   );
 };
@@ -364,10 +296,17 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     // margin: 4,
   },
+  inputContainer: {
+    justifyContent: 'center',
+  },
   input: {
-    backgroundColor: '#800',
-    width: '100%',
-  }
-
- });
+    height: 50,
+    backgroundColor: appColors.primary
+  },
+  icon: {
+    position: 'absolute',
+    right: 10,
+    top: 19
+  },
+});
 export default ShuttleNumberScreen;

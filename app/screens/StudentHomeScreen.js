@@ -14,7 +14,7 @@ import {createMaterialBottomTabNavigator} from '@react-navigation/material-botto
 import LinearGradient from 'react-native-linear-gradient';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {images, icons, COLORS, FONTS, SIZES} from '../constants';
-import ShuttleNumberScreen from './ShuttleNumberScreen';
+import ShuttleNumberScreen from './ShuttleNumberScreen(old)';
 import StudentInfo from './StudentInfo';
 import NotificationScreen from './NotificationScreen';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -171,7 +171,9 @@ const StudentHomeScreen = () => {
             justifyContent: 'space-between',
           }}
           onPress={() =>
-            navigation.navigate('StudentInfo', {reg_no: registration_no})
+            navigation.navigate('ShuttleRouteScreen', {
+              title: 'ShuttleRouteScreen',
+            })
           }>
           <Text
             style={{
@@ -236,6 +238,36 @@ const StudentHomeScreen = () => {
               color: appColors.primary,
             }}>
             PAYMENT FOR SHUTTLE
+          </Text>
+          <MaterialIcons name="arrow-forward-ios" size={30} color="#800" />
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={{
+            elevation: 13,
+            marginTop: '5%',
+            backgroundColor: 'white',
+            borderRadius: 14,
+            borderWidth: 1,
+            borderStyle: 'solid',
+            borderColor: appColors.primary,
+            padding: 30,
+            width: '90%',
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+          }}
+          onPress={() =>
+            Linking.openURL(
+              'https://www.neduet.edu.pk/sites/default/files/users/student_affairs/Shuttle_Route.pdf',
+            )
+          }>
+          <Text
+            style={{
+              fontSize: 19,
+              fontWeight: 'bold',
+              color: appColors.primary,
+            }}>
+            QUICK NAVIGATION
           </Text>
           <MaterialIcons name="arrow-forward-ios" size={30} color="#800" />
         </TouchableOpacity>

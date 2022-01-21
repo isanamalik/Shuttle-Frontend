@@ -3,10 +3,17 @@ import {View, Text, Image, StyleSheet} from 'react-native';
 import {Button} from 'react-native-paper';
 import appColors from '../colors';
 import * as Animatable from 'react-native-animatable';
+import {useNavigation} from '@react-navigation/native';
 
 const LandingPage1 = ({setIsPageOne, setIsPageTwo}) => {
+  const navigation = useNavigation();
   return (
     <View>
+      <Button
+        style={{marginBottom: 60, alignItems: 'flex-end'}}
+        onPress={() => navigation.navigate('LoginScreen')}>
+        <Text style={{color: appColors.primary, fontSize: 20}}>SKIP</Text>
+      </Button>
       <Animatable.Image
         animation="bounceIn"
         duraton="1500"
@@ -40,7 +47,7 @@ const LandingPage1 = ({setIsPageOne, setIsPageTwo}) => {
 };
 const styles = StyleSheet.create({
   img: {
-    marginTop: 150,
+    marginTop: 50,
     marginBottom: 50,
     height: 200,
     width: '100%',
@@ -49,7 +56,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 60,
     marginTop: '20%',
-    backgroundColor: appColors.primary,
+    backgroundColor: '#800',
     width: '100%',
     height: 400,
   },

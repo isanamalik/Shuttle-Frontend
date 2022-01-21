@@ -12,10 +12,11 @@ import Header from '../components/Header'
 import BackButton from '../components/BackButton';
 import axios from "axios";
 import { BASE_URL } from '../config/index';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Button from '../components/Button'
 import { Loading } from '../components/Loading';
 import {COLORS} from '../constants'
+import appColors from '../colors';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 const ShuttleRouteScreen = ({route, navigation}) => {
   const [loading, setLoading] = useState(false);
@@ -34,43 +35,61 @@ const ShuttleRouteScreen = ({route, navigation}) => {
            for(let i=0;i<response.data.route_locations.length;i++){
              if(i==response.data.route_locations.length-1){
                   routeList.push(
-            <View key={i}>
-          <View style={styles.row}>
-          <MaterialCommunityIcons name="bus" size={35} color="#0d47a1" />
-          <Text style={styles.item}>{response.data.route_locations[i]}</Text>
-        </View>
-       </View>
-           )
+                    <View key={i}>
+                      <View style={styles.row}>
+                        <MaterialIcons
+                          name="album"
+                          size={35}
+                          color="#E1AD01"
+                        />
+                        <Text style={styles.item}>
+                          {response.data.route_locations[i]}
+                        </Text>
+                      </View>
+                    </View>,
+                  );
              }
              else {
             routeList.push(
-            <View key={i}>
-          <View style={styles.row}>
-          <MaterialCommunityIcons name="bus" size={35} color="#0d47a1" />
-          <Text style={styles.item}>{response.data.route_locations[i]}</Text>
-        </View>
-          <View style={{
-        borderStyle: 'dotted',
-        height:5,
-        borderLeftWidth:2,
-        marginLeft: 16, marginBottom: 2
-       }}/>
-          <View style={{
-        borderStyle: 'dotted',
-        height:5,
-        borderLeftWidth:2,
-        marginLeft: 16,
-         marginBottom: 2
-       }}/>
-          <View style={{
-        borderStyle: 'dotted',
-        height:5,
-        borderLeftWidth:2,
-        marginLeft: 16,
-         marginBottom: 2
-       }}/>
-       </View>
-           )}
+              <View key={i}>
+                <View style={styles.row}>
+                  <MaterialIcons name="album" size={35} color="#E1AD01" />
+                  <Text style={styles.item}>
+                    {response.data.route_locations[i]}
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    borderStyle: 'dotted',
+                    height: 5,
+                    borderLeftWidth: 2,
+                    marginLeft: 16,
+                    marginBottom: 2,
+                    color: '#E1AD01',
+                  }}
+                />
+                <View
+                  style={{
+                    borderStyle: 'dotted',
+                    height: 5,
+                    borderLeftWidth: 2,
+                    marginLeft: 16,
+                    marginBottom: 2,
+                    color: '#E1AD01',
+                  }}
+                />
+                <View
+                  style={{
+                    borderStyle: 'dotted',
+                    height: 5,
+                    borderLeftWidth: 2,
+                    marginLeft: 16,
+                    marginBottom: 2,
+                    color: '#E1AD01',
+                  }}
+                />
+              </View>,
+            );}
            }
            updateRouteLocation([...routeLocation,routeList])
         })
@@ -79,60 +98,117 @@ const ShuttleRouteScreen = ({route, navigation}) => {
   }, [])
 // console.log()
   return (
-    <SafeAreaView style={{flex: 1}} >
-      
-      <View style={styles.container}>
-         <BackButton goBack={() => navigation.navigate('ShuttleNumberScreen')} />
-        <ScrollView>
-             <Text style={styles.header}>Shuttle Number {JSON.stringify(route_id)} Routes</Text>
-            <View style={styles.routesWrapper}>
-
-            {/* you have to display the routes here */}
-            {routeLocation}
-           {/* end them before view tag */}
-        </View>
-   </ScrollView>
-    </View>
- <View style={{  flexDirection: 'row', justifyContent: 'center', alignContent: 'center', marginBottom: 10}}>
-         <TouchableOpacity
-            onPress={() => {
-              navigation.navigate('ShuttleMapScreen', {
-                route_id: JSON.stringify(route_id),
+    <SafeAreaView style={{flex: 1}}>
+      <View style={{backgroundColor: '#800'}}>
+        <View style={styles.top}>
+          <MaterialIcons
+            name="arrow-back"
+            size={35}
+            color="white"
+            onPress={() =>
+              navigation.navigate('StudentHomeScreen', {
+                title: 'StudentHomeScreen',
               })
-            }}
-          >
-             <Button  style={styles.button}>Track</Button>
-          </TouchableOpacity>
+            }
+          />
+          <Text style={styles.header}>
+            Shuttle No. {JSON.stringify(route_id)} Routes
+          </Text>
+          <MaterialIcons
+            name="notifications"
+            size={33}
+            color="white"
+            onPress={() =>
+              navigation.navigate('NotificationScreen', {
+                title: 'Notifications',
+              })
+            }
+          />
+        </View>
+        <View style={styles.bottomContainer}>
+          <View style={styles.container}>
+            <ScrollView>
+              <View style={styles.routesWrapper}>
+                {/* you have to display the routes here */}
+                {routeLocation}
+                {/* end them before view tag */}
+              </View>
+            </ScrollView>
           </View>
-            <Loading loading={loading} />
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignContent: 'center',
+              marginBottom: 10,
+            }}>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('ShuttleMapScreen', {
+                  route_id: JSON.stringify(route_id),
+                });
+              }}>
+              <Button style={styles.loginBtn}>
+                <Text style={styles.loginText}>TRACK</Text>
+              </Button>
+            </TouchableOpacity>
+          </View>
+          <Loading loading={loading} />
+        </View>
+      </View>
     </SafeAreaView>
   );
 };
-const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      padding: 20,
-      marginLeft:10
-    },
-    row: {
-      flexDirection: 'row'
-     },
-     item: {
-       paddingHorizontal: 8,
-       paddingVertical: 5,
-       fontSize: 16,
-       color: '#777777',
 
-     },
-     routesWrapper: {
-       margin: 25
-     },
-        header: {
-        color: COLORS.darkblue,
-        fontSize: 23,
-        textAlign: 'center',
-    },
-  });
+const styles = StyleSheet.create({
+  bottomContainer: {
+    alignItems: 'center',
+    borderRadius: 40,
+    borderBottomEndRadius: 0,
+    borderBottomLeftRadius: 0,
+    marginTop: '3%',
+    backgroundColor: 'white',
+    width: '100%',
+    height: 650,
+  },
+  top: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 10,
+    marginLeft: 10,
+    marginRight: 10,
+  },
+
+  container: {
+    flex: 1,
+    padding: 20,
+    marginLeft: 10,
+  },
+  row: {
+    flexDirection: 'row',
+  },
+  item: {
+    paddingVertical: 5,
+    fontSize: 17,
+    fontWeight: 'bold',
+    color: appColors.primary,
+  },
+  routesWrapper: {
+    margin: 0,
+  },
+  header: {
+    color: 'white',
+    fontSize: 20,
+    textAlign: 'center',
+  },
+  loginBtn: {
+    backgroundColor: '#800',
+    borderRadius: 5,
+  },
+  loginText: {
+    color: 'white',
+  },
+});
 
 export default ShuttleRouteScreen;
 

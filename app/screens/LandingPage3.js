@@ -10,6 +10,11 @@ const LandingPage3 = () => {
   const navigation= useNavigation()
   return (
     <View>
+      <Button
+        style={{marginBottom: 60, alignItems: 'flex-end'}}
+        onPress={() => navigation.navigate('LoginScreen')}>
+        <Text style={{color: appColors.primary, fontSize: 20}}>SKIP</Text>
+      </Button>
       <Animatable.Image
         animation="bounceIn"
         duraton="1500"
@@ -24,7 +29,7 @@ const LandingPage3 = () => {
             fontSize: 27,
             textAlign: 'center',
             color: 'white',
-            marginTop: 40,
+            marginTop: 20,
           }}>
           Get Notified about your shuttle's arrival
         </Text>
@@ -45,8 +50,6 @@ const LandingPage3 = () => {
 };
 const styles = StyleSheet.create({
   img: {
-    marginTop: 70,
-    marginBottom: 15,
     height: 300,
     width: '100%',
   },
@@ -54,7 +57,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 60,
     marginTop: '20%',
-    backgroundColor: appColors.primary,
+    backgroundColor: '#800',
     width: '100%',
     height: 400,
   },

@@ -78,7 +78,7 @@ const LoginUser = () => {
   };
   return (
     <View style={styles.container}>
-      <Text style={styles.headerText}>Let's Get Started</Text>
+      <Text style={styles.headerText}>Let's Get Started!</Text>
       <View style={styles.formContainer}>
         <Text style={styles.formLabel}>REGISTRATION NUMBER</Text>
         <TextInput
@@ -131,15 +131,18 @@ const styles = StyleSheet.create({
   },
   headerText: {
     color: '#800',
-    fontSize: 30,
+    fontSize: 35,
     fontWeight: 'bold',
+    marginVertical: 20,
   },
   formContainer: {
     marginTop: 25,
   },
   formLabel: {
     color: '#800',
-    fontSize: 17,
+    fontSize: 19,
+    fontFamily: 'sans-serif',
+    fontWeight: 'bold',
     marginBottom: 13,
   },
   input: {

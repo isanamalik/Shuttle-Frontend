@@ -38,7 +38,7 @@ const OptionItem = ({ bgColor, icon, label, onPress, text }) => {
   )
 }
 
-const ShuttleNumberScreen = ({ navigation }) => {
+const ShuttleNumberScreenOld = ({ navigation }) => {
   const [locationName, setLocationName] = useState({ value: '', error: '' });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -50,12 +50,13 @@ const ShuttleNumberScreen = ({ navigation }) => {
     for (let i = 0; i < 15; i++) {
       if (i == 3 || i == 6 || i == 9 || i == 12 || i == 15) {
         markerList.push(
-          <Text key={i + 20} style={{ flexDirection: 'row', justifyContent: 'center', margin: 50 }}>{'\n'}{'\n'} </Text>
+          <Text key={i + 20} style={{justifyContent: 'center', width: '90%' }}>{'\n'} </Text>
         )
       }
       markerList.push(
         <OptionItem
           key={i}
+          style={{width: '90%'}}
           bgColor={['#46aeff', '#5884ff']}
           text={i + 1}
           onPress={() => {
@@ -189,4 +190,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default ShuttleNumberScreen;
+export default ShuttleNumberScreenOld;
