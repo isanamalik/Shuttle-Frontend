@@ -17,7 +17,7 @@ const LandingPage1 = ({setIsPageOne, setIsPageTwo}) => {
       <Animatable.Image
         animation="bounceIn"
         duraton="1500"
-        source={require('../../assets/landing-page1.png')}
+        source={require('../../assets/landing-page3.png')}
         style={styles.img}
         //resizeMode="stretch"
       />
