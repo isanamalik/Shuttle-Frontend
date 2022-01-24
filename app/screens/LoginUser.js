@@ -22,10 +22,12 @@ import axios from 'axios';
 import {registrationNumberValidator, passwordValidator} from '../core/utils';
 import {Error} from '../components/Error';
 import {images} from '../constants';
+import {useNavigation} from '@react-navigation/native';
 
 // const Tab = createMaterialTopTabNavigator();
 
-const LoginUser = ({navigation}) => {
+const LoginUser = () => {
+  const navigation = useNavigation();
   const [registrationNumber, setRegistrationNumber] = useState({
     value: '',
     error: '',
@@ -57,7 +59,7 @@ const LoginUser = ({navigation}) => {
         .then((res) => {
           console.log(res.status);
           console.log('reg', registrationNumber.value);
-          if (res.data.msg == 'login succeful') {
+          if (res.data.msg == 'login successful') {
             console.log('here');
             navigation.navigate('StudentHomeScreen', {
               registration: registrationNumber.value,
@@ -76,9 +78,9 @@ const LoginUser = ({navigation}) => {
   };
   return (
     <View style={styles.container}>
-      <Text style={styles.headerText}>Let's get started</Text>
+      <Text style={styles.headerText}>Let's Get Started!</Text>
       <View style={styles.formContainer}>
-        <Text style={styles.formLabel}>Registration Number</Text>
+        <Text style={styles.formLabel}>REGISTRATION NUMBER</Text>
         <TextInput
           placeholderTextColor={'grey'}
           style={styles.input}
@@ -94,7 +96,7 @@ const LoginUser = ({navigation}) => {
         />
       </View>
       <View style={styles.formContainer}>
-        <Text style={styles.formLabel}>Password</Text>
+        <Text style={styles.formLabel}>PASSWORD</Text>
         <TextInput
           placeholderTextColor={'grey'}
           style={styles.input}
@@ -109,10 +111,16 @@ const LoginUser = ({navigation}) => {
         />
       </View>
       <View style={{marginTop: 30}}>
-        <Button onPress={_onLoginPressed} style={styles.loginBtn}>
+        <Button
+          onPress={() => navigation.navigate('StudentHomeScreen')}
+          style={styles.loginBtn}>
           <Text style={styles.loginText}>LOGIN</Text>
         </Button>
       </View>
+      <Button onPress={() => navigation.navigate('SignupScreen')}
+        style={{backgroundColor: 'white', padding: 5, margin: 10}}>
+        <Text style={{color: '#800', fontSize: 20}}>Signup</Text>
+      </Button>
     </View>
   );
 };
@@ -122,26 +130,29 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   headerText: {
-    color: '#a00',
-    fontSize: 25,
+    color: '#800',
+    fontSize: 35,
     fontWeight: 'bold',
+    marginVertical: 20,
   },
   formContainer: {
     marginTop: 25,
   },
   formLabel: {
-    color: '#a00',
-    fontSize: 17,
-    marginBottom: 10,
+    color: '#800',
+    fontSize: 19,
+    fontFamily: 'sans-serif',
+    fontWeight: 'bold',
+    marginBottom: 13,
   },
   input: {
     borderRadius: 5,
     backgroundColor: '#D3D3D3',
-    color: '#a00',
+    color: '#800',
     padding: 10,
   },
   loginBtn: {
-    backgroundColor: '#a00',
+    backgroundColor: '#800',
     borderRadius: 5,
   },
   loginText: {

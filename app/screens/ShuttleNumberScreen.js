@@ -4,7 +4,6 @@ import Header from '../components/Header'
 import TextInput from '../components/TextInput';
 import BackButton from '../components/BackButton';
 import Button from '../components/Button';
-import LinearGradient from 'react-native-linear-gradient';
 import { Loading } from '../components/Loading';
 import { BASE_URL } from '../config/index';
 import { images, icons, COLORS, FONTS, SIZES } from '../constants';
@@ -13,29 +12,52 @@ import {
   locationNameValidator
 } from '../core/utils';
 import { CommonActions } from '@react-navigation/routers';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import appColors from '../colors';
 
 const OptionItem = ({ bgColor, icon, label, onPress, text }) => {
   return (
-    <TouchableOpacity
-      style={{ flex: 1, alignItems: 'center', justifyContent: 'center', margin: 50 }}
-      onPress={onPress}
-    >
-      <View style={[styles.shadow, { width: 75, height: 75, marginRight: 20, marginLeft: 20 }]}>
-        <LinearGradient
-          style={[{ flex: 1, alignItems: 'center', justifyContent: 'center', borderRadius: 15 }]}
-          colors={['#46aeff', '#5884ff']}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 0, y: 1 }}
-        >
-          <Text style={{
-            color: COLORS.white,
-            fontSize: SIZES.h1
-          }}>{text}</Text>
-        </LinearGradient>
-      </View>
-      {/* <Text style={{ marginTop: SIZES.base, color: COLORS.gray, ...FONTS.body3 }}>{label}</Text> */}
-    </TouchableOpacity>
-  )
+      <TouchableOpacity onPress={onPress}>
+        <View
+          style={{
+            marginRight: 10,
+            marginLeft: 10,
+            textAlign: 'left',
+          }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              width: '160%',
+              marginRight: 3,
+              marginLeft: 3,
+              borderRadius: 14,
+              //borderWidth: 0.75,
+              borderBottomWidth: 1,
+              borderStyle: 'solid',
+              borderColor: appColors.primary,
+              padding: 10,
+            }}>
+            <View style={{flexDirection: 'row', textAlign: 'left'}}>
+              <MaterialIcons name="directions-bus" size={35} color="#E1AD01" />
+              <Text
+                style={{
+                  color: appColors.primary,
+                  fontSize: 18,
+                  fontWeight: 'bold',
+                  textAlign: 'left',
+                  marginLeft: 20,
+                  marginTop: 5,
+                }}>
+                SHUTTLE NO.{text}
+              </Text>
+            </View>
+            <MaterialIcons name="arrow-forward-ios" size={25} color="grey" />
+          </View>
+        </View>
+        {/* <Text style={{ marginTop: SIZES.base, color: COLORS.gray, ...FONTS.body3 }}>{label}</Text> */}
+      </TouchableOpacity>
+  );
 }
 
 const ShuttleNumberScreen = ({ navigation }) => {
@@ -48,10 +70,35 @@ const ShuttleNumberScreen = ({ navigation }) => {
   let markerList = [];
   if (locationName.value == '')
     for (let i = 0; i < 15; i++) {
-      if (i == 3 || i == 6 || i == 9 || i == 12 || i == 15) {
+      if (
+        i == 1 ||
+        i == 2 ||
+        i == 3 ||
+        i == 4 ||
+        i == 5 ||
+        i == 6 ||
+        i == 7 ||
+        i == 8 ||
+        i == 9 ||
+        i == 10 ||
+        i == 11 ||
+        i == 12 ||
+        i == 13 ||
+        i == 14 ||
+        i == 15
+      ) {
         markerList.push(
-          <Text key={i + 20} style={{ flexDirection: 'row', justifyContent: 'center', margin: 50 }}>{'\n'}{'\n'} </Text>
-        )
+          <Text
+            key={i + 20}
+            style={{
+              justifyContent: 'center',
+              width: '100%',
+              textAlign: 'left',
+            }}>
+            {'\n'}
+            <View style={styles.lineStyle} />
+          </Text>,
+        );
       }
       markerList.push(
         <OptionItem
@@ -59,14 +106,13 @@ const ShuttleNumberScreen = ({ navigation }) => {
           bgColor={['#46aeff', '#5884ff']}
           text={i + 1}
           onPress={() => {
-            navigation.navigate("ShuttleRouteScreen", {
-              route_id: i + 1 
-            })
+            navigation.navigate('ShuttleRouteScreen', {
+              route_id: i + 1,
+            });
             // this.displayRoutes();
           }}
-
-        />
-      )
+        />,
+      );
     }
   
   const onSearch = async () => {
@@ -94,26 +140,42 @@ const ShuttleNumberScreen = ({ navigation }) => {
         else  {
           for (let i = 0; i < search.length; i++) {
             console.log('route ids',search[i].route_id)
-               if (i == 3 || i == 6 || i == 9 || i == 12 || i == 15) {
-                
-        searchResult.push(
-          <Text key={search[i].route_id} style={{ flexDirection: 'row', justifyContent: 'center', margin: 50 }}>{'\n'}{'\n'} </Text>
-        )
-      }
+               if (
+                 i == 1 ||
+                 i == 2 ||
+                 i == 3 ||
+                 i == 4 ||
+                 i == 5 ||
+                 i == 6 ||
+                 i == 7 ||
+                 i == 8 ||
+                 i == 9 ||
+                 i == 10 ||
+                 i == 11 ||
+                 i == 12 ||
+                 i == 13 ||
+                 i == 14 ||
+                 i == 15
+               ) {
+                 searchResult.push(
+                   <Text
+                     key={search[i].route_id}>
+                   </Text>,
+                 );
+               }
       searchResult.push(
         <OptionItem
           key={i + 1}
-          bgColor={['#46aeff', '#5884ff']}
+          bgColor={['#800', '#800']}
           text={search[i].route_id}
           onPress={() => {
-            navigation.navigate("ShuttleRouteScreen", {
-              route_id: search[i].route_id 
-            })
+            navigation.navigate('ShuttleRouteScreen', {
+              route_id: search[i].route_id,
+            });
             // this.displayRoutes();
           }}
-
-        />
-      )
+        />,
+      );
           }
           setSearchResult([...searchResult])
           setLoading(false);
@@ -133,60 +195,118 @@ const ShuttleNumberScreen = ({ navigation }) => {
     console.log('in display')
   }
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-     <BackButton goBack={() => navigation.navigate('StudentHomeScreen')} />
-      <View style={styles.container}>
-      
-        <ScrollView>
-           <Header title="Find Your Shuttle" />
-           
-          <View style={{ padding: 18, alignItems: 'center' }}>
-         
+    <View style={{backgroundColor: '#800'}}>
+      <View style={styles.top}>
+        <MaterialIcons
+          name="arrow-back"
+          size={35}
+          color="white"
+          onPress={() =>
+            navigation.navigate('StudentHomeScreen', {
+              title: 'StudentHomeScreen',
+            })
+          }
+        />
+        <Text style={{color: 'white', fontSize: 20, marginTop: 5}}>
+          Shuttle Schedules
+        </Text>
+        <MaterialIcons
+          name="search"
+          size={33}
+          color="white"
+          onPress={() =>
+            navigation.navigate('QuickNavigation', {
+              title: 'QuickNavigation',
+            })
+          }
+        />
+      </View>
+      <View style={styles.bottomContainer}>
+        <View style={{padding: 10, width: '90%'}}>
+          <Text
+            style={{
+              fontWeight: 'bold',
+              fontSize: 17,
+              color: '#800',
+              textAlign: 'left',
+            }}>
+            Search by Area
+          </Text>
+          <View style={styles.inputContainer}>
             <TextInput
-              label="Enter your location(e.g Buffer Zone)"
+              placeholderTextColor="white"
+              style={styles.input}
+              placeholder="Enter your location(e.g Buffer Zone)"
               returnKeyType="next"
               value={locationName.value}
-              onChangeText={text => setLocationName({ value: text, error: '' })}
+              onChangeText={(text) => setLocationName({value: text, error: ''})}
               error={!!locationName.error}
               errorText={locationName.error}
             />
-            <Button  onPress={onSearch} style={{alignContent: 'center', marginTop: 10}}>Search</Button>
-           
+            <MaterialIcons
+              style={styles.icon}
+              onPress={onSearch}
+              name="search"
+              size={30}
+              color="white"
+            />
             <View style={styles.row}>
               <Text style={styles.error}>{error}</Text>
             </View>
           </View>
+        </View>
 
-          <Text style={{ flex: 1, marginRight: SIZES.base }}>
-            {markerList}
-            {searchResult}
+        <ScrollView style={{width: '100%', height: '500%'}}>
+          <Text style={{width: '100%', textAlign: 'left'}}>
+            {markerList} {searchResult}
           </Text>
-          <View style={{ marginBottom: SIZES.radius }}>
-          </View>
         </ScrollView>
-      </View >
-       <Loading loading={loading} />
-    </SafeAreaView>
+
+        <Loading loading={loading} />
+      </View>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-
-  container: {
-    flex: 1,
-    marginTop: 30
+  bottomContainer: {
+    alignItems: 'center',
+    borderRadius: 40,
+    marginTop: '3%',
+    backgroundColor: 'white',
+    width: '100%',
+    height: 700,
+  },
+  top: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 10,
+    marginLeft: 10,
+    marginRight: 10,
   },
   error: {
-    color: "red"
+    color: 'red',
+  },
+  error: {
+    color: 'red',
   },
   row: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignContent: 'center',
     // margin: 4,
-  }
-
-
+  },
+  inputContainer: {
+    justifyContent: 'center',
+  },
+  input: {
+    height: 50,
+    backgroundColor: appColors.primary
+  },
+  icon: {
+    position: 'absolute',
+    right: 10,
+    top: 19
+  },
 });
-
 export default ShuttleNumberScreen;

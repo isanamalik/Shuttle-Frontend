@@ -7,6 +7,8 @@ import axios from "axios";
 import { BASE_URL } from '../config/index';
 import { Loading } from '../components/Loading';
 import Moment from 'moment';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import appColors from '../colors';
 
 const NotificationScreen = ({ navigation }) => {
   Moment.locale('en');
@@ -45,30 +47,72 @@ const NotificationScreen = ({ navigation }) => {
   }, [])
 
     return (
-        <SafeAreaView style={styles.container}>
-        <ScrollView>
-        <Header title="Notifications"/>
-           <View style={styles.cardsWrapper}>
-          {notificationInfo}
+      <SafeAreaView style={styles.container}>
+        <View style={{backgroundColor: '#800'}}>
+          <View style={styles.top}>
+            <MaterialIcons
+              name="arrow-back"
+              size={35}
+              color="white"
+              onPress={() =>
+                navigation.navigate('StudentHomeScreen', {
+                  title: 'StudentHomeScreen',
+                })
+              }
+            />
+            <Text style={{color: 'white', fontSize: 20, marginTop: 5}}>
+              Latest Updates
+            </Text>
+            <MaterialIcons
+              name="notifications"
+              size={33}
+              color="white"
+              onPress={() =>
+                navigation.navigate('NotificationScreen', {
+                  title: 'Notifications',
+                })
+              }
+            />
+          </View>
+          <ScrollView>
+            <View style={styles.bottomContainer}>
+              <Text style={styles.text}>Important Announcements</Text>
+              <View style={styles.cardsWrapper}>{notificationInfo}</View>
+            </View>
+          </ScrollView>
+          <Loading loading={loading} />
         </View>
-        <BackButton goBack={() => navigation.navigate('StudentHomeScreen')} />
-     
-        </ScrollView>
-        <Loading loading={loading} />
-        </SafeAreaView>
+      </SafeAreaView>
     );
 };
 
 const styles = StyleSheet.create({
-    container: {
-       flex: 1
-      },
-       cardsWrapper: {
-    marginTop: 25,
+  container: {
+    flex: 1,
+  },
+  cardsWrapper: {
+    marginTop: 10,
     width: '90%',
+    fontSize: 20,
     alignSelf: 'center',
-    marginBottom: 105
-
+    marginBottom: 105,
+  },
+  bottomContainer: {
+    alignItems: 'center',
+    borderRadius: 40,
+    borderBottomEndRadius: 0,
+    borderBottomLeftRadius: 0,
+    marginTop: '3%',
+    backgroundColor: 'white',
+    width: '100%',
+    height: 5000,
+  },
+  top: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 10,
+    marginLeft: 10,
+    marginRight: 10,
   },
   card: {
     height: 100,
@@ -79,35 +123,35 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.8,
     shadowRadius: 2,
     elevation: 5,
-    // marginBottom: 105
+    marginBottom: 10,
+  },
+  text: {
+    color: appColors.primary,
+    fontWeight: 'bold',
+    fontSize: 19,
+    marginTop: 10,
+    marginBottom: 0,
   },
   cardInfo: {
     flex: 2,
     padding: 10,
-    borderColor: '#0d47a1',
-    borderWidth: 1,
-  borderRadius: 8,
-    backgroundColor: '#fff',
-    
+    borderRadius: 10,
+    backgroundColor: '#F5F5F5',
   },
   cardTitle: {
     fontWeight: 'bold',
-    color: '#0d47a1',
-     textDecorationLine: 'underline'
+    color: appColors.primary,
   },
   cardDetails: {
-    fontSize: 12,
+    fontSize: 13,
     color: '#444',
-    
   },
-   time: {
-    fontSize: 12,
+  time: {
+    fontSize: 13,
     color: '#444',
     textAlign: 'right',
-    marginTop: 30
-    
+    marginTop: 30,
   },
-
 });
 
 export default NotificationScreen;

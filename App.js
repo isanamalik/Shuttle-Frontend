@@ -24,6 +24,7 @@ import LoginUser from './app/screens/LoginUser';
 import LoginAdmin from './app/screens/LoginAdmin';
 import AdminHomeScreen from './app/screens/AdminHomeScreen';
 import {AuthContext} from './app/contexts/AuthContext';
+import HomeScreen from './app/screens/HomeScreen';
 
 
 const Stack = createStackNavigator();
@@ -71,113 +72,112 @@ export default class App extends Component {
   
   return (
     <NavigationContainer theme={theme}>
-
       <Stack.Navigator initialRouteName="LandingScreen">
         <Stack.Screen
           name="LandingScreen"
           // changing here
           component={LandingScreen}
           options={{
-            title: "Welcome Wheels",
+            title: 'Welcome Wheels',
             headerShown: false,
             headerStyle: {
-              backgroundColor: COLORS.white
+              backgroundColor: COLORS.white,
             },
             headerLeft: null,
             headerRight: () => (
               <TouchableOpacity
-                style={{ marginRight: SIZES.padding }}
-                onPress={() => console.log("Pressed")}
-              >
-              </TouchableOpacity>
+                style={{marginRight: SIZES.padding}}
+                onPress={() => console.log('Pressed')}></TouchableOpacity>
             ),
           }}
         />
-        <Stack.Screen 
+        <Stack.Screen
           name="NotificationScreen"
           component={NotificationScreen}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="LoginScreen"
           component={LoginScreen}
           // onPress={() =>console.log("hello")}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
-          name="DriverScreen"
-          component={DriverScreen}
+          name="HomeScreen"
+          component={HomeScreen}
+          // onPress={() =>console.log("hello")}
+          options={{headerShown: false}}
         />
+        <Stack.Screen name="DriverScreen" component={DriverScreen} />
         <Stack.Screen
           name="AdminNotificationScreen"
           component={AdminNotificationScreen}
-            options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="SignupScreen"
           component={SignupScreen}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="StudentHomeScreen"
           component={StudentHomeScreen}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="ShuttleMapScreen"
           component={ShuttleMapScreen}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="ShuttleNumberScreen"
           component={ShuttleNumberScreen}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
-         <Stack.Screen
+        <Stack.Screen
           name="StudentInfo"
           component={StudentInfo}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
-         <Stack.Screen
+        <Stack.Screen
           name="About"
           component={About}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
-  
+
         <Stack.Screen
           name="ShuttleRouteScreen"
           component={ShuttleRouteScreen}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
-         <Stack.Screen
+        <Stack.Screen
           name="LoginUser"
           component={LoginUser}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
-         <Stack.Screen
+        <Stack.Screen
           name="LoginAdmin"
           component={LoginAdmin}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
-          <Stack.Screen
+        <Stack.Screen
           name="AdminHomeScreen"
           component={AdminHomeScreen}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
-          <Stack.Screen
+        <Stack.Screen
           name="AdminUpdateFeeScreen"
           component={AdminUpdateFeeScreen}
-            options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="AdminGetFeeScreen"
           component={AdminGetFeeScreen}
-            options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
-        
       </Stack.Navigator>
     </NavigationContainer>
-    );
+  );
 
         }
 
