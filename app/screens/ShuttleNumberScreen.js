@@ -256,7 +256,7 @@ const ShuttleNumberScreen = ({ navigation }) => {
           </View>
         </View>
 
-        <ScrollView style={{width: '100%', height: '500%'}}>
+        <ScrollView style={{width: '100%', height: '100%'}}>
           <Text style={{width: '100%', textAlign: 'left'}}>
             {markerList} {searchResult}
           </Text>
@@ -301,12 +301,12 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 50,
-    backgroundColor: appColors.primary
+    backgroundColor: appColors.primary,
   },
   icon: {
     position: 'absolute',
     right: 10,
-    top: 19
+    top: 19,
   },
 });
 export default ShuttleNumberScreen;

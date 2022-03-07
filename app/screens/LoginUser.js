@@ -23,6 +23,7 @@ import {registrationNumberValidator, passwordValidator} from '../core/utils';
 import {Error} from '../components/Error';
 import {images} from '../constants';
 import {useNavigation} from '@react-navigation/native';
+import appColors from '../colors';
 
 // const Tab = createMaterialTopTabNavigator();
 
@@ -169,12 +170,12 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   label: {
-    color: theme.colors.secondary,
+    color: '#800',
     marginTop: 4,
   },
   link: {
     fontWeight: 'bold',
-    color: COLORS.darkblue,
+    color: '#800',
     marginTop: 4,
   },
   error: {

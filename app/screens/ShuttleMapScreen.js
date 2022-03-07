@@ -232,111 +232,100 @@ export default class MapScreen extends Component {
     // console.log(markerList)
     return (
       <SafeAreaView style={{flex: 1}}>
-      <View style={styles.container}>
-        <Modal
-        visible={modalVisible}
-        onRequestClose={() => {
-          setModalVisible(!modalVisible);
-        }}
-      >
-        <View style={styles.centeredView}>
-          
-          <View style={styles.modalView}>
-          {/* <Header title="" /> */}
-          <Text>Oops! The shuttle has been passed from your stop.</Text>
-            <TouchableOpacity
-              onPress={
-                () => this.onCloseModal(false)
-                }
-            >
-              <WhiteButton style={{marginTop: 10}}>Ok</WhiteButton>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
-        <MapView
-          draggable={false}
-          style={styles.map}
-          initialRegion={coordinates}>
-          <Marker
-            draggable={false}
-            coordinate={{
-              latitude: markerPosition.latitude || coordinates.latitude,
-              longitude: markerPosition.longitude || coordinates.longitude,
+        <View style={styles.container}>
+          <Modal
+            visible={modalVisible}
+            onRequestClose={() => {
+              setModalVisible(!modalVisible);
             }}>
-            <View
-              pointerEvents="none"
-              style={{
-                position: 'absolute',
-                top: 0,
-                bottom: 0,
-                left: 0,
-                right: 0,
-                width: 25,
-                height: 25,
-                alignItems: 'center',
-                justifyContent: 'center',
-                backgroundColor: 'transparent',
-              }}>
-              <Image source={marker} style={{ width: 25, height: 25 }} />
+            <View style={styles.centeredView}>
+              <View style={styles.modalView}>
+                {/* <Header title="" /> */}
+                <Text>Oops! The shuttle has been passed from your stop.</Text>
+                <TouchableOpacity onPress={() => this.onCloseModal(false)}>
+                  <WhiteButton style={{marginTop: 10}}>Ok</WhiteButton>
+                </TouchableOpacity>
+              </View>
             </View>
-          </Marker>
-          {markerList}
+          </Modal>
+          <MapView
+            draggable={false}
+            style={styles.map}
+            initialRegion={coordinates}>
+            <Marker
+              draggable={false}
+              coordinate={{
+                latitude: markerPosition.latitude || coordinates.latitude,
+                longitude: markerPosition.longitude || coordinates.longitude,
+              }}>
+              <View
+                pointerEvents="none"
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  width: 25,
+                  height: 25,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  backgroundColor: 'transparent',
+                }}>
+                <Image source={marker} style={{width: 25, height: 25}} />
+              </View>
+            </Marker>
+            {markerList}
 
-          <Polyline
-            coordinates={polyLineCoordinates}
-            strokeColor="#000" // fallback for when `strokeColors` is not supported by the map-provider
-            strokeColors={[
-              '#7F0000',
-              '#00000000', // no color, creates a "long" gradient between the previous and next coordinate
-              '#B24112',
-              '#E5845C',
-              '#238C23',
-              '#7F0000',
-            ]}
-            strokeWidth={6}
-          />
-        </MapView>
+            <Polyline
+              coordinates={polyLineCoordinates}
+              strokeColor="#000" // fallback for when `strokeColors` is not supported by the map-provider
+              strokeColors={[
+                '#7F0000',
+                '#00000000', // no color, creates a "long" gradient between the previous and next coordinate
+                '#B24112',
+                '#E5845C',
+                '#238C23',
+                '#7F0000',
+              ]}
+              strokeWidth={6}
+            />
+          </MapView>
         </View>
-        <View style={{ flexDirection: 'row', margin: 5, paddingVertical: 10 }}>
-         <TouchableOpacity
+        <View style={{flexDirection: 'row', margin: 5, paddingVertical: 10}}>
+          <TouchableOpacity
             onPress={() => {
               this.addingMarkers();
-            }}
-          >
-             <Button style={styles.button}>Check Routes</Button>
+            }}>
+            <Button style={styles.button1}>CHECK ROUTES</Button>
           </TouchableOpacity>
 
-            <TouchableOpacity
+          <TouchableOpacity
             onPress={() => {
               this.getDistance();
-            }}
-          >
-             <WhiteButton style={styles.button}>Calculate ETA</WhiteButton>
-              <Text style={{textAlign: 'center'}}>ETA: {this.state.eta ? this.state.eta : 'no eta available'} </Text>
+            }}>
+            <Button style={styles.button2}>Calculate ETA</Button>
+            <Text style={{textAlign: 'center'}}>
+              ETA: {this.state.eta ? this.state.eta : 'no eta available'}{' '}
+            </Text>
           </TouchableOpacity>
         </View>
         <Text style={styles.error}> {this.state.error}</Text>
-        <View style={{ flexDirection: 'row', margin: 5, paddingVertical: 10 }}>
-       
-        <TouchableOpacity
+        <View style={{flexDirection: 'row', margin: 5, paddingVertical: 10}}>
+          <TouchableOpacity
             onPress={() => {
-                 this.getPolyLineCoordinates('start');
-            }}
-          >
-             <Button style={styles.button}>Start Tracking</Button>
+              this.getPolyLineCoordinates('start');
+            }}>
+            <Button style={styles.button1}>Start Tracking</Button>
           </TouchableOpacity>
-            <TouchableOpacity
+          <TouchableOpacity
             onPress={() => {
-             this.getPolyLineCoordinates('stop');
-            }}
-          >
-             <WhiteButton  style={styles.button}>Stop Tracking</WhiteButton>
-              
+              this.getPolyLineCoordinates('stop');
+            }}>
+            <Button style={styles.button2}>Stop Tracking</Button>
           </TouchableOpacity>
-           
         </View>
-      <Loading loading={this.state.loading} />
+        <Loading loading={this.state.loading} />
       </SafeAreaView>
     );
   }
@@ -353,33 +342,42 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     // ...StyleSheet.absoluteFillObject,
-
   },
-  button: {
-    width: 170
+  button1: {
+    color: 'black',
+    width: 170,
+    height: 50,
+    backgroundColor: '#800',
+    borderRadius: 10,
+  },
+  button2: {
+    marginLeft: 10,
+    width: 170,
+    backgroundColor: 'grey',
+    borderRadius: 10,
   },
   error: {
     color: 'red',
-    textAlign: 'center'
+    textAlign: 'center',
   },
-   modalContainer: {
-    justifyContent: "center",
-      alignContent: "center",
-      alignSelf: 'center'
+  modalContainer: {
+    justifyContent: 'center',
+    alignContent: 'center',
+    alignSelf: 'center',
   },
-      modalView: {
-      // display: "flex",
-      margin: 20,
-      backgroundColor: "transparent",
-      borderRadius: 20,
-      padding: 35,
-      justifyContent: "center",
-      alignItems: "center",
-      borderColor: '#0d47a1',
-      borderWidth: 2,
+  modalView: {
+    // display: "flex",
+    margin: 20,
+    backgroundColor: 'transparent',
+    borderRadius: 20,
+    padding: 35,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderColor: '#0d47a1',
+    borderWidth: 2,
     marginTop: 225,
-    textAlign: 'center'
-    },
+    textAlign: 'center',
+  },
   row: {
     flexDirection: 'row',
     justifyContent: 'center',

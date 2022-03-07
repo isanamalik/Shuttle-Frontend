@@ -11,6 +11,9 @@ import NotificationScreen from "./NotificationScreen";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Header from '../components/Header'
 import LogoutButton from '../components/LogoutButton';
+import appColors from '../colors';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -19,53 +22,128 @@ const registration_no = route.params.registration;
   console.log('props registration no.', registration_no)
 // const { registration_no } = route.params;
     return (
-        <View style={styles.container}>
-        <LogoutButton logout={() => navigation.navigate('LoginScreen')} />
-            {/* Banner */}
-            <Header title="Welcome Wheels Admin"/>
-   
-           <View style={styles.categoryContainer2}>
-           <TouchableOpacity onPress={() => navigation.navigate('AdminUpdateFeeScreen')}
-          style={styles.categoryBtn}>
-          <View style={styles.categoryIcon}>
-            <Ionicons
-              name="cash-outline"
-              size={35}
-              color="#FFF"
-            />
-            <Text style={styles.categoryBtnTxt}>Update Fee Status</Text>
-          </View>
-    
-        </TouchableOpacity>
-
-      </View>
-            <View style={styles.categoryContainer2}>
-         <TouchableOpacity onPress={() => navigation.navigate('AdminGetFeeScreen')} style={styles.categoryBtn} >
-          <View style={styles.categoryIcon}>
-            <MaterialCommunityIcons name="card-account-details" size={35} color="#FFF"/>
-             <Text style={styles.categoryBtnTxt}>Check Fee Status</Text>
-          </View>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.categoryContainer2}>
-         <TouchableOpacity onPress={() => navigation.navigate('AdminNotificationScreen')} style={styles.categoryBtn} >
-          <View style={styles.categoryIcon}>
-            <MaterialCommunityIcons name="bell-alert-outline" size={35} color="#FFF"/>
-             <Text style={styles.categoryBtnTxt}>Update Notifications</Text>
-          </View>
-        </TouchableOpacity>
-      </View>
+      <View style={{backgroundColor: '#800'}}>
+        <View style={styles.top}>
+          <Text style={{color: 'white', fontSize: 20, marginTop: 5}}>
+            ADMIN
+          </Text>
         </View>
+        <View style={styles.bottomContainer}>
+          {/* Banner */}
+
+          <View style={styles.categoryContainer2}>
+            <TouchableOpacity
+              style={{
+                elevation: 13,
+                marginTop: '15%',
+                backgroundColor: 'white',
+                borderRadius: 14,
+                borderWidth: 1,
+                borderStyle: 'solid',
+                borderColor: appColors.primary,
+                padding: 30,
+                width: '100%',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+              }}
+              onPress={() => navigation.navigate('AdminUpdateFeeScreen')}>
+              <Text
+                style={{
+                  fontSize: 19,
+                  fontWeight: 'bold',
+                  color: appColors.primary,
+                }}>
+                UPDATE FEE STATUS
+              </Text>
+              <MaterialIcons name="arrow-forward-ios" size={30} color="#800" />
+            </TouchableOpacity>
+          </View>
+          <View style={styles.categoryContainer2}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('AdminGetFeeScreen')}
+              style={{
+                elevation: 13,
+                marginTop: '5%',
+                backgroundColor: 'white',
+                borderRadius: 14,
+                borderWidth: 1,
+                borderStyle: 'solid',
+                borderColor: appColors.primary,
+                padding: 30,
+                width: '100%',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+              }}>
+              <Text
+                style={{
+                  fontSize: 19,
+                  fontWeight: 'bold',
+                  color: appColors.primary,
+                }}>
+                CHECK FEE STATUS
+              </Text>
+              <MaterialIcons name="arrow-forward-ios" size={30} color="#800" />
+            </TouchableOpacity>
+          </View>
+          <View style={styles.categoryContainer2}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('AdminNotificationScreen')}
+              style={{
+                elevation: 13,
+                marginTop: '5%',
+                backgroundColor: 'white',
+                borderRadius: 14,
+                borderWidth: 1,
+                borderStyle: 'solid',
+                borderColor: appColors.primary,
+                padding: 30,
+                width: '100%',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+              }}>
+              <Text
+                style={{
+                  fontSize: 19,
+                  fontWeight: 'bold',
+                  color: appColors.primary,
+                }}>
+                UPDATE NOTIFICATIONS
+              </Text>
+              <MaterialIcons name="arrow-forward-ios" size={30} color="#800" />
+            </TouchableOpacity>
+          </View>
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate('LoginScreen', {
+                title: 'LoginScreen',
+              })
+            }>
+            <View style={styles.menu}>
+              <MaterialIcons name="logout" color="#800" size={33} />
+              <Text style={styles.menu_detail}>Logout</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+      </View>
     );
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        marginTop: 40,
-        marginBottom: 40,
-         
-    },
+  top: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: 10,
+    marginLeft: 10,
+    marginRight: 10,
+  },
+  bottomContainer: {
+    alignItems: 'center',
+    borderRadius: 40,
+    marginTop: '3%',
+    backgroundColor: 'white',
+    width: '100%',
+    height: 700,
+  },
   wrapper: {},
   categoryContainer: {
     flexDirection: 'row',
@@ -74,11 +152,10 @@ const styles = StyleSheet.create({
     marginTop: 50,
     // marginBottom: 10,
   },
-    categoryContainer2: {
+  categoryContainer2: {
     flexDirection: 'row',
-    width: '80%',
+    width: '90%',
     alignSelf: 'center',
-    marginTop: 40,
     // marginBottom: 10,
   },
   categoryBtn: {
@@ -94,7 +171,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     width: 140,
     height: 140,
-    backgroundColor: COLORS.darkblue, 
+    backgroundColor: COLORS.darkblue,
     borderRadius: 25,
   },
   categoryBtnTxt: {
@@ -106,8 +183,7 @@ const styles = StyleSheet.create({
     marginTop: 25,
     width: '90%',
     alignSelf: 'center',
-    marginBottom: 105
-
+    marginBottom: 105,
   },
   card: {
     height: 100,
@@ -120,49 +196,56 @@ const styles = StyleSheet.create({
     elevation: 5,
     // marginBottom: 105
   },
-    scrollView: {
+  menu: {
+    marginTop: 230,
+    flexDirection: 'row',
+    marginBottom: 10,
+  },
+  menu_detail: {
+    color: '#800',
+    marginLeft: 15,
+    fontSize: 25,
+    fontWeight: 'bold',
+  },
+  scrollView: {
     height: 320,
     // marginBottom: 25
     // marginVertical: 5,
     // flexDirection: 'row',
- 
   },
-//   cardImgWrapper: {
-//     flex: 1,
-//   },
-//   cardImg: {
-//     height: '100%',
-//     width: '100%',
-//     alignSelf: 'center',
-//     borderRadius: 8,
-//     borderBottomRightRadius: 0,
-//     borderTopRightRadius: 0,
-//   },
+  //   cardImgWrapper: {
+  //     flex: 1,
+  //   },
+  //   cardImg: {
+  //     height: '100%',
+  //     width: '100%',
+  //     alignSelf: 'center',
+  //     borderRadius: 8,
+  //     borderBottomRightRadius: 0,
+  //     borderTopRightRadius: 0,
+  //   },
   cardInfo: {
     flex: 2,
     padding: 10,
     borderColor: '#0d47a1',
     borderWidth: 1,
-  borderRadius: 8,
+    borderRadius: 8,
     backgroundColor: '#fff',
-    
   },
   cardTitle: {
     fontWeight: 'bold',
     color: '#0d47a1',
-     textDecorationLine: 'underline'
+    textDecorationLine: 'underline',
   },
   cardDetails: {
     fontSize: 12,
     color: '#444',
-    
   },
-   time: {
+  time: {
     fontSize: 12,
     color: '#444',
     textAlign: 'right',
-    marginTop: 30
-    
+    marginTop: 30,
   },
 });
 
