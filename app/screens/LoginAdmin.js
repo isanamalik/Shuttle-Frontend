@@ -58,75 +58,164 @@ const LoginAdmin = ({ navigation }) => {
         }
     };
     return (
-        <SafeAreaView style={{ flex: 1 }}>
-            <View style={styles.container}>
-                <Image
-                source={images.logo}
-                resizeMode="contain"
-                style={{
-                    width: '30%',
-                    height: '25%',
-                }}
-                />
-                <TextInput
-                    label="Registration Number(e.g 4001048)"
-                    returnKeyType="next"
-                    value={registrationNumber.value}
-                    onChangeText={text => setRegistrationNumber({ value: text, error: '' })}
-                    error={!!registrationNumber.error}
-                    errorText={registrationNumber.error}
-                    
-                />
-                <TextInput
-                    label="Password"
-                    returnKeyType="done"
-                    value={password.value}
-                    onChangeText={text => setPassword({ value: text, error: '' })}
-                    error={!!password.error}
-                    errorText={password.error}
-                    secureTextEntry
-                    outlineColor="#0d47a1"
-                />
+      //         <SafeAreaView style={{ flex: 1 }}>
+      //             <View style={styles.container}>
+      //                 <Image
+      //                 source={images.logo}
+      //                 resizeMode="contain"
+      //                 style={{
+      //                     width: '30%',
+      //                     height: '25%',
+      //                 }}
+      //                 />
+      //                 <TextInput
+      //                     label="Registration Number(e.g 4001048)"
+      //                     returnKeyType="next"
+      //                     value={registrationNumber.value}
+      //                     onChangeText={text => setRegistrationNumber({ value: text, error: '' })}
+      //                     error={!!registrationNumber.error}
+      //                     errorText={registrationNumber.error}
 
-                <View style={styles.row}>
-                    <Text style={styles.error}>{error}</Text>
-                </View>
-               
-                <Button onPress={_onLoginPressed}>Login</Button>
+      //                 />
+      //                 <TextInput
+      //                     label="Password"
+      //                     returnKeyType="done"
+      //                     value={password.value}
+      //                     onChangeText={text => setPassword({ value: text, error: '' })}
+      //                     error={!!password.error}
+      //                     errorText={password.error}
+      //                     secureTextEntry
+      //                     outlineColor="#0d47a1"
+      //                 />
 
-            </View>
-<Loading loading={loading} />
-        </SafeAreaView>
+      //                 <View style={styles.row}>
+      //                     <Text style={styles.error}>{error}</Text>
+      //                 </View>
+
+      //                 <Button onPress={_onLoginPressed}>Login</Button>
+
+      //             </View>
+      // <Loading loading={loading} />
+      //         </SafeAreaView>
+
+      <View style={styles.container}>
+        <Text style={styles.headerText}>Let's Get Started!</Text>
+        <View style={styles.formContainer}>
+          <Text style={styles.formLabel}>ADMIN ID</Text>
+          <TextInput
+            placeholderTextColor={'grey'}
+            style={styles.input}
+            placeholder="Registration Number(e.g 4001048)"
+            returnKeyType="next"
+            value={registrationNumber.value}
+            onChangeText={(text) =>
+              setRegistrationNumber({value: text, error: ''})
+            }
+            error={!!registrationNumber.error}
+            errorText={registrationNumber.error}
+            color={'#a00'}
+          />
+        </View>
+        <View style={styles.formContainer}>
+          <Text style={styles.formLabel}>PASSWORD</Text>
+          <TextInput
+            placeholderTextColor={'grey'}
+            style={styles.input}
+            placeholder="Password"
+            returnKeyType="next"
+            value={password.value}
+            onChangeText={(text) => setPassword({value: text, error: ''})}
+            error={!!password.error}
+            errorText={password.error}
+            color={'#a00'}
+            secureTextEntry={true}
+          />
+        </View>
+        <View style={styles.row}>
+           <Text style={styles.error}>{error}</Text>
+        </View>
+        <View>
+          <Button onPress={_onLoginPressed} style={styles.loginBtn}>
+            <Text style={styles.loginText}>LOGIN</Text>
+          </Button>
+        </View>
+        <Loading loading={loading} />
+      </View>
     );
 };
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: 'center',
-        padding: 18,
-    },
-    forgotPassword: {
-        width: '100%',
-        alignItems: 'flex-end',
-        marginBottom: 24,
-    },
-    row: {
-        flexDirection: 'row',
-        marginTop: 10,
-        marginBottom: 10
-    },
-    label: {
-        color: theme.colors.secondary,
-        marginTop: 4
-    },
-    link: {
-        fontWeight: 'bold',
-        color: COLORS.darkblue,
-        marginTop: 4
-    },
-    error: {
-        color: "red"
-    }
+    // container: {
+    //     flex: 1,
+    //     alignItems: 'center',
+    //     padding: 18,
+    // },
+    // forgotPassword: {
+    //     width: '100%',
+    //     alignItems: 'flex-end',
+    //     marginBottom: 24,
+    // },
+    // row: {
+    //     flexDirection: 'row',
+    //     marginTop: 10,
+    //     marginBottom: 10
+    // },
+    // label: {
+    //     color: theme.colors.secondary,
+    //     marginTop: 4
+    // },
+    // link: {
+    //     fontWeight: 'bold',
+    //     color: COLORS.darkblue,
+    //     marginTop: 4
+    // },
+    // error: {
+    //     color: "red"
+    // }
+
+     container: {
+    flex: 1,
+    padding: 20,
+  },
+  headerText: {
+    color: '#800',
+    fontSize: 35,
+    fontWeight: 'bold',
+    marginVertical: 20,
+  },
+  formContainer: {
+    marginTop: 25,
+  },
+  formLabel: {
+    color: '#800',
+    fontSize: 19,
+    fontFamily: 'sans-serif',
+    fontWeight: 'bold'
+  },
+  input: {
+    backgroundColor: '#D3D3D3',
+    color: '#800',
+  },
+  loginBtn: {
+    backgroundColor: '#800',
+    borderRadius: 5,
+    width: '100%',
+  },
+  loginText: {
+    color: 'white',
+  },
+  forgotPassword: {
+    width: '100%',
+    alignItems: 'flex-end',
+    marginBottom: 24,
+  },
+  row: {
+    flexDirection: 'row',
+    marginTop: 10,
+    marginBottom: 10,
+  },
+  error: {
+    color: 'red',
+  },
 });
 
 export default LoginAdmin;

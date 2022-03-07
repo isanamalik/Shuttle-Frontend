@@ -62,33 +62,33 @@ const LoginScreen = ({ navigation }) => {
     );
 };
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: 'center',
-        padding: 18,
-    },
-    forgotPassword: {
-        width: '100%',
-        alignItems: 'flex-end',
-        marginBottom: 24,
-    },
-    row: {
-        flexDirection: 'row',
-        marginTop: 10,
-        marginBottom: 10
-    },
-    label: {
-        color: appColors.primary,
-        marginTop: 4
-    },
-    link: {
-        fontWeight: 'bold',
-        color: appColors.primary,
-        marginTop: 4
-    },
-    error: {
-        color: "red"
-    }
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    padding: 18,
+  },
+  forgotPassword: {
+    width: '100%',
+    alignItems: 'flex-end',
+    marginBottom: 24,
+  },
+  row: {
+    flexDirection: 'row',
+    marginTop: 10,
+    marginBottom: 10,
+  },
+  label: {
+    color: '#800',
+    marginTop: 4,
+  },
+  link: {
+    fontWeight: 'bold',
+    color: '#800',
+    marginTop: 4,
+  },
+  error: {
+    color: 'red',
+  },
 });
 
 export default LoginScreen;

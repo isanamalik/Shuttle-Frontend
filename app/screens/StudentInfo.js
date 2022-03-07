@@ -52,7 +52,7 @@ const StudentInfo = ({ route,navigation }) => {
                     marginBottom: 5,
                   },
                 ]}>
-              
+                
                 {/* {response.st_name} */}
               </Title>
               <Caption style={styles.caption}>Student</Caption>

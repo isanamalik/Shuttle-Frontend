@@ -22,6 +22,8 @@ import {
 import { BASE_URL } from '../config/index';
 import { images } from '../constants';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import appColors from '../colors';
 
 const AdminUpdateFeeScreen = ({navigation}) => {
 
@@ -88,189 +90,257 @@ const AdminUpdateFeeScreen = ({navigation}) => {
     setModalVisible(false)
   }
   return (
-    <SafeAreaView  style={styles.container}>
-    <BackButton goBack={() => navigation.navigate('AdminHomeScreen')} />
-    <View style={{marginTop: 0}}>
-     <Header title="Update Fee Status" />
-     </View>
-   <View style={styles.modalContainer}>
-   <Modal
-        visible={modalVisible}
-        onRequestClose={() => {
-          setModalVisible(!modalVisible);
-        }}
-      >
-        <View style={styles.centeredView}>
-          
-          <View style={styles.modalView}>
-          {/* <Header title="" /> */}
-          <Text>Fee Status has been updated. Click ok to update another record</Text>
-            <TouchableOpacity
-              onPress={() => onCloseModal()}
-            >
-              <WhiteButton style={{marginTop: 10}}>Ok</WhiteButton>
-            </TouchableOpacity>
-          </View>
+    <View style={{backgroundColor: '#800'}}>
+      <View style={styles.top}>
+        <MaterialIcons
+          name="arrow-back"
+          size={35}
+          color="white"
+          onPress={() =>
+            navigation.navigate('AdminHomeScreen', {
+              title: 'AdminHomeScreen',
+            })
+          }
+        />
+        <Text style={{color: 'white', fontSize: 20, marginTop: 5}}>
+          Update Fee Status
+        </Text>
+        <MaterialIcons
+          name="close"
+          size={33}
+          color="#800"
+          onPress={() =>
+            navigation.navigate('AdminHomeScreen', {
+              title: 'AdminHomeScreen',
+            })
+          }
+        />
+      </View>
+      <View style={styles.bottomContainer}>
+        <View style={styles.modalContainer}>
+          <Modal
+            visible={modalVisible}
+            onRequestClose={() => {
+              setModalVisible(!modalVisible);
+            }}>
+            <View style={styles.centeredView}>
+              <View style={styles.modalView}>
+                {/* <Header title="" /> */}
+                <Text>
+                  Fee Status has been updated. Click ok to update another record
+                </Text>
+                <TouchableOpacity onPress={() => onCloseModal()}>
+                  <WhiteButton style={{marginTop: 10}}>Ok</WhiteButton>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </Modal>
         </View>
-      </Modal>
-</View>
-          <View style={styles.categoryContainer}>
-        
-         <TextInput
-              label="Registration Number(e.g 4001048)"
+        <View style={{padding: 10, width: '90%'}}>
+          <Text
+            style={{
+              marginTop: 30,
+              fontWeight: 'bold',
+              fontSize: 17,
+              color: '#800',
+              textAlign: 'left',
+            }}>
+            Search by Registration Number
+          </Text>
+
+          <View style={styles.inputContainer}>
+            <TextInput
+              placeholderTextColor="white"
+              style={styles.input}
+              placeholder="Registration Number(e.g 4001048)"
               returnKeyType="next"
               value={registrationNumber.value}
-              onChangeText={text => setRegistrationNumber({ value: text, error: '' })}
+              onChangeText={(text) =>
+                setRegistrationNumber({value: text, error: ''})
+              }
               error={!!registrationNumber.error}
               errorText={registrationNumber.error}
             />
-        
+            <MaterialIcons
+              style={styles.icon}
+              name="search"
+              size={30}
+              color="white"
+            />
+
             <DropDownPicker
               items={[
-                { label: 'January', value: '01' },
-                { label: 'February', value: '02' },
-                { label: 'March', value: '03' },
-                { label: 'April', value: '04' },
-                { label: 'May', value: '05' },
-                { label: 'June', value: '06' },
-                { label: 'July', value: '07' },
-                { label: 'August', value: '08' },
-                { label: 'September', value: '09' },
-                { label: 'October', value: '10' },
-                { label: 'November', value: '11' },
-                { label: 'December', value: '12' },
-
+                {label: 'January', value: '01'},
+                {label: 'February', value: '02'},
+                {label: 'March', value: '03'},
+                {label: 'April', value: '04'},
+                {label: 'May', value: '05'},
+                {label: 'June', value: '06'},
+                {label: 'July', value: '07'},
+                {label: 'August', value: '08'},
+                {label: 'September', value: '09'},
+                {label: 'October', value: '10'},
+                {label: 'November', value: '11'},
+                {label: 'December', value: '12'},
               ]}
-              placeholder="Select Month"
+              placeholder="SELECT MONTH"
               placeholderStyle={{
-                fontWeight: 'bold'
+                fontWeight: 'bold',
+                color: '#800',
+                fontSize: 17,
               }}
-              containerStyle={{ height: 60, width: 320 }}
+              containerStyle={{marginTop: 30, height: 60, width: 335}}
               style={styles.dropDown}
               itemStyle={{
-                justifyContent: 'flex-start'
+                justifyContent: 'flex-start',
               }}
-              dropDownStyle={{ backgroundColor: '#fafafa' }}
-              onChangeItem={item => setMonth({ value: item, error: '' })}
-               selectedValue={month.label}
+              dropDownStyle={{backgroundColor: '#fafafa'}}
+              onChangeItem={(item) => setMonth({value: item, error: ''})}
+              selectedValue={month.label}
             />
-             {month.error ? <Text style={styles.error}>{month.error}</Text> : null}
+            {month.error ? (
+              <Text style={styles.error}>{month.error}</Text>
+            ) : null}
             <DropDownPicker
-
               items={[
-                { label: '2023', value: '2023' },
-                { label: '2022', value: '2022' },
-                { label: '2021', value: '2021' },
-                { label: '2020', value: '2020' },
-                { label: '2019', value: '2019' },
+                {label: '2023', value: '2023'},
+                {label: '2022', value: '2022'},
+                {label: '2021', value: '2021'},
+                {label: '2020', value: '2020'},
+                {label: '2019', value: '2019'},
               ]}
-              placeholder="Select Year"
+              placeholder="SELECT YEAR"
               placeholderStyle={{
-                fontWeight: 'bold'
+                fontWeight: 'bold',
+                color: '#800',
+                fontSize: 17,
               }}
-              containerStyle={{ height: 60, width: 320 }}
+              containerStyle={{marginTop: 30, height: 60, width: 335}}
               style={styles.dropDown}
               itemStyle={{
-                justifyContent: 'flex-start'
+                justifyContent: 'flex-start',
               }}
-              dropDownStyle={{ backgroundColor: '#fafafa' }}
-              onChangeItem={item => setYear({ value: item, error: '' })}
+              dropDownStyle={{backgroundColor: '#fafafa'}}
+              onChangeItem={(item) => setYear({value: item, error: ''})}
             />
-             {year.error ? <Text style={styles.error}>{year.error}</Text> : null}
-       
+            {year.error ? <Text style={styles.error}>{year.error}</Text> : null}
+
             <DropDownPicker
-
               items={[
-                { label: 'Paid', value: 'Paid' },
-                { label: 'Unpaid', value: 'Unpaid' },
+                {label: 'Paid', value: 'Paid'},
+                {label: 'Unpaid', value: 'Unpaid'},
               ]}
-              placeholder="Select Status"
+              placeholder="SELECT STATUS"
               placeholderStyle={{
-                fontWeight: 'bold'
+                fontWeight: 'bold',
+                color: '#800',
+                fontSize: 17,
               }}
-              containerStyle={{ height: 60, width: 320 }}
+              containerStyle={{marginTop: 30, height: 60, width: 335}}
               style={styles.dropDown}
               itemStyle={{
-                justifyContent: 'flex-start'
+                justifyContent: 'flex-start',
               }}
-              dropDownStyle={{ backgroundColor: '#fafafa' }}
-              onChangeItem={item => setFeeStatus({ value: item, error: '' })}
+              dropDownStyle={{backgroundColor: '#fafafa'}}
+              onChangeItem={(item) => setFeeStatus({value: item, error: ''})}
             />
-             {feeStatus.error ? <Text style={styles.error}>{feeStatus.error}</Text> : null}
-       
-          
-   
+            {feeStatus.error ? (
+              <Text style={styles.error}>{feeStatus.error}</Text>
+            ) : null}
           </View>
-           <View style={styles.row}>
-              <Text style={styles.error}>{error}</Text>
-              </View>
-              <View style = {{ flex: 1, alignItems: 'center'}}>
-          <Button onPress={updateFeeStatus} style={styles.button}>Update</Button>
+          <View style={styles.row}>
+            <Text style={styles.error}>{error}</Text>
           </View>
-          <Loading loading={loading} />
+        </View>
+        <View style={{flex: 1, alignItems: 'center'}}>
+          <Button onPress={updateFeeStatus} style={styles.updateBtn}>
+            <Text style={styles.updateText}>UPDATE</Text>
+          </Button>
+        </View>
+        <Loading loading={loading} />
         {/* </AuthContainer>
       </ScrollView> */}
-
-    </SafeAreaView>
-
+      </View>
+    </View>
   );
 };
 const styles = StyleSheet.create({
-   container: {
-         flex: 1,
-        marginTop: 40,
-        // marginBottom: 40,
-         
-    },
-     categoryContainer: {
+  bottomContainer: {
+    alignItems: 'center',
+    borderRadius: 40,
+    marginTop: '3%',
+    backgroundColor: 'white',
+    width: '100%',
+    height: 700,
+  },
+  categoryContainer: {
     width: '90%',
     alignSelf: 'center',
     marginTop: 50,
     // marginBottom: 10,
   },
-   error: {
-    color: "red"
+  top: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 10,
+    marginLeft: 10,
+    marginRight: 10,
+  },
+  updateBtn: {
+    backgroundColor: '#800',
+    borderRadius: 5,
+    width: 340,
+  },
+  updateText: {
+    color: 'white',
+  },
+  error: {
+    color: 'red',
   },
   modalContainer: {
-    justifyContent: "center",
-      alignContent: "center",
-      alignSelf: 'center'
+    justifyContent: 'center',
+    alignContent: 'center',
+    alignSelf: 'center',
   },
-      modalView: {
-      // display: "flex",
-      margin: 20,
-      backgroundColor: "transparent",
-      borderRadius: 20,
-      padding: 35,
-      justifyContent: "center",
-      alignItems: "center",
-      borderColor: '#0d47a1',
-      borderWidth: 2,
+  inputContainer: {
+    justifyContent: 'center',
+  },
+  modalView: {
+    // display: "flex",
+    margin: 20,
+    backgroundColor: '#0d47a1',
+    borderRadius: 20,
+    padding: 35,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderColor: '#0d47a1',
+    borderWidth: 2,
     marginTop: 225,
-    textAlign: 'center'
-    },
+    textAlign: 'center',
+  },
   row: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignContent: 'center',
     // margin: 4,
   },
+  input: {
+    height: 50,
+    backgroundColor: '#800',
+  },
   label: {
     color: theme.colors.secondary,
-    marginTop: 4
-  },
-  button: {
-    marginTop: 24,
+    marginTop: 4,
   },
   // row: {
   //   flexDirection: 'row',
   //   justifyContent: 'center',
-    
+
   // },
   link: {
     fontWeight: 'bold',
     color: COLORS.darkblue,
-    marginTop: 4
+    marginTop: 4,
   },
   scrollView: {
     marginHorizontal: 20,
@@ -283,8 +353,13 @@ const styles = StyleSheet.create({
   //   textAlign: 'left'
   // },
   dropDown: {
-    marginTop: 6
-  }
+    marginTop: 6,
+  },
+  icon: {
+    position: 'absolute',
+    right: 10,
+    top: 19,
+  },
 });
 
 export default AdminUpdateFeeScreen;
