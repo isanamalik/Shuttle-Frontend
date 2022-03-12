@@ -32,7 +32,7 @@ import {useNavigation} from '@react-navigation/native';
 
 const Tab = createMaterialBottomTabNavigator();
 
-const StudentHomeScreen = () => {
+const StudentHomeScreen = ({route}) => {
   const navigation = useNavigation();
   // const registration_no = route.params;
   // Moment.locale('en');
@@ -42,7 +42,7 @@ const StudentHomeScreen = () => {
   // useEffect(() => {
   //   setLoading(true);
   //   try {
-  //     axios.get(`${BASE_URL}/student/get_notifications/`).then((res) => {
+  //     axios.get(`${BASE_URL}/student/get_notifications   /`).then((res) => {
   //       setLoading(false);
   //       let response = res.data;
   //       console.log('notification', res.data.length);
@@ -110,6 +110,7 @@ const StudentHomeScreen = () => {
           onPress={() =>
             navigation.navigate('StudentInfo', {
               title: 'StudentInfo',
+              registration_no:  route.params.registration
             })
           }
         />
@@ -125,7 +126,7 @@ const StudentHomeScreen = () => {
           }
         />
       </View>
-      <View style={styles.bottomContainer}>
+      <ScrollView contentContainerStyle={styles.bottomContainer}>
         <TouchableOpacity
           style={{
             elevation: 13,
@@ -271,7 +272,7 @@ const StudentHomeScreen = () => {
           </Text>
           <MaterialIcons name="arrow-forward-ios" size={30} color="#800" />
         </TouchableOpacity>
-      </View>
+      </ScrollView>
     </View>
   );
 };

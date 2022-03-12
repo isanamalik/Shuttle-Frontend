@@ -37,12 +37,14 @@ const LoginUser = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const _onLoginPressed = async () => {
+    console.log('pressed')
     const registrationNumberError = registrationNumberValidator(
       registrationNumber.value,
     );
     const passwordError = passwordValidator(password.value);
 
     if (registrationNumberError || passwordError) {
+      console.log('in errow',registrationNumberError.at, passwordError )
       setRegistrationNumber({
         ...registrationNumber,
         error: registrationNumberError,
@@ -52,15 +54,16 @@ const LoginUser = () => {
     }
     try {
       setLoading(true);
+      console.log('calling apiiii');
       const request = await axios
         .post(`${BASE_URL}/student/login`, {
           st_reg_number: registrationNumber.value,
           password: password.value,
         })
         .then((res) => {
-          console.log(res.status);
+          console.log('api successsssssss',res.data);
           console.log('reg', registrationNumber.value);
-          if (res.data.msg == 'login successful') {
+          if (res.data.msg == 'login succeful') {
             console.log('here');
             navigation.navigate('StudentHomeScreen', {
               registration: registrationNumber.value,
@@ -113,7 +116,8 @@ const LoginUser = () => {
       </View>
       <View style={{marginTop: 30}}>
         <Button
-          onPress={() => navigation.navigate('StudentHomeScreen')}
+          // onPress={() => navigation.navigate('StudentHomeScreen')}
+          onPress={() => _onLoginPressed()}
           style={styles.loginBtn}>
           <Text style={styles.loginText}>LOGIN</Text>
         </Button>

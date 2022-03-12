@@ -10,7 +10,7 @@ const LandingPage2 = ({setIsPageTwo, setIsPageThree}) => {
   return (
     <View>
       <Button
-        style={{marginBottom: 60, alignItems: 'flex-end'}}
+        style={{ alignItems: 'flex-end'}}
         onPress={() => navigation.navigate('LoginScreen')}>
         <Text style={{color: appColors.primary, fontSize: 20}}>SKIP</Text>
       </Button>
@@ -32,7 +32,7 @@ const LandingPage2 = ({setIsPageTwo, setIsPageThree}) => {
           }}>
           Live Shuttle Tracking{' '}
         </Text>
-        <Text style={{margin: 35, fontSize: 16, color: 'white'}}>
+        <Text style={{margin: 35, fontSize: 16, color: 'white', textAlign:'center'}}>
           {' '}
           Track your shuttle to know it's exact location
         </Text>
@@ -47,18 +47,20 @@ const LandingPage2 = ({setIsPageTwo, setIsPageThree}) => {
 };
 const styles = StyleSheet.create({
   img: {
-    marginTop: 70,
-    marginBottom: 30,
-    height: 200,
+    marginTop: 50,
+    marginBottom: 50,
+    height: 250,
     width: '100%',
+    // backgroundColor:'blue'
+    // paddingBottom: 30
   },
   bottomContainer: {
     alignItems: 'center',
-    borderRadius: 50,
-    marginTop: '20%',
+    borderRadius: 60,
     backgroundColor: '#800',
     width: '100%',
     height: 400,
+    paddingBottom: 20,
   },
 });
 export default LandingPage2;

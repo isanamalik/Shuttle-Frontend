@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -14,92 +14,111 @@ import axios from "axios";
 import { BASE_URL } from '../config/index';
 import Button from '../components/Button'
 import { Loading } from '../components/Loading';
-import {COLORS} from '../constants'
+import { COLORS } from '../constants'
 import appColors from '../colors';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-const ShuttleRouteScreen = ({route, navigation}) => {
+const ShuttleRouteScreen = ({ route, navigation }) => {
   const [loading, setLoading] = useState(false);
   const { route_id } = route.params;
-   const [routeLocation, updateRouteLocation] = React.useState([]);
-  console.log('route parms',route_id)
+  const [routeLocation, updateRouteLocation] = React.useState([]);
+  console.log('route parms', route_id)
   useEffect(() => {
     console.log('route id from search', route_id)
     setLoading(true)
-     try {
+    try {
       const request = axios.get(`${BASE_URL}/route/get/` + route_id)
         .then((response) => {
           setLoading(false)
           console.log(response.data.route_locations)
-           let routeList = [];
-           for(let i=0;i<response.data.route_locations.length;i++){
-             if(i==response.data.route_locations.length-1){
-                  routeList.push(
-                    <View key={i}>
-                      <View style={styles.row}>
-                        <MaterialIcons
-                          name="album"
-                          size={35}
-                          color="#E1AD01"
-                        />
-                        <Text style={styles.item}>
-                          {response.data.route_locations[i]}
-                        </Text>
-                      </View>
-                    </View>,
-                  );
-             }
-             else {
-            routeList.push(
-              <View key={i}>
-                <View style={styles.row}>
-                  <MaterialIcons name="album" size={35} color="#E1AD01" />
-                  <Text style={styles.item}>
-                    {response.data.route_locations[i]}
-                  </Text>
-                </View>
-                <View
-                  style={{
-                    borderStyle: 'dotted',
-                    height: 5,
-                    borderLeftWidth: 2,
-                    marginLeft: 16,
-                    marginBottom: 2,
-                    color: '#E1AD01',
-                  }}
-                />
-                <View
-                  style={{
-                    borderStyle: 'dotted',
-                    height: 5,
-                    borderLeftWidth: 2,
-                    marginLeft: 16,
-                    marginBottom: 2,
-                    color: '#E1AD01',
-                  }}
-                />
-                <View
-                  style={{
-                    borderStyle: 'dotted',
-                    height: 5,
-                    borderLeftWidth: 2,
-                    marginLeft: 16,
-                    marginBottom: 2,
-                    color: '#E1AD01',
-                  }}
-                />
-              </View>,
-            );}
-           }
-           updateRouteLocation([...routeLocation,routeList])
+          let routeList = [];
+          for (let i = 0; i < response.data.route_locations.length; i++) {
+            if (i == response.data.route_locations.length - 1) {
+              routeList.push(
+                <View key={i}>
+                  <View style={styles.row}>
+                    <MaterialIcons
+                      name="album"
+                      size={35}
+                      color="#E1AD01"
+                    />
+                    <Text style={styles.item}>
+                      {response.data.route_locations[i]}
+                    </Text>
+                  </View>
+                </View>,
+              );
+            }
+            else {
+              routeList.push(
+                <View key={i}>
+                  <View style={styles.row}>
+                    <MaterialIcons name="album" size={35} color="#E1AD01" />
+                    <Text style={styles.item}>
+                      {response.data.route_locations[i]}
+                    </Text>
+                  </View>
+                  <View
+                    style={{
+                      borderStyle: 'dotted',
+                      height: 5,
+                      borderLeftWidth: 2,
+                      marginLeft: 16,
+                      marginBottom: 2,
+                      color: '#E1AD01',
+                    }}
+                  />
+                  <View
+                    style={{
+                      borderStyle: 'dotted',
+                      height: 5,
+                      borderLeftWidth: 2,
+                      marginLeft: 16,
+                      marginBottom: 2,
+                      color: '#E1AD01',
+                    }}
+                  />
+                  <View
+                    style={{
+                      borderStyle: 'dotted',
+                      height: 5,
+                      borderLeftWidth: 2,
+                      marginLeft: 16,
+                      marginBottom: 2,
+                      color: '#E1AD01',
+                    }}
+                  />
+                </View>,
+              );
+            }
+          }
+          updateRouteLocation([...routeLocation, routeList])
         })
     }
-    catch (err) { console.log(err)}
+    catch (err) { console.log(err) }
   }, [])
-// console.log()
+  // console.log()
   return (
-    <SafeAreaView style={{flex: 1}}>
-      <View style={{backgroundColor: '#800'}}>
+    <SafeAreaView style={{ flex: 1 }}>
+      {/* <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignContent: 'center',
+              marginBottom: 10,
+            }}>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('ShuttleMapScreen', {
+                  route_id: JSON.stringify(route_id),
+                });
+              }}>
+              <Button style={styles.loginBtn}>
+                <Text style={styles.loginText}>TRACK</Text>
+              </Button>
+            </TouchableOpacity>
+          </View> */}
+      <View style={{ backgroundColor: '#800' }}>
         <View style={styles.top}>
           <MaterialIcons
             name="arrow-back"
@@ -125,36 +144,33 @@ const ShuttleRouteScreen = ({route, navigation}) => {
             }
           />
         </View>
-        <View style={styles.bottomContainer}>
+        <ScrollView contentContainerStyle={styles.bottomContainer}>
           <View style={styles.container}>
-            <ScrollView>
+            {/* <ScrollView> */}
               <View style={styles.routesWrapper}>
-                {/* you have to display the routes here */}
                 {routeLocation}
-                {/* end them before view tag */}
               </View>
-            </ScrollView>
-          </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'center',
-              alignContent: 'center',
-              marginBottom: 10,
-            }}>
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate('ShuttleMapScreen', {
-                  route_id: JSON.stringify(route_id),
-                });
-              }}>
-              <Button style={styles.loginBtn}>
-                <Text style={styles.loginText}>TRACK</Text>
-              </Button>
-            </TouchableOpacity>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'center',
+                  alignContent: 'center',
+                  marginBottom: 10,
+                }}>
+                <TouchableOpacity
+                  onPress={() => {
+                    navigation.navigate('ShuttleMapScreen', {
+                      route_id: JSON.stringify(route_id),
+                    });
+                  }}>
+                  <Button style={styles.loginBtn}>
+                    <Text style={styles.loginText}>TRACK</Text>
+                  </Button>
+                </TouchableOpacity>
+              </View>
           </View>
           <Loading loading={loading} />
-        </View>
+        </ScrollView>
       </View>
     </SafeAreaView>
   );
@@ -167,9 +183,10 @@ const styles = StyleSheet.create({
     borderBottomEndRadius: 0,
     borderBottomLeftRadius: 0,
     marginTop: '3%',
+    paddingBottom: 30,
     backgroundColor: 'white',
     width: '100%',
-    height: 650,
+    // height: '100%',
   },
   top: {
     flexDirection: 'row',

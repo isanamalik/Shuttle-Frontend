@@ -1,26 +1,27 @@
 import React from 'react';
-import {View, Text, Image, StyleSheet} from 'react-native';
-import {Button} from 'react-native-paper';
+import { View, Text, Image, StyleSheet } from 'react-native';
+import { Button } from 'react-native-paper';
 import appColors from '../colors';
 import * as Animatable from 'react-native-animatable';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
-const LandingPage1 = ({setIsPageOne, setIsPageTwo}) => {
+const LandingPage1 = ({ setIsPageOne, setIsPageTwo }) => {
   const navigation = useNavigation();
   return (
     <View>
       <Button
-        style={{marginBottom: 60, alignItems: 'flex-end'}}
+        style={{ marginBottom: 60, alignItems: 'flex-end' }}
         onPress={() => navigation.navigate('LoginScreen')}>
-        <Text style={{color: appColors.primary, fontSize: 20}}>SKIP</Text>
+        <Text style={{ color: appColors.primary, fontSize: 20 }}>SKIP</Text>
       </Button>
-      <Animatable.Image
-        animation="bounceIn"
-        duraton="1500"
-        source={require('../../assets/landing-page3.png')}
-        style={styles.img}
+      <View style={styles.img}>
+        <Animatable.Image
+          animation="bounceIn"
+          duraton="1500"
+          source={require('../../assets/landing-page3.png')}
         //resizeMode="stretch"
-      />
+        />
+      </View>
       <Animatable.View animation="fadeInUpBig" style={styles.bottomContainer}>
         <Text
           style={{
@@ -32,14 +33,14 @@ const LandingPage1 = ({setIsPageOne, setIsPageTwo}) => {
           }}>
           Shuttle Routes and other Updates
         </Text>
-        <Text style={{margin: 20, fontSize: 16, color: 'white'}}>
+        <Text style={{ margin: 20, fontSize: 16, color: 'white' }}>
           {' '}
           Be upto date with Shuttle Related News
         </Text>
         <Button
-          style={{backgroundColor: 'white', padding: 5}}
+          style={{ backgroundColor: 'white', padding: 5 }}
           onPress={() => [setIsPageOne(false), setIsPageTwo(true)]}>
-          <Text style={{color: appColors.primary, fontSize: 20}}>Next</Text>
+          <Text style={{ color: appColors.primary, fontSize: 20 }}>Next</Text>
         </Button>
       </Animatable.View>
     </View>
@@ -49,8 +50,9 @@ const styles = StyleSheet.create({
   img: {
     marginTop: 50,
     marginBottom: 50,
-    height: 200,
+    height: 130,
     width: '100%',
+    paddingBottom: 30
   },
   bottomContainer: {
     alignItems: 'center',
@@ -59,6 +61,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#800',
     width: '100%',
     height: 400,
+    paddingBottom: 20,
   },
 });
 export default LandingPage1;
