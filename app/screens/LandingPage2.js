@@ -14,6 +14,8 @@ const LandingPage2 = ({setIsPageTwo, setIsPageThree}) => {
         onPress={() => navigation.navigate('LoginScreen')}>
         <Text style={{color: appColors.primary, fontSize: 20}}>SKIP</Text>
       </Button>
+      <Text style={styles.UniLabel}>NED University of Engineering and Technology</Text>
+
       <Animatable.Image
         animation="bounceIn"
         duraton="1500"
@@ -53,6 +55,11 @@ const styles = StyleSheet.create({
     width: '100%',
     // backgroundColor:'blue'
     // paddingBottom: 30
+  },
+  UniLabel:{
+    color:'#800',
+    textAlign:'center',
+
   },
   bottomContainer: {
     alignItems: 'center',

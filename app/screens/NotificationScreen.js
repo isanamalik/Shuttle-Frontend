@@ -78,6 +78,8 @@ const NotificationScreen = ({ navigation }) => {
             <View style={styles.bottomContainer}>
               <Text style={styles.text}>Important Announcements</Text>
               <View style={styles.cardsWrapper}>{notificationInfo}</View>
+                  <Text style={styles.UniLabel}>NED University of Engineering and Technology</Text>
+
             </View>
           </ScrollView>
           <Loading loading={loading} />
@@ -96,6 +98,11 @@ const styles = StyleSheet.create({
     fontSize: 20,
     alignSelf: 'center',
     marginBottom: 105,
+  },
+  UniLabel:{
+    color:'#800',
+    textAlign:'center',
+
   },
   bottomContainer: {
     alignItems: 'center',
@@ -126,7 +133,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   text: {
-    color: appColors.primary,
+    color: '#800',
     fontWeight: 'bold',
     fontSize: 19,
     marginTop: 10,

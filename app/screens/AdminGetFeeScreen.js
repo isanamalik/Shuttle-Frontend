@@ -72,7 +72,7 @@ const AdminGetFeeScreen = ({navigation}) => {
             let student_info = [];
             student_info.push(
               <View key={1}>
-                <Text
+                <Text 
                   style={{
                     color: '#800',
                     fontSize: 20,
@@ -131,7 +131,7 @@ const AdminGetFeeScreen = ({navigation}) => {
             let fee_status = [];
             student_info.push(
               <View key={1}>
-                <Header title="Student Data" />
+                <Header  title="Student Data" />
                 <View style={styles.userInfoSection}>
                   <View style={styles.row}>
                     <Icon name="school" color="#800" size={20} />
@@ -236,6 +236,7 @@ const AdminGetFeeScreen = ({navigation}) => {
               <Text style={styles.searchText}>SEARCH</Text>
             </Button>
           </View>
+          <Text style={styles.UniLabel}>NED University of Engineering and Technology</Text>
           <View>
             <Text style={styles.error}>{error}</Text>
           </View>
@@ -273,6 +274,11 @@ const styles = StyleSheet.create({
     height: 50,
     width: 360,
     backgroundColor: '#F5F5F5',
+  },
+  UniLabel:{
+    color:'#800',
+    textAlign:'center',
+
   },
   inputContainer: {
     justifyContent: 'center',
@@ -345,14 +351,14 @@ const styles = StyleSheet.create({
   cardInfo: {
     flex: 2,
     padding: 10,
-    borderColor: '#0d47a1',
+    borderColor: '#800',
     borderWidth: 1,
     borderRadius: 8,
     backgroundColor: '#fff',
   },
   cardTitle: {
     fontWeight: 'bold',
-    color: '#0d47a1',
+    color: '#800',
     //  textDecorationLine: 'underline'
   },
   cardDetails: {

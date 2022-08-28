@@ -102,7 +102,9 @@ const StudentHomeScreen = ({route}) => {
   // console.log('props registration no.', registration_no)
   return (
     <View style={{backgroundColor: '#800'}}>
+
       <View style={styles.top}>
+        
         <MaterialIcons
           name="menu"
           size={35}
@@ -115,6 +117,7 @@ const StudentHomeScreen = ({route}) => {
           }
         />
         <Text style={{color: 'white', fontSize: 20, marginTop: 5}}>HOME</Text>
+
         <MaterialIcons
           name="notifications"
           size={33}
@@ -127,6 +130,8 @@ const StudentHomeScreen = ({route}) => {
         />
       </View>
       <ScrollView contentContainerStyle={styles.bottomContainer}>
+    <Text style={styles.UniLabel}>NED University of Engineering and Technology</Text>
+
         <TouchableOpacity
           style={{
             elevation: 13,
@@ -292,6 +297,11 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     width: '100%',
     height: 700,
+  },
+  UniLabel:{
+    color:'#800',
+    textAlign:'center',
+
   },
   top: {
     flexDirection: 'row',

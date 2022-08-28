@@ -99,13 +99,14 @@ const LoginAdmin = ({ navigation }) => {
       //         </SafeAreaView>
 
       <View style={styles.container}>
+        <Text style={styles.UniLabel}>NED University of Engineering and Technology</Text>
         <Text style={styles.headerText}>Let's Get Started!</Text>
         <View style={styles.formContainer}>
           <Text style={styles.formLabel}>ADMIN ID</Text>
           <TextInput
             placeholderTextColor={'grey'}
             style={styles.input}
-            placeholder="Registration Number(e.g 4001048)"
+            placeholder="Enter ID"
             returnKeyType="next"
             value={registrationNumber.value}
             onChangeText={(text) =>
@@ -141,7 +142,9 @@ const LoginAdmin = ({ navigation }) => {
         </View>
         <Loading loading={loading} />
       </View>
+    
     );
+    
 };
 const styles = StyleSheet.create({
     // container: {
@@ -176,6 +179,11 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
   },
+  UniLabel:{
+    color:'#800',
+    textAlign:'center',
+
+  },
   headerText: {
     color: '#800',
     fontSize: 35,
@@ -194,6 +202,7 @@ const styles = StyleSheet.create({
   input: {
     backgroundColor: '#D3D3D3',
     color: '#800',
+  
   },
   loginBtn: {
     backgroundColor: '#800',

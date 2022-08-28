@@ -1,4 +1,4 @@
-import React, {memo, useState} from 'react';
+import React, { memo, useState } from 'react';
 import {
   View,
   TouchableOpacity,
@@ -7,22 +7,23 @@ import {
   SafeAreaView,
   Image,
   TextInput,
+  ActivityIndicator
 } from 'react-native';
 // import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import Header from '../components/Header';
 // import Button from '../components/Button';
-import {Button} from 'react-native-paper';
+import { Button } from 'react-native-paper';
 // import TextInput from '../components/TextInput';
 import BackButton from '../components/BackButton';
-import {theme} from '../core/theme';
-import {COLORS} from '../constants';
-import {Loading} from '../components/Loading';
-import {BASE_URL} from '../config/index';
+import { theme } from '../core/theme';
+import { COLORS } from '../constants';
+import { Loading } from '../components/Loading';
+import { BASE_URL } from '../config/index';
 import axios from 'axios';
-import {registrationNumberValidator, passwordValidator} from '../core/utils';
-import {Error} from '../components/Error';
-import {images} from '../constants';
-import {useNavigation} from '@react-navigation/native';
+import { registrationNumberValidator, passwordValidator } from '../core/utils';
+import { Error } from '../components/Error';
+import { images } from '../constants';
+import { useNavigation } from '@react-navigation/native';
 import appColors from '../colors';
 
 // const Tab = createMaterialTopTabNavigator();
@@ -33,7 +34,7 @@ const LoginUser = () => {
     value: '',
     error: '',
   });
-  const [password, setPassword] = useState({value: '', error: ''});
+  const [password, setPassword] = useState({ value: '', error: '' });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const _onLoginPressed = async () => {
@@ -44,12 +45,12 @@ const LoginUser = () => {
     const passwordError = passwordValidator(password.value);
 
     if (registrationNumberError || passwordError) {
-      console.log('in errow',registrationNumberError.at, passwordError )
+      console.log('in errow', registrationNumberError.at, passwordError)
       setRegistrationNumber({
         ...registrationNumber,
         error: registrationNumberError,
       });
-      setPassword({...password, error: passwordError});
+      setPassword({ ...password, error: passwordError });
       return;
     }
     try {
@@ -61,15 +62,15 @@ const LoginUser = () => {
           password: password.value,
         })
         .then((res) => {
-          console.log('api successsssssss',res.data);
+          console.log('api successsssssss', res.data);
           console.log('reg', registrationNumber.value);
           if (res.data.msg == 'login succeful') {
             console.log('here');
             navigation.navigate('StudentHomeScreen', {
               registration: registrationNumber.value,
             });
-            setRegistrationNumber({value: ''});
-            setPassword({value: ''});
+            setRegistrationNumber({ value: '' });
+            setPassword({ value: '' });
           } else {
             setError('Invalid Credentials');
           }
@@ -82,6 +83,7 @@ const LoginUser = () => {
   };
   return (
     <View style={styles.container}>
+      <Text style={styles.UniLabel}>NED University of Engineering and Technology</Text>
       <Text style={styles.headerText}>Let's Get Started!</Text>
       <View style={styles.formContainer}>
         <Text style={styles.formLabel}>REGISTRATION NUMBER</Text>
@@ -92,7 +94,7 @@ const LoginUser = () => {
           returnKeyType="next"
           value={registrationNumber.value}
           onChangeText={(text) =>
-            setRegistrationNumber({value: text, error: ''})
+            setRegistrationNumber({ value: text, error: '' })
           }
           error={!!registrationNumber.error}
           errorText={registrationNumber.error}
@@ -107,24 +109,27 @@ const LoginUser = () => {
           placeholder="Password"
           returnKeyType="next"
           value={password.value}
-          onChangeText={(text) => setPassword({value: text, error: ''})}
+          onChangeText={(text) => setPassword({ value: text, error: '' })}
           error={!!password.error}
           errorText={password.error}
           color={'#a00'}
           secureTextEntry={true}
         />
       </View>
-      <View style={{marginTop: 30}}>
-        <Button
-          // onPress={() => navigation.navigate('StudentHomeScreen')}
-          onPress={() => _onLoginPressed()}
-          style={styles.loginBtn}>
-          <Text style={styles.loginText}>LOGIN</Text>
-        </Button>
+      <View style={{ marginTop: 30 }}>
+        {loading ? <ActivityIndicator size="small" color="#800" /> :
+
+          <Button
+            // onPress={() => navigation.navigate('StudentHomeScreen')}
+            onPress={() => _onLoginPressed()}
+            style={styles.loginBtn}>
+            <Text style={styles.loginText}>LOGIN</Text>
+          </Button>
+        }
       </View>
       <Button onPress={() => navigation.navigate('SignupScreen')}
-        style={{backgroundColor: 'white', padding: 5, margin: 10}}>
-        <Text style={{color: '#800', fontSize: 20}}>Signup</Text>
+        style={{ backgroundColor: 'white', padding: 5, margin: 10 }}>
+        <Text style={{ color: '#800', fontSize: 20 }}>Signup</Text>
       </Button>
     </View>
   );
@@ -133,6 +138,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
+  },
+  UniLabel:{
+    color:'#800',
+    textAlign:'center',
+
   },
   headerText: {
     color: '#800',

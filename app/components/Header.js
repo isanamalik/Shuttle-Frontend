@@ -18,10 +18,11 @@ Header.defaultProps = {
 
 const styles = StyleSheet.create({
     text: {
-        color: COLORS.darkblue,
+        color: '#800',
         fontSize: 23,
         textAlign: 'center'
     },
+   
 
 });
 
