@@ -37,8 +37,12 @@ const HomeScreen = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
+      
+
             {/* Banner */}
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+          
+
                 <Image
                     source={images.ned}
                     // resizeMode="cover"
@@ -94,6 +98,11 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: COLORS.white
     },
+    UniLabel:{
+        color:'#800',
+        textAlign:'center',
+    
+      },
     shadow: {
         shadowColor: "#000",
         shadowOffset: {

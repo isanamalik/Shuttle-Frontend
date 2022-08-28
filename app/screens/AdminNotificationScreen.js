@@ -279,6 +279,8 @@ const AdminNotificationScreen = ({navigation}) => {
             </Modal>
 
             <View>
+          <Text style={styles.UniLabel}>NED University of Engineering and Technology</Text>
+              
               <Button
                 onPress={() => setModalVisible(true)}
                 style={styles.notifyBtn}>
@@ -381,6 +383,11 @@ const styles = StyleSheet.create({
   notifyText: {
     color: 'white',
     fontSize: 20,
+  },
+  UniLabel:{
+    color:'#800',
+    textAlign:'center',
+
   },
   editBtn: {
     paddingVertical: 0,

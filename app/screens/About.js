@@ -52,12 +52,13 @@ const About = ({ navigation }) => {
                 fontWeight: 'bold',
                 marginTop: 20,
               }}>
-              About Welcome Wheels
+              About Us
             </Text>
             <View style={styles.row}>
               <Text style={styles.text}>
-                Welcome Wheels is a local NED body responsible for connecting
-                transport networks to students of the university.{' '}
+               Shuttle Track is an application powered by NED-UET and is responsible
+               for connecting the University's transport network to the University's 
+               students and faculty.{' '}
               </Text>
 
               <Text style={styles.text}>

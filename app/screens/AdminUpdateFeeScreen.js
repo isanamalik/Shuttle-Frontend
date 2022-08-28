@@ -126,17 +126,19 @@ const AdminUpdateFeeScreen = ({navigation}) => {
             <View style={styles.centeredView}>
               <View style={styles.modalView}>
                 {/* <Header title="" /> */}
-                <Text>
+                <Text style={styles.modaltext}>
                   Fee Status has been updated. Click ok to update another record
                 </Text>
                 <TouchableOpacity onPress={() => onCloseModal()}>
-                  <WhiteButton style={{marginTop: 10}}>Ok</WhiteButton>
+                  <WhiteButton style={{marginTop: 10, borderColor:'#800'}}>Ok</WhiteButton>
                 </TouchableOpacity>
               </View>
             </View>
           </Modal>
         </View>
         <View style={{padding: 10, width: '90%'}}>
+        <Text style={styles.UniLabel}>NED University of Engineering and Technology</Text>
+
           <Text
             style={{
               marginTop: 30,
@@ -150,7 +152,8 @@ const AdminUpdateFeeScreen = ({navigation}) => {
 
           <View style={styles.inputContainer}>
             <TextInput
-              placeholderTextColor="white"
+              placeholderTextColor="#800"
+              color='#800'
               style={styles.input}
               placeholder="Registration Number(e.g 4001048)"
               returnKeyType="next"
@@ -165,7 +168,7 @@ const AdminUpdateFeeScreen = ({navigation}) => {
               style={styles.icon}
               name="search"
               size={30}
-              color="white"
+              color="#800"
             />
 
             <DropDownPicker
@@ -257,11 +260,14 @@ const AdminUpdateFeeScreen = ({navigation}) => {
             <Text style={styles.updateText}>UPDATE</Text>
           </Button>
         </View>
+        
         <Loading loading={loading} />
+       
         {/* </AuthContainer>
       </ScrollView> */}
       </View>
     </View>
+
   );
 };
 const styles = StyleSheet.create({
@@ -272,6 +278,14 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     width: '100%',
     height: 700,
+  },
+  UniLabel:{
+    color:'#800',
+    textAlign:'center',
+
+  },
+  modaltext: {
+    color:'white'
   },
   categoryContainer: {
     width: '90%',
@@ -308,12 +322,12 @@ const styles = StyleSheet.create({
   modalView: {
     // display: "flex",
     margin: 20,
-    backgroundColor: '#0d47a1',
+    backgroundColor: '#800',
     borderRadius: 20,
     padding: 35,
     justifyContent: 'center',
     alignItems: 'center',
-    borderColor: '#0d47a1',
+    borderColor: '#800',
     borderWidth: 2,
     marginTop: 225,
     textAlign: 'center',
@@ -326,7 +340,9 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 50,
-    backgroundColor: '#800',
+    color:'#800',
+    // backgroundColor: '#800',
+    
   },
   label: {
     color: theme.colors.secondary,

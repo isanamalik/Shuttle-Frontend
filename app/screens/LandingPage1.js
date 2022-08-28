@@ -20,11 +20,14 @@ const LandingPage1 = ({ setIsPageOne, setIsPageTwo }) => {
   
   return (
     <View>
+      
       <Button
         style={{ marginBottom: 60, alignItems: 'flex-end' }}
         onPress={onSkip}>
         <Text style={{ color: appColors.primary, fontSize: 20 }}>SKIP</Text>
       </Button>
+      <Text style={styles.UniLabel}>NED University of Engineering and Technology</Text>
+
       <View style={styles.img}>
         <Animatable.Image
           animation="bounceIn"
@@ -64,6 +67,11 @@ const styles = StyleSheet.create({
     height: 130,
     width: '100%',
     paddingBottom: 30
+  },
+  UniLabel:{
+    color:'#800',
+    textAlign:'center',
+
   },
   bottomContainer: {
     alignItems: 'center',

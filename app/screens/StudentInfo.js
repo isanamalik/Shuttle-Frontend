@@ -140,11 +140,12 @@ const StudentInfo = ({ route, navigation }) => {
                   <TouchableOpacity
                     style={{ marginBottom: 15 }}
                     onPress={() =>
-                      navigation.navigate('StudentHomeScreen', {
-                        title: 'StudentHomeScreen',
+                      navigation.navigate('ShuttleRouteScreen', {
+                        title: 'ShuttleRouteScreen',
                       })
                     }>
-                    <View style={styles.menu}>
+                    <View style={styles.menu}
+                    >
                       <MaterialIcons name="location-on" color="white" size={27} />
                       <Text style={styles.menu_detail}>Live Shuttle Tracking</Text>
                     </View>
@@ -159,7 +160,8 @@ const StudentInfo = ({ route, navigation }) => {
                     }>
                     <View style={styles.menu}>
                       <MaterialIcons name="payment" color="white" size={27} />
-                      <Text style={styles.menu_detail}>
+                      <Text style={styles.menu_detail} 
+                      onPress={() => navigation.navigate('PaymentScreen', {title: 'Payment'})}>
                         Payment for Shuttle Card
                       </Text>
                     </View>

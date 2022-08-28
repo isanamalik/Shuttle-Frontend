@@ -1,3 +1,4 @@
+
 import React, { memo, useContext, useState } from 'react';
 import {
   View,
@@ -7,6 +8,7 @@ import {
   SafeAreaView,
   Image,
   TextInput,
+  ActivityIndicator
 } from 'react-native';
 // import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import Header from '../components/Header';
@@ -70,6 +72,7 @@ const LoginUser = () => {
           console.log('api successsssssss', res.data);
           console.log('reg', registrationNumber.value);
           if (res.data.msg == 'login succeful') {
+
             axios.post(`${BASE_URL}/student/get/` + registrationNumber.value)
               .then(async (res) => {
                 await AsyncStorage.setItem("LoggedInUser", JSON.stringify(res.data.id));
@@ -80,6 +83,7 @@ const LoginUser = () => {
                 setRegistrationNumber({ value: '' });
                 setPassword({ value: '' });
               })
+
           } else {
             setError('Invalid Credentials');
           }
@@ -92,6 +96,7 @@ const LoginUser = () => {
   };
   return (
     <View style={styles.container}>
+      <Text style={styles.UniLabel}>NED University of Engineering and Technology</Text>
       <Text style={styles.headerText}>Let's Get Started!</Text>
       <View style={styles.formContainer}>
         <Text style={styles.formLabel}>REGISTRATION NUMBER</Text>
@@ -125,12 +130,17 @@ const LoginUser = () => {
         />
       </View>
       <View style={{ marginTop: 30 }}>
-        <Button
-          // onPress={() => navigation.navigate('StudentHomeScreen')}
-          onPress={() => _onLoginPressed()}
-          style={styles.loginBtn}>
-          <Text style={styles.loginText}>LOGIN</Text>
-        </Button>
+
+        {loading ? <ActivityIndicator size="small" color="#800" /> :
+
+          <Button
+            // onPress={() => navigation.navigate('StudentHomeScreen')}
+            onPress={() => _onLoginPressed()}
+            style={styles.loginBtn}>
+            <Text style={styles.loginText}>LOGIN</Text>
+          </Button>
+        }
+
       </View>
       <Button onPress={() => navigation.navigate('SignupScreen')}
         style={{ backgroundColor: 'white', padding: 5, margin: 10 }}>
@@ -143,6 +153,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
+  },
+  UniLabel:{
+    color:'#800',
+    textAlign:'center',
+
   },
   headerText: {
     color: '#800',
