@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, SafeAreaView, StatusBar, Image,Modal } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, SafeAreaView, StatusBar, Image, Modal } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import Header from '../components/Header';
 import Button from '../components/Button';
@@ -25,60 +25,106 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import appColors from '../colors';
 
-const AdminUpdateFeeScreen = ({navigation}) => {
+const monthsList = [
+  { label: "January", value: "January" },
+  { label: "February", value: "February" },
+  { label: "March", value: "March" },
+  { label: "April", value: "April" },
+  { label: "May", value: "May" },
+  { label: "June", value: "June" },
+  { label: "July", value: "July" },
+  { label: "August", value: "August" },
+  { label: "September", value: "September" },
+  { label: "October", value: "October" },
+  { label: "November", value: "November" },
+  { label: "December", value: "December" },
+]
 
- const [modalVisible, setModalVisible] = useState(false);
+const yearsList = [
+  { label: '2023', value: '2023' },
+  { label: '2022', value: '2022' },
+  { label: '2021', value: '2021' },
+  { label: '2020', value: '2020' },
+  { label: '2019', value: '2019' },
+];
+
+const feeStatusList = [
+  { label: 'Paid', value: 'Paid' },
+  { label: 'Unpaid', value: 'Unpaid' },
+];
+
+const AdminUpdateFeeScreen = ({ navigation }) => {
+
+  const [modalVisible, setModalVisible] = useState(false);
   const [registrationNumber, setRegistrationNumber] = useState({ value: '', error: '' });
-  const [month, setMonth] = useState({ value: '', error: '' });
-  const [year, setYear] = useState({ value: '', error: '' });
-  const [feeStatus, setFeeStatus] = useState({ value: '', error: '' });
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  
+
+  const [month, setMonth] = React.useState(undefined);
+  const [monthError, setMonthError] = React.useState("");
+  const [monthOpen, setMonthOpen] = React.useState(false);
+
+  const onMonthOpen = React.useCallback(() => { }, []);
+
+  const [year, setYear] = React.useState(undefined);
+  const [yearError, setYearError] = React.useState("");
+  const [yearOpen, setYearOpen] = React.useState(false);
+
+  const onYearOpen = React.useCallback(() => { }, []);
+
+  const [feeStatus, setFeeStatus] = React.useState(undefined);
+  const [feeStatusError, setFeeStatusError] = React.useState("");
+  const [feeStatusOpen, setFeeStatusOpen] = React.useState(false);
+
+  const onFeeStatusOpen = React.useCallback(() => { }, []);
+
 
   const updateFeeStatus = async () => {
     setError('')
-     const registrationNumberError = registrationNumberValidator(registrationNumber.value)
-    const monthError = monthValidator(month.value);
-    const yearError = yearValidator(year.value);
-    const feeStatusError = feeValidator(feeStatus.value);
+    const registrationNumberError = registrationNumberValidator(registrationNumber.value)
+    const monthError = monthValidator(month);
+    const yearError = yearValidator(year);
+    const feeStatusError = feeValidator(feeStatus);
 
 
-    if ( registrationNumberError || monthError || yearError || feeStatusError) {
+    if (registrationNumberError || monthError || yearError || feeStatusError) {
       setRegistrationNumber({ ...registrationNumber, error: registrationNumberError })
-      setMonth({ ...month, error: monthError })
-      setYear({ ...year, error: yearError });
-      setFeeStatus({ ...feeStatus, error: feeStatusError });
+      setMonth(month);
+      setYear(year);
+      setFeeStatus(feeStatus);
+      setMonthError(monthError);
+      setYearError(yearError);
+      setFeeStatusError(feeStatusError)
 
       return;
     }
-    console.log(registrationNumber.value, month.value.label, year.value.value,feeStatus.value.value)
- 
+
     try {
       setLoading(true);
       const request = await axios.post(`${BASE_URL}/admin/insert_fee`, {
-       paid_date: year.value.value + '-' + month.value.value,
+        paid_date: year + '-' + month,
         st_reg_number: registrationNumber.value,
-        fee_status: feeStatus.value.value,
-        paid_month: month.value.label + " " + year.value.value
+        fee_status: feeStatus,
+        paid_month: month + " " + year
       }).then((response) => {
-        console.log('check response' ,response.data)
+        console.log('check response', response.data)
         setLoading(false)
-        if(response.data.hasOwnProperty('msg')  === true){
+        if (response.data.hasOwnProperty('msg') === true) {
           console.log('show error message here')
           setError(response.data.msg)
         }
         else {
           console.log('show data')
-           setModalVisible(true)
-           setRegistrationNumber({value: ''})
-           setMonth({value: ''})
-           setYear({label: ''})
-           setFeeStatus({label: ''})
+          setModalVisible(true)
+          setRegistrationNumber({ value: '' })
+          setMonth({ value: '' })
+          setYear({ label: '' })
+          setFeeStatus({ label: '' })
         }
       })
 
-    } catch (e) {  
+    } catch (e) {
       console.log(e)
       setError(e)
       setLoading(false)
@@ -90,7 +136,7 @@ const AdminUpdateFeeScreen = ({navigation}) => {
     setModalVisible(false)
   }
   return (
-    <View style={{backgroundColor: '#800'}}>
+    <View style={{ backgroundColor: '#800' }}>
       <View style={styles.top}>
         <MaterialIcons
           name="arrow-back"
@@ -102,7 +148,7 @@ const AdminUpdateFeeScreen = ({navigation}) => {
             })
           }
         />
-        <Text style={{color: 'white', fontSize: 20, marginTop: 5}}>
+        <Text style={{ color: 'white', fontSize: 20, marginTop: 5 }}>
           Update Fee Status
         </Text>
         <MaterialIcons
@@ -130,14 +176,14 @@ const AdminUpdateFeeScreen = ({navigation}) => {
                   Fee Status has been updated. Click ok to update another record
                 </Text>
                 <TouchableOpacity onPress={() => onCloseModal()}>
-                  <WhiteButton style={{marginTop: 10, borderColor:'#800'}}>Ok</WhiteButton>
+                  <WhiteButton style={{ marginTop: 10, borderColor: '#800' }}>Ok</WhiteButton>
                 </TouchableOpacity>
               </View>
             </View>
           </Modal>
         </View>
-        <View style={{padding: 10, width: '90%'}}>
-        <Text style={styles.UniLabel}>NED University of Engineering and Technology</Text>
+        <View style={{ padding: 10, width: '90%' }}>
+          <Text style={styles.UniLabel}>NED University of Engineering and Technology</Text>
 
           <Text
             style={{
@@ -159,7 +205,7 @@ const AdminUpdateFeeScreen = ({navigation}) => {
               returnKeyType="next"
               value={registrationNumber.value}
               onChangeText={(text) =>
-                setRegistrationNumber({value: text, error: ''})
+                setRegistrationNumber({ value: text, error: '' })
               }
               error={!!registrationNumber.error}
               errorText={registrationNumber.error}
@@ -171,98 +217,62 @@ const AdminUpdateFeeScreen = ({navigation}) => {
               color="#800"
             />
 
-            <DropDownPicker
-              items={[
-                {label: 'January', value: '01'},
-                {label: 'February', value: '02'},
-                {label: 'March', value: '03'},
-                {label: 'April', value: '04'},
-                {label: 'May', value: '05'},
-                {label: 'June', value: '06'},
-                {label: 'July', value: '07'},
-                {label: 'August', value: '08'},
-                {label: 'September', value: '09'},
-                {label: 'October', value: '10'},
-                {label: 'November', value: '11'},
-                {label: 'December', value: '12'},
-              ]}
+            <DropDown
+              zIndex={3000}
+              zIndexInverse={3000}
               placeholder="SELECT MONTH"
-              placeholderStyle={{
-                fontWeight: 'bold',
-                color: '#800',
-                fontSize: 17,
-              }}
-              containerStyle={{marginTop: 30, height: 60, width: 335}}
-              style={styles.dropDown}
-              itemStyle={{
-                justifyContent: 'flex-start',
-              }}
-              dropDownStyle={{backgroundColor: '#fafafa'}}
-              onChangeItem={(item) => setMonth({value: item, error: ''})}
-              selectedValue={month.label}
+              open={monthOpen}
+              value={month}
+              items={monthsList}
+              setOpen={setMonthOpen}
+              onOpen={onMonthOpen}
+              setValue={setMonth}
             />
-            {month.error ? (
-              <Text style={styles.error}>{month.error}</Text>
-            ) : null}
-            <DropDownPicker
-              items={[
-                {label: '2023', value: '2023'},
-                {label: '2022', value: '2022'},
-                {label: '2021', value: '2021'},
-                {label: '2020', value: '2020'},
-                {label: '2019', value: '2019'},
-              ]}
-              placeholder="SELECT YEAR"
-              placeholderStyle={{
-                fontWeight: 'bold',
-                color: '#800',
-                fontSize: 17,
-              }}
-              containerStyle={{marginTop: 30, height: 60, width: 335}}
-              style={styles.dropDown}
-              itemStyle={{
-                justifyContent: 'flex-start',
-              }}
-              dropDownStyle={{backgroundColor: '#fafafa'}}
-              onChangeItem={(item) => setYear({value: item, error: ''})}
-            />
-            {year.error ? <Text style={styles.error}>{year.error}</Text> : null}
 
-            <DropDownPicker
-              items={[
-                {label: 'Paid', value: 'Paid'},
-                {label: 'Unpaid', value: 'Unpaid'},
-              ]}
-              placeholder="SELECT STATUS"
-              placeholderStyle={{
-                fontWeight: 'bold',
-                color: '#800',
-                fontSize: 17,
-              }}
-              containerStyle={{marginTop: 30, height: 60, width: 335}}
-              style={styles.dropDown}
-              itemStyle={{
-                justifyContent: 'flex-start',
-              }}
-              dropDownStyle={{backgroundColor: '#fafafa'}}
-              onChangeItem={(item) => setFeeStatus({value: item, error: ''})}
+            {monthError?.length > 0 ? <Text style={styles.error}>{monthError}</Text> : null}
+
+            <DropDown
+              zIndex={20}
+              zIndexInverse={20}
+              placeholder="SELECT YEAR"
+              open={yearOpen}
+              value={year}
+              items={yearsList}
+              setOpen={setYearOpen}
+              onOpen={onYearOpen}
+              setValue={setYear}
             />
-            {feeStatus.error ? (
-              <Text style={styles.error}>{feeStatus.error}</Text>
-            ) : null}
+
+            {yearError?.length > 0 ? <Text style={styles.error}>{yearError}</Text> : null}
+
+
+            <DropDown
+              zIndex={20}
+              zIndexInverse={20}
+              placeholder="SELECT FEE STATUS"
+              open={feeStatusOpen}
+              value={feeStatus}
+              items={feeStatusList}
+              setOpen={setFeeStatusOpen}
+              onOpen={onFeeStatusOpen}
+              setValue={setFeeStatus}
+            />
+
+            {feeStatusError?.length > 0 ? <Text style={styles.error}>{feeStatusError}</Text> : null}
+
           </View>
           <View style={styles.row}>
             <Text style={styles.error}>{error}</Text>
           </View>
         </View>
-        <View style={{flex: 1, alignItems: 'center'}}>
+        <View style={{ flex: 1, alignItems: 'center' }}>
           <Button onPress={updateFeeStatus} style={styles.updateBtn}>
             <Text style={styles.updateText}>UPDATE</Text>
           </Button>
         </View>
-        
+
         <Loading loading={loading} />
-       
+
         {/* </AuthContainer>
       </ScrollView> */}
       </View>
@@ -279,13 +289,13 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 700,
   },
-  UniLabel:{
-    color:'#800',
-    textAlign:'center',
+  UniLabel: {
+    color: '#800',
+    textAlign: 'center',
 
   },
   modaltext: {
-    color:'white'
+    color: 'white'
   },
   categoryContainer: {
     width: '90%',
@@ -340,9 +350,9 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 50,
-    color:'#800',
+    color: '#800',
     // backgroundColor: '#800',
-    
+
   },
   label: {
     color: theme.colors.secondary,

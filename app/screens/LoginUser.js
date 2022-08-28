@@ -1,34 +1,13 @@
 
-import React, { memo, useContext, useState } from 'react';
-import {
-  View,
-  TouchableOpacity,
-  StyleSheet,
-  Text,
-  SafeAreaView,
-  Image,
-  TextInput,
-  ActivityIndicator
-} from 'react-native';
-// import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import Header from '../components/Header';
-// import Button from '../components/Button';
+import React, { useContext, useState } from 'react';
+import {View,StyleSheet,Text,TextInput,ActivityIndicator} from 'react-native';
 import { Button } from 'react-native-paper';
-// import TextInput from '../components/TextInput';
-import BackButton from '../components/BackButton';
-import { theme } from '../core/theme';
-import { COLORS } from '../constants';
-import { Loading } from '../components/Loading';
 import { BASE_URL } from '../config/index';
 import axios from 'axios';
 import { registrationNumberValidator, passwordValidator } from '../core/utils';
-import { Error } from '../components/Error';
-import { images } from '../constants';
 import { useNavigation } from '@react-navigation/native';
-import appColors from '../colors';
 import { AuthContext } from '../contexts/AuthContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-// const Tab = createMaterialTopTabNavigator();
 
 const LoginUser = () => {
   const navigation = useNavigation();
@@ -43,12 +22,7 @@ const LoginUser = () => {
   const { setLoggedInUser } = useContext(AuthContext);
 
   const _onLoginPressed = async () => {
-    console.log('pressed')
-    // AsyncStorage.removeItem("viewedLandingPage");
-    // return;
-    const registrationNumberError = registrationNumberValidator(
-      registrationNumber.value,
-    );
+    const registrationNumberError = registrationNumberValidator(registrationNumber.value);
     const passwordError = passwordValidator(password.value);
 
     if (registrationNumberError || passwordError) {
@@ -69,10 +43,7 @@ const LoginUser = () => {
           password: password.value,
         })
         .then((res) => {
-          console.log('api successsssssss', res.data);
-          console.log('reg', registrationNumber.value);
           if (res.data.msg == 'login succeful') {
-
             axios.post(`${BASE_URL}/student/get/` + registrationNumber.value)
               .then(async (res) => {
                 await AsyncStorage.setItem("LoggedInUser", JSON.stringify(res.data.id));
@@ -83,7 +54,6 @@ const LoginUser = () => {
                 setRegistrationNumber({ value: '' });
                 setPassword({ value: '' });
               })
-
           } else {
             setError('Invalid Credentials');
           }
