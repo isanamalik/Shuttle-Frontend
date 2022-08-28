@@ -1,4 +1,5 @@
-import React, { memo, useState } from 'react';
+
+import React, { memo, useContext, useState } from 'react';
 import {
   View,
   TouchableOpacity,
@@ -25,7 +26,8 @@ import { Error } from '../components/Error';
 import { images } from '../constants';
 import { useNavigation } from '@react-navigation/native';
 import appColors from '../colors';
-
+import { AuthContext } from '../contexts/AuthContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 // const Tab = createMaterialTopTabNavigator();
 
 const LoginUser = () => {
@@ -37,8 +39,13 @@ const LoginUser = () => {
   const [password, setPassword] = useState({ value: '', error: '' });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+
+  const { setLoggedInUser } = useContext(AuthContext);
+
   const _onLoginPressed = async () => {
     console.log('pressed')
+    // AsyncStorage.removeItem("viewedLandingPage");
+    // return;
     const registrationNumberError = registrationNumberValidator(
       registrationNumber.value,
     );
@@ -56,7 +63,7 @@ const LoginUser = () => {
     try {
       setLoading(true);
       console.log('calling apiiii');
-      const request = await axios
+      await axios
         .post(`${BASE_URL}/student/login`, {
           st_reg_number: registrationNumber.value,
           password: password.value,
@@ -65,12 +72,18 @@ const LoginUser = () => {
           console.log('api successsssssss', res.data);
           console.log('reg', registrationNumber.value);
           if (res.data.msg == 'login succeful') {
-            console.log('here');
-            navigation.navigate('StudentHomeScreen', {
-              registration: registrationNumber.value,
-            });
-            setRegistrationNumber({ value: '' });
-            setPassword({ value: '' });
+
+            axios.post(`${BASE_URL}/student/get/` + registrationNumber.value)
+              .then(async (res) => {
+                await AsyncStorage.setItem("LoggedInUser", JSON.stringify(res.data.id));
+                setLoggedInUser(res.data.id);
+                navigation.navigate('StudentHomeScreen', {
+                  registration: registrationNumber.value,
+                });
+                setRegistrationNumber({ value: '' });
+                setPassword({ value: '' });
+              })
+
           } else {
             setError('Invalid Credentials');
           }
@@ -117,6 +130,7 @@ const LoginUser = () => {
         />
       </View>
       <View style={{ marginTop: 30 }}>
+
         {loading ? <ActivityIndicator size="small" color="#800" /> :
 
           <Button
@@ -126,6 +140,7 @@ const LoginUser = () => {
             <Text style={styles.loginText}>LOGIN</Text>
           </Button>
         }
+
       </View>
       <Button onPress={() => navigation.navigate('SignupScreen')}
         style={{ backgroundColor: 'white', padding: 5, margin: 10 }}>

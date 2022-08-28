@@ -100,6 +100,8 @@ const StudentHomeScreen = ({route}) => {
   // }, []);
 
   // console.log('props registration no.', registration_no)
+  console.log("ROUTEE:",route.params);
+
   return (
     <View style={{backgroundColor: '#800'}}>
 
@@ -236,7 +238,7 @@ const StudentHomeScreen = ({route}) => {
             flexDirection: 'row',
             justifyContent: 'space-between',
           }}
-          onPress={() => navigation.navigate('About', {title: 'About'})}>
+          onPress={() => navigation.navigate('PaymentScreen', {title: 'Payment'})}>
           <Text
             style={{
               fontSize: 19,

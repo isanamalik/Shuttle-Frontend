@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { View, StyleSheet, Item, Button, Image, TouchableOpacity, SectionList, StatusBar, SafeAreaView, ScrollView } from 'react-native';
 import Header from '../components/Header'
 import BackButton from '../components/BackButton';
@@ -17,29 +17,31 @@ import { BASE_URL } from '../config/index';
 import appColors from '../colors';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import LogoutButton from '../components/LogoutButton';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { AuthContext } from '../contexts/AuthContext';
 
 const StudentInfo = ({ route, navigation }) => {
   const [loading, setLoading] = useState(false);
   const [studentInformation, updateStudentInformation] = React.useState([]);
   const [responseError, setResponseError] = useState('');
   const [feeStatus, setFeeStatus] = useState([]);
-  const [studentInfo, setStudentInfo] = useState({});
+
+  const { user } = useContext(AuthContext);
 
   const registration_no = route.params.registration_no
-  useEffect(() => {
-    setLoading(true)
-    try {
-      axios.post(`${BASE_URL}/student/get/` + registration_no)
-        .then((res) => {
-          setLoading(false)
-          console.log('res', res)
-          setStudentInfo(res.data.id)
-        })
-    }
-    catch (err) { console.log(err) }
-  }, [])
-
-  console.log('studentInfo', studentInfo)
+  // useEffect(() => {
+  //   setLoading(true)
+  //   try {
+  //     axios.post(`${BASE_URL}/student/get/` + registration_no)
+  //       .then((res) => {
+  //         setLoading(false)
+  //         console.log('res', res)
+  //         setStudentInfo(res.data.id)
+  //       })
+  //   }
+  //   catch (err) { console.log(err) }
+  // }, [])
+  
   return (
     <ScrollView>
       <View style={styles.top}>
@@ -68,7 +70,7 @@ const StudentInfo = ({ route, navigation }) => {
       <View style={styles.bottomContainer}>
         <View style={styles.cardsWrapper}>
           {
-            studentInfo &&
+            user &&
             <>
 
               <View style={styles.userInfoSection} key={1}>
@@ -88,20 +90,20 @@ const StudentInfo = ({ route, navigation }) => {
                         },
                       ]}>
 
-                      {studentInfo?.st_name}
+                      {user?.st_name}
                     </Title>
                     <Caption style={styles.caption}>Student</Caption>
                     <View style={styles.row}>
                       <Icon name="school" color="white" size={20} />
                       <Text style={styles.student_detail}>
-                        {studentInfo?.st_department}
+                        {user?.st_department}
                       </Text>
                     </View>
                     <View style={styles.row}>
                       <Icon name="file" color="white" size={20} />
                       <Text style={styles.student_detail}>
                         Registration No.
-                        {studentInfo?.st_reg_number}
+                        {user?.st_reg_number}
                         {'\n'}
                       </Text>
                     </View>
@@ -191,11 +193,13 @@ const StudentInfo = ({ route, navigation }) => {
 
                   <TouchableOpacity
                     style={{ marginBottom: 15 }}
-                    onPress={() =>
-                      navigation.navigate('LoginScreen', {
-                        title: 'LoginScreen',
-                      })
-                    }>
+                    onPress={() => {
+                      AsyncStorage.removeItem("LoggedInUser").then(() => {
+                        navigation.navigate('LoginScreen', {
+                          title: 'LoginScreen',
+                        })
+                      }).catch(err => {})
+                    }}>
                     <View style={styles.menu}>
                       <MaterialIcons name="logout" color="white" size={27} />
                       <Text style={styles.menu_detail}>Logout</Text>

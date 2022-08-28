@@ -5,14 +5,25 @@ import * as Animatable from 'react-native-animatable';
 import appColors from '../colors';
 import {useNavigation} from '@react-navigation/native';
 import { COLORS } from '../constants';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const LandingPage3 = () => {
   const navigation= useNavigation()
+
+
+  const onSkip = () => {
+    AsyncStorage.setItem("viewedLandingPage", "true").then(()=> {
+      navigation.navigate('LoginScreen')
+    }).catch(err => {
+      console.log(err);
+    })
+  }
+
   return (
     <View>
       <Button
         style={{ alignItems: 'flex-end'}}
-        onPress={() => navigation.navigate('LoginScreen')}>
+        onPress={onSkip}>
         <Text style={{color: appColors.primary, fontSize: 20}}>SKIP</Text>
       </Button>
       <Text style={styles.UniLabel}>NED University of Engineering and Technology</Text>
@@ -41,7 +52,7 @@ const LandingPage3 = () => {
         </Text>
         <Button
           style={{backgroundColor: 'white', padding: 5, margin: 10}}
-          onPress={() => navigation.navigate('LoginScreen')}>
+          onPress={onSkip}>
           <Text style={{color: appColors.primary, fontSize: 20}}>
             LET'S START
           </Text>
