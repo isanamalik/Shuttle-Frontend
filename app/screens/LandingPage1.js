@@ -4,14 +4,25 @@ import { Button } from 'react-native-paper';
 import appColors from '../colors';
 import * as Animatable from 'react-native-animatable';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const LandingPage1 = ({ setIsPageOne, setIsPageTwo }) => {
   const navigation = useNavigation();
+
+
+  const onSkip = () => {
+    AsyncStorage.setItem("viewedLandingPage", "true").then(()=> {
+      navigation.navigate('LoginScreen')
+    }).catch(err => {
+      console.log(err);
+    })
+  }
+  
   return (
     <View>
       <Button
         style={{ marginBottom: 60, alignItems: 'flex-end' }}
-        onPress={() => navigation.navigate('LoginScreen')}>
+        onPress={onSkip}>
         <Text style={{ color: appColors.primary, fontSize: 20 }}>SKIP</Text>
       </Button>
       <View style={styles.img}>

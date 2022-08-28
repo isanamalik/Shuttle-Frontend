@@ -1,4 +1,4 @@
-import React, {memo, useState} from 'react';
+import React, { memo, useContext, useState } from 'react';
 import {
   View,
   TouchableOpacity,
@@ -11,20 +11,21 @@ import {
 // import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import Header from '../components/Header';
 // import Button from '../components/Button';
-import {Button} from 'react-native-paper';
+import { Button } from 'react-native-paper';
 // import TextInput from '../components/TextInput';
 import BackButton from '../components/BackButton';
-import {theme} from '../core/theme';
-import {COLORS} from '../constants';
-import {Loading} from '../components/Loading';
-import {BASE_URL} from '../config/index';
+import { theme } from '../core/theme';
+import { COLORS } from '../constants';
+import { Loading } from '../components/Loading';
+import { BASE_URL } from '../config/index';
 import axios from 'axios';
-import {registrationNumberValidator, passwordValidator} from '../core/utils';
-import {Error} from '../components/Error';
-import {images} from '../constants';
-import {useNavigation} from '@react-navigation/native';
+import { registrationNumberValidator, passwordValidator } from '../core/utils';
+import { Error } from '../components/Error';
+import { images } from '../constants';
+import { useNavigation } from '@react-navigation/native';
 import appColors from '../colors';
-
+import { AuthContext } from '../contexts/AuthContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 // const Tab = createMaterialTopTabNavigator();
 
 const LoginUser = () => {
@@ -33,43 +34,52 @@ const LoginUser = () => {
     value: '',
     error: '',
   });
-  const [password, setPassword] = useState({value: '', error: ''});
+  const [password, setPassword] = useState({ value: '', error: '' });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+
+  const { setLoggedInUser } = useContext(AuthContext);
+
   const _onLoginPressed = async () => {
     console.log('pressed')
+    // AsyncStorage.removeItem("viewedLandingPage");
+    // return;
     const registrationNumberError = registrationNumberValidator(
       registrationNumber.value,
     );
     const passwordError = passwordValidator(password.value);
 
     if (registrationNumberError || passwordError) {
-      console.log('in errow',registrationNumberError.at, passwordError )
+      console.log('in errow', registrationNumberError.at, passwordError)
       setRegistrationNumber({
         ...registrationNumber,
         error: registrationNumberError,
       });
-      setPassword({...password, error: passwordError});
+      setPassword({ ...password, error: passwordError });
       return;
     }
     try {
       setLoading(true);
       console.log('calling apiiii');
-      const request = await axios
+      await axios
         .post(`${BASE_URL}/student/login`, {
           st_reg_number: registrationNumber.value,
           password: password.value,
         })
         .then((res) => {
-          console.log('api successsssssss',res.data);
+          console.log('api successsssssss', res.data);
           console.log('reg', registrationNumber.value);
           if (res.data.msg == 'login succeful') {
-            console.log('here');
-            navigation.navigate('StudentHomeScreen', {
-              registration: registrationNumber.value,
-            });
-            setRegistrationNumber({value: ''});
-            setPassword({value: ''});
+            axios.post(`${BASE_URL}/student/get/` + registrationNumber.value)
+              .then(async (res) => {
+                await AsyncStorage.setItem("LoggedInUser", JSON.stringify(res.data.id));
+                setLoggedInUser(res.data.id);
+                navigation.navigate('StudentHomeScreen', {
+                  registration: registrationNumber.value,
+                });
+                setRegistrationNumber({ value: '' });
+                setPassword({ value: '' });
+              })
           } else {
             setError('Invalid Credentials');
           }
@@ -92,7 +102,7 @@ const LoginUser = () => {
           returnKeyType="next"
           value={registrationNumber.value}
           onChangeText={(text) =>
-            setRegistrationNumber({value: text, error: ''})
+            setRegistrationNumber({ value: text, error: '' })
           }
           error={!!registrationNumber.error}
           errorText={registrationNumber.error}
@@ -107,14 +117,14 @@ const LoginUser = () => {
           placeholder="Password"
           returnKeyType="next"
           value={password.value}
-          onChangeText={(text) => setPassword({value: text, error: ''})}
+          onChangeText={(text) => setPassword({ value: text, error: '' })}
           error={!!password.error}
           errorText={password.error}
           color={'#a00'}
           secureTextEntry={true}
         />
       </View>
-      <View style={{marginTop: 30}}>
+      <View style={{ marginTop: 30 }}>
         <Button
           // onPress={() => navigation.navigate('StudentHomeScreen')}
           onPress={() => _onLoginPressed()}
@@ -123,8 +133,8 @@ const LoginUser = () => {
         </Button>
       </View>
       <Button onPress={() => navigation.navigate('SignupScreen')}
-        style={{backgroundColor: 'white', padding: 5, margin: 10}}>
-        <Text style={{color: '#800', fontSize: 20}}>Signup</Text>
+        style={{ backgroundColor: 'white', padding: 5, margin: 10 }}>
+        <Text style={{ color: '#800', fontSize: 20 }}>Signup</Text>
       </Button>
     </View>
   );
