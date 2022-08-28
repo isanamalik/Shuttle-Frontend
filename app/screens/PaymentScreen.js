@@ -3,7 +3,7 @@ import { View, Text, ScrollView, StyleSheet, Image, TextInput, ActivityIndicator
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { Button } from 'react-native-paper';
 import appColors from '../colors';
-import { ned } from '../constants/images';
+import { easypaisa, ned } from '../constants/images';
 import DropDown from '../components/DropDown';
 import { useFocusEffect } from '@react-navigation/native';
 import axios from 'axios';
@@ -29,8 +29,7 @@ const yearsList = [
     { label: "First", value: "First" },
     { label: "Second", value: "Second" },
     { label: "Third", value: "Third" },
-    { label: "Fourth", value: "Fourth" },
-    { label: "Fifth", value: "Fifth" }
+    { label: "Fourth", value: "Fourth" }
 ]
 
 
@@ -83,7 +82,7 @@ const PaymentScreen = ({ navigation }) => {
                         }
                     />
                     <Text style={{ color: 'white', fontSize: 20, marginTop: 5 }}>
-                        PaymentScreen
+                        Shuttle Payment
                     </Text>
     
                     <View style={{ height: 33, width: 33 }} />
@@ -91,7 +90,7 @@ const PaymentScreen = ({ navigation }) => {
                 <View style={styles.bottomContainer}>
     
                     <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: '#fff1f1', paddingVertical: 10, paddingHorizontal: 12, width: '100%' }}>
-                        <Image source={ned} style={{ height: 60, width: 60 }} resizeMode="contain" />
+                        <Image source={easypaisa} style={{ height: 60, width: 60 }} resizeMode="contain" />
     
                         <Text style={{ fontSize: 16, paddingLeft: 10, color: appColors.primary, }}>Easy Paisa</Text>
                     </View>
@@ -132,7 +131,7 @@ const PaymentScreen = ({ navigation }) => {
     
                     <TextInput
                         style={styles.input}
-                        value={"03363569905"}
+                        value={"03363567408"}
                     />
     
                     <Button

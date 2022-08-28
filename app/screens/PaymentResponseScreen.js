@@ -3,7 +3,7 @@ import React, { useContext } from 'react';
 import { View, Text, StyleSheet, Image, Dimensions } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import appColors from '../colors';
-import { ned } from '../constants/images';
+import { easypaisa, ned } from '../constants/images';
 import { AuthContext } from '../contexts/AuthContext';
 
 const WINDOW_WIDTH = Dimensions.get('window').width;
@@ -59,15 +59,15 @@ const PaymentResponseScreen = ({navigation}) => {
                 <View style={styles.bottomContainer}>
 
                     <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: '#fff1f1', paddingVertical: 10, paddingHorizontal: 12, width: '100%' }}>
-                        <Image source={ned} style={{ height: 60, width: 60 }} resizeMode="contain" />
+                        <Image source={easypaisa} style={{ height: 60, width: 60 }} resizeMode="contain" />
 
                         <Text style={{ fontSize: 16, paddingLeft: 10, color: appColors.primary, }}>Easy Paisa</Text>
                     </View>
 
 
                     <Card
-                    date={"28/08/22"}
-                    Time={"8:02"}
+                    date={new Date().getDate().toLocaleString() +"-"+ new Date().getMonth().toLocaleString() +"-"+ new Date().getFullYear().toLocaleString()}
+                    // Time={"8:02"}
                     studentName={user?.st_name}
                     status={"Success"}
                     paymentMethod="EasyPaisa"
